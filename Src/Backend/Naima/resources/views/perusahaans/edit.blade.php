@@ -50,6 +50,12 @@
         </div>
 
         <div class="form-group">
+            <label for="password_confirmation">Konfirmasi Password</label>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+        </div>
+
+
+        <div class="form-group">
             <label for="alamat">Alamat</label>
             <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat', $perusahaan->alamat) }}">
             @error('alamat')

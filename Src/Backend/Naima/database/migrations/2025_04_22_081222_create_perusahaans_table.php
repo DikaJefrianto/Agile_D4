@@ -14,15 +14,16 @@ class CreatePerusahaansTable extends Migration
     public function up()
     {
         Schema::create('perusahaans', function (Blueprint $table) {
-            $table->id();  // Menambahkan kolom id otomatis
-            $table->string('nama');  // Kolom nama perusahaan
-            $table->string('username')->unique();  // Kolom username, harus unik
-            $table->string('email')->unique();  // Kolom email, harus unik
-            $table->string('password');  // Kolom password, untuk license
-            $table->string('alamat')->nullable();  // Kolom alamat (opsional), nullable artinya bisa kosong
-            $table->text('keterangan')->nullable();  // Kolom keterangan (opsional), nullable
-            $table->timestamps();  // Kolom created_at dan updated_at
+            $table->id();
+            $table->string('nama');
+            $table->string('username')->unique();
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('alamat')->nullable();
+            $table->text('keterangan')->nullable();
+            $table->timestamps();
         });
+
     }
 
     /**

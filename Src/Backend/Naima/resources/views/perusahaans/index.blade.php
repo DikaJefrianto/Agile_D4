@@ -36,16 +36,12 @@
                         <td>{{ $perusahaan->email }}</td>
                         <td>{{ $perusahaan->alamat }}</td>
                         <td>{{ $perusahaan->keterangan }}</td>
-                        <td class="text-center">
-                            <a href="{{ route('perusahaans.edit', $perusahaan->id) }}" class="btn btn-sm btn-warning me-1">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </a>
-                            <form action="{{ route('perusahaans.destroy', $perusahaan->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                        <td>
+                            <a href="{{ route('perusahaans.edit', $perusahaan->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('perusahaans.destroy', $perusahaan->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus pengguna ini?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="bi bi-trash"></i> Hapus
-                                </button>
+                                <button class="btn btn-danger btn-sm">Hapus</button>
                             </form>
                         </td>
                     </tr>

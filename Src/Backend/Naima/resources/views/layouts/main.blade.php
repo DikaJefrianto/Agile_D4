@@ -13,7 +13,6 @@
 </head>
 <body class="bg-white">
 
-    @include('layouts.sidebar')
     <!-- Header -->
     @include('layouts.header')
 
