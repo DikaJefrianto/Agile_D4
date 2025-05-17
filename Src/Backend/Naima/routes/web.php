@@ -1,33 +1,26 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\perusahaan\PerusahaanController;
-use App\Http\Controllers\pengguna\PenggunaController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\karyawan\KaryawanController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+ })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
 // Menggunakan Route Resource untuk controller PerusahaanController
 Route::resource('perusahaans', PerusahaanController::class);
 
-Route::resource('penggunas', PenggunaController::class);
-
-
-
-// Menampilkan form login
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-
-// Proses login
-Route::post('login', [LoginController::class, 'login'])->name('login.submit');
-
-// Halaman setelah login untuk pengguna yang sudah terautentikasi
-Route::middleware('auth')->group(function () {
-    // Halaman dashboard perusahaan
-    Route::get('perusahaan/dashboard', [PerusahaanController::class, 'dashboard'])->name('perusahaan.dashboard');
-    // Halaman dashboard admin (Naima)
-    Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-});
-
-
+Route::resource('karyawans', KaryawanController::class);
+require __DIR__.'/auth.php';

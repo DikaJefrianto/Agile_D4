@@ -1,4 +1,4 @@
-@extends('layouts.main') <!-- Pastikan ini sesuai dengan file layout utamamu -->
+@extends('layouts.app') <!-- Pastikan ini sesuai dengan file layout utamamu -->
 
 @section('title', 'Manajemen Perusahaan')
 
@@ -38,7 +38,7 @@
                         <td>{{ $perusahaan->keterangan }}</td>
                         <td>
                             <a href="{{ route('perusahaans.edit', $perusahaan->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('perusahaans.destroy', $perusahaan->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus pengguna ini?')">
+                            <form action="{{ route('perusahaans.destroy', $perusahaan->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm">Hapus</button>

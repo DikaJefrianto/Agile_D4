@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
-class Pengguna extends Model
+class Karyawan extends Model
 {
     use HasFactory;
 
-    protected $table = 'penggunas';
+    protected $table = 'karyawans'; // Nama tabel di database
 
     protected $fillable = [
         'nama_lengkap',
@@ -19,6 +19,7 @@ class Pengguna extends Model
         'role',
         'no_telp',
         'foto',
+        'perusahaan_id',
     ];
 
     // Enkripsi password secara otomatis saat diset

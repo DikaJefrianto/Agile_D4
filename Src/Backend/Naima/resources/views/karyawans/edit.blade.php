@@ -1,10 +1,10 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
-@section('title', 'Edit Pengguna')
+@section('title', 'Edit Karyawan')
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="mb-4">Edit Data Pengguna</h1>
+    <h1 class="mb-4">Edit Data Karyawan</h1>
 
     {{-- Menampilkan notifikasi error validasi --}}
     @if ($errors->any())
@@ -18,8 +18,8 @@
         </div>
     @endif
 
-    {{-- Form Edit Pengguna --}}
-    <form action="{{ route('penggunas.update', $pengguna->id) }}" method="POST" enctype="multipart/form-data">
+    {{-- Form Edit Karyawan --}}
+    <form action="{{ route('karyawans.update', $karyawan->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -27,7 +27,7 @@
             <label for="perusahaan_id" class="form-label">Perusahaan</label>
             <select name="perusahaan_id" class="form-select" required>
                 @foreach ($perusahaans as $perusahaan)
-                    <option value="{{ $perusahaan->id }}" {{ $pengguna->perusahaan_id == $perusahaan->id ? 'selected' : '' }}>
+                    <option value="{{ $perusahaan->id }}" {{ $karyawan->perusahaan_id == $perusahaan->id ? 'selected' : '' }}>
                         {{ $perusahaan->nama }}
                     </option>
                 @endforeach
@@ -36,12 +36,12 @@
 
         <div class="mb-3">
             <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
-            <input type="text" name="nama_lengkap" class="form-control" value="{{ old('nama_lengkap', $pengguna->nama_lengkap) }}" required>
+            <input type="text" name="nama_lengkap" class="form-control" value="{{ old('nama_lengkap', $karyawan->nama_lengkap) }}" required>
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" value="{{ old('email', $pengguna->email) }}" required>
+            <input type="email" name="email" class="form-control" value="{{ old('email', $karyawan->email) }}" required>
         </div>
 
         <div class="mb-3">
@@ -57,27 +57,27 @@
         <div class="mb-3">
             <label for="role" class="form-label">Role</label>
             <select name="role" class="form-select" required>
-                <option value="admin" {{ $pengguna->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                <option value="manajer" {{ $pengguna->role == 'manajer' ? 'selected' : '' }}>Manajer</option>
-                <option value="karyawan" {{ $pengguna->role == 'karyawan' ? 'selected' : '' }}>karyawan</option>
+                <option value="admin" {{ $karyawan->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                <option value="manajer" {{ $karyawan->role == 'manajer' ? 'selected' : '' }}>Manajer</option>
+                <option value="karyawan" {{ $karyawan->role == 'karyawan' ? 'selected' : '' }}>Karyawan</option>
             </select>
         </div>
 
         <div class="mb-3">
             <label for="no_telp" class="form-label">No. Telepon</label>
-            <input type="text" name="no_telp" class="form-control" value="{{ old('no_telp', $pengguna->no_telp) }}">
+            <input type="text" name="no_telp" class="form-control" value="{{ old('no_telp', $karyawan->no_telp) }}">
         </div>
 
         <div class="mb-3">
             <label for="foto" class="form-label">Foto (Opsional)</label><br>
-            @if ($pengguna->foto)
-                <img src="{{ asset('storage/' . $pengguna->foto) }}" width="100" class="mb-2" alt="Foto Pengguna">
+            @if ($karyawan->foto)
+                <img src="{{ asset('storage/' . $karyawan->foto) }}" width="100" class="mb-2" alt="Foto Karyawan">
             @endif
             <input type="file" name="foto" class="form-control">
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('penggunas.index') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('karyawans.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
 @endsection

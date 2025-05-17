@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('title', 'Tambah Pengguna')
 
@@ -19,7 +19,7 @@
     @endif
 
     {{-- Form Tambah Pengguna --}}
-    <form action="{{ route('penggunas.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('karyawans.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
 
@@ -28,7 +28,7 @@
             <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
             <input type="text" name="nama_lengkap" class="form-control" value="{{ old('nama_lengkap') }}" required>
         </div>
-        
+
 
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
@@ -65,8 +65,20 @@
             <input type="file" name="foto" class="form-control">
         </div>
 
+        <div class="mb-3">
+            <label for="perusahaan_id" class="form-label">Perusahaan</label>
+            <select name="perusahaan_id" class="form-select" required>
+                <option value="">-- Pilih Perusahaan --</option>
+                @foreach ($perusahaans as $perusahaan)
+                    <option value="{{ $perusahaan->id }}" {{ old('perusahaan_id') == $perusahaan->id ? 'selected' : '' }}>
+                        {{ $perusahaan->nama }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <button type="submit" class="btn btn-success">Simpan</button>
-        <a href="{{ route('penggunas.index') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('karyawans.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
 @endsection
