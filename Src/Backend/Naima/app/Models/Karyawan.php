@@ -19,7 +19,7 @@ class Karyawan extends Model
         'role',
         'no_telp',
         'foto',
-        'perusahaan_id',
+        'perusahaan_id', // Pastikan kolom ini ada di tabel karyawans
     ];
 
     // Enkripsi password secara otomatis saat diset
@@ -33,6 +33,6 @@ class Karyawan extends Model
     // Relasi ke model Perusahaan
     public function perusahaan()
     {
-        return $this->belongsTo(Perusahaan::class);
+        return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
     }
 }

@@ -45,4 +45,9 @@ class Perusahaan extends Model
     {
         return $this->nama . ' (' . $this->username . ')';
     }
+
+    public function karyawans()
+    {
+        return $this->hasMany(Karyawan::class, 'perusahaan_id');
+    }
 }

@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Karyawan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class KaryawanController extends Controller
 {
@@ -38,34 +42,46 @@ class KaryawanController extends Controller
     {
         // Validasi input
         $validated = $request->validate([
-            'nama_lengkap'   => 'required|string|max:255',
-            'email'          => 'required|email|unique:karyawans,email',
-            'password'       => 'required|min:6|confirmed',
-            'role'           => 'required|in:admin,manajer,karyawan',
-            'no_telp'        => 'nullable|string|max:20',
-            'foto'           => 'nullable|image|max:2048',
-            'perusahaan_id'  => 'required|exists:perusahaans,id', // Validasi perusahaan_id
+            'nama_lengkap'  => 'required|string|max:255',
+            'email'         => 'required|email|unique:karyawans,email|max:255|unique:users,email',
+            'password'      => 'required|string|min:6|confirmed',
+            'role'          => 'required|in:karyawan',
+            'no_telp'       => 'nullable|string|max:20',
+            'foto'          => 'nullable|image|max:2048',
         ]);
 
-        // Menyimpan foto jika ada
+        // Simpan foto jika ada
+        $fotoPath = null;
         if ($request->hasFile('foto')) {
-            $validated['foto'] = $request->file('foto')->store('foto_karyawan', 'public');
+            $fotoPath = $request->file('foto')->store('foto_karyawan', 'public');
         }
 
-        // Menyimpan data karyawan ke tabel menggunakan DB facade
-        DB::table('karyawans')->insert([
-            'nama_lengkap'   => $validated['nama_lengkap'],
-            'email'          => $validated['email'],
-            'password'       => bcrypt($validated['password']), // Meng-hash password sebelum disimpan
-            'role'           => $validated['role'],
-            'no_telp'        => $validated['no_telp'],
-            'foto'           => $validated['foto'] ?? null,
-            'perusahaan_id'  => $validated['perusahaan_id'], // Simpan perusahaan_id
-            'created_at'     => now(),
-            'updated_at'     => now(),
+        // Pastikan perusahaan tidak null
+        $perusahaan = Auth::user()->perusahaan;
+        if (!$perusahaan) {
+            return redirect()->back()->withErrors(['error' => 'Perusahaan tidak ditemukan untuk pengguna ini.']);
+        }
+
+        // Simpan data karyawan di tabel karyawans
+        $karyawan = $perusahaan->karyawans()->create([
+            'nama_lengkap'  => $request->nama_lengkap,
+            'email'         => $request->email,
+            'password'      => Hash::make($request->password),
+            'role'          => $request->role,
+            'no_telp'       => $request->no_telp,
+            'foto'          => $fotoPath,
         ]);
 
-        return redirect()->route('karyawans.index')->with('success', 'Karyawan berhasil ditambahkan.');
+        // Buat akun pengguna untuk karyawan di tabel users
+        \App\Models\User::create([
+            'name'          => $request->nama_lengkap,
+            'email'         => $request->email,
+            'password'      => Hash::make($request->password), // Enkripsi password
+            'role'          => 'karyawan', // Tetapkan role sebagai karyawan
+            'perusahaan_id' => $perusahaan->id, // Hubungkan dengan perusahaan
+        ]);
+
+        return redirect()->route('karyawans.index')->with('success', 'Karyawan berhasil ditambahkan dan akun pengguna telah dibuat.');
     }
 
     /**

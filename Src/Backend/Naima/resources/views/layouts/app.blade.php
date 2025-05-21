@@ -126,16 +126,21 @@
                     <i class="bi bi-house me-2"></i> Dashboard
                 </a>
             </li>
-            <li>
-                <a href="{{ route('perusahaans.index') }}" class="nav-link text-white">
-                    <i class="bi bi-buildings me-2"></i> Manajemen Perusahaan
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('karyawans.index') }}" class="nav-link text-white">
-                    <i class="bi bi-person me-2"></i> Karyawan
-                </a>
-            </li>
+            @if (auth()->user()->role == 'admin')
+                <li>
+                    <a href="{{ route('perusahaans.index') }}" class="nav-link text-white">
+                        <i class="bi bi-buildings me-2"></i> Manajemen Perusahaan
+                    </a>
+                </li>
+            @endif
+
+            @if (auth()->user()->role == 'perusahaan')
+                <li>
+                    <a href="{{ route('karyawans.index') }}" class="nav-link text-white">
+                        <i class="bi bi-person me-2"></i> Karyawan
+                    </a>
+                </li>
+            @endif
             <li>
                 <a href="#" class="nav-link text-white">
                     <i class="bi bi-calculator me-2"></i> Perhitungan
@@ -208,25 +213,28 @@
                 <button class="btn btn-light" type="button"><i class="bi bi-search"></i></button>
             </div>
 
-            <div class="dropdown">
-                <img src="https://i.pravatar.cc/35" class="rounded-circle profile-pic dropdown-toggle"
-                    id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" alt="profile">
+            <div class="dropdown d-flex align-items-center">
+                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle gap-2"
+                    id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="me-2 text-black">Hai, {{ Auth::user()->name }}</span>
+                    <img src="{{ Auth::user()->foto ? asset('storage/' . Auth::user()->foto) : asset('/images/default-avatar.png') }}"
+                         class="rounded-circle profile-pic" alt="profile">
+                </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Pengaturan</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                    <li><a class="dropdown-item" href="{{ route('profile.update') }}">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
                     <li>
                         <form id="logout-form-dropdown" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                        <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form-dropdown').submit();">
+                        <a class="dropdown-item text-danger" href="#"
+                            onclick="event.preventDefault(); document.getElementById('logout-form-dropdown').submit();">
                             Logout
                         </a>
                     </li>
                 </ul>
             </div>
+
         </div>
     </div>
 
@@ -234,16 +242,6 @@
     <div class="main-content">
         @yield('content') <!-- Isi konten -->
     </div>
-
-    @auth
-        @if (Auth::user()->role === 'admin')
-            <p>Selamat datang, Admin!</p>
-        @elseif (Auth::user()->role === 'perusahaan')
-            <p>Selamat datang, Perusahaan!</p>
-        @elseif (Auth::user()->role === 'karyawan')
-            <p>Selamat datang, Karyawan!</p>
-        @endif
-    @endauth
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
