@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\perusahaan\PerusahaanController;
 use App\Http\Controllers\karyawan\KaryawanController;
+use App\Http\Controllers\strategi\StrategiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+//Route strategi
+
+Route::resource('strategi', StrategiController::class);
 
 // Menggunakan Route Resource untuk controller PerusahaanController
 Route::resource('perusahaans', PerusahaanController::class);
