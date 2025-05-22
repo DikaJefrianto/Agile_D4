@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Strategi;
 
 class StrategiController extends Controller
@@ -25,7 +25,6 @@ class StrategiController extends Controller
     {
         //
         $validated = $request->validate([
-            'perusahaan_id' => 'required|exists:perusahaans,id',
             'nama_program' => 'required|string',
             'deskripsi' => 'required|string',
             'dokumen' => 'nullable|file|mimes:pdf,doc,docx',
@@ -34,7 +33,9 @@ class StrategiController extends Controller
 
         if ($request->hasFile('dokumen')) {
             $validated['dokumen'] = $request->file('dokumen')->store('strategi_docs', 'public');
+
         }
+
 
         $strategi = Strategi::create($validated);
 

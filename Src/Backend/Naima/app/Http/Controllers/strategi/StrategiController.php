@@ -12,7 +12,7 @@ class StrategiController extends Controller
 {
     public function index()
     {
-        $strategis = Strategi::with('perusahaan')->get();
+        $strategis = Strategi::all();
         return view('strategi.index', compact('strategis'));
     }
 
@@ -25,7 +25,6 @@ class StrategiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'perusahaan_id' => 'required|exists:perusahaans,id',
             'nama_program' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'dokumen' => 'nullable|file|mimes:pdf,doc,docx',

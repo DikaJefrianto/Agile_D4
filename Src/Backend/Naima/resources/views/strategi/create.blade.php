@@ -6,14 +6,6 @@
     <form action="{{ route('strategi.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-2">
-            <label>Perusahaan</label>
-            <select name="perusahaan_id" class="form-control">
-                @foreach($perusahaans as $p)
-                    <option value="{{ $p->id }}">{{ $p->nama }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="mb-2">
             <label>Nama Program</label>
             <input name="nama_program" class="form-control" required>
         </div>
