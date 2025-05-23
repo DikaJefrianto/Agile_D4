@@ -1,29 +1,34 @@
 <?php
 namespace App\Http\Controllers\karyawan;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\Karyawan;
+use App\Models\Perusahaan;
+use App\Models\User;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class KaryawanController extends Controller
 {
     /**
      * Tampilkan semua karyawan.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil semua data karyawan beserta perusahaan terkait
-        $karyawans = \App\Models\Karyawan::with('perusahaan')->get();
+        // Ambil query parameter untuk pencarian
+        $search = $request->input('search');
 
-        // // Debugging
-        // dd($karyawans);
+        // Ambil data karyawan dengan pagination dan filter
+        $karyawans = Karyawan::with('perusahaan')->when($search, function ($query, $search) {
+            return $query->where('nama_lengkap', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+        })->paginate(5); // Pastikan ini mengembalikan paginator
 
-        return view('karyawans.index', compact('karyawans'));
+        return view('karyawans.index', compact('karyawans', 'search'));
     }
 
     /**
@@ -31,7 +36,7 @@ class KaryawanController extends Controller
      */
     public function create()
     {
-        $perusahaans = \App\Models\Perusahaan::all(); // Ambil semua data perusahaan
+        $perusahaans = Perusahaan::all();
         return view('karyawans.create', compact('perusahaans'));
     }
 
@@ -42,46 +47,68 @@ class KaryawanController extends Controller
     {
         // Validasi input
         $validated = $request->validate([
-            'nama_lengkap'  => 'required|string|max:255',
-            'email'         => 'required|email|unique:karyawans,email|max:255|unique:users,email',
-            'password'      => 'required|string|min:6|confirmed',
-            'role'          => 'required|in:karyawan',
-            'no_telp'       => 'nullable|string|max:20',
-            'foto'          => 'nullable|image|max:2048',
+            'nama_lengkap' => 'required|string|max:255',
+            'email'        => 'required|email|unique:karyawans,email|unique:users,email|max:255',
+            'password'     => 'required|string|min:8|confirmed',
+            'no_telp'      => 'nullable|string|max:30',
+            'foto'         => 'nullable|image|mimes:jpeg,jpg,png|max:4096', // max 4MB
         ]);
 
         // Simpan foto jika ada
         $fotoPath = null;
         if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('foto_karyawan', 'public');
+            try {
+                $file = $request->file('foto');
+                if ($file->isValid()) {
+                    $fotoPath = $file->store('foto_karyawan', 'public');
+                }
+            } catch (Exception $e) {
+                Log::error('Error uploading file: ' . $e->getMessage());
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Gagal mengunggah foto. Silakan coba lagi dengan ukuran file maksimal 4MB.');
+            }
         }
 
-        // Pastikan perusahaan tidak null
+        // Dapatkan perusahaan dari pengguna yang sedang login
         $perusahaan = Auth::user()->perusahaan;
-        if (!$perusahaan) {
+        if (! $perusahaan) {
             return redirect()->back()->withErrors(['error' => 'Perusahaan tidak ditemukan untuk pengguna ini.']);
         }
 
-        // Simpan data karyawan di tabel karyawans
-        $karyawan = $perusahaan->karyawans()->create([
-            'nama_lengkap'  => $request->nama_lengkap,
-            'email'         => $request->email,
-            'password'      => Hash::make($request->password),
-            'role'          => $request->role,
-            'no_telp'       => $request->no_telp,
-            'foto'          => $fotoPath,
-        ]);
+        try {
+            // Buat akun pengguna untuk karyawan di tabel users
+            $user = User::create([
+                'name'          => $validated['nama_lengkap'],
+                'email'         => $validated['email'],
+                'password'      => Hash::make($validated['password']),
+                'role'          => 'karyawan',
+                'perusahaan_id' => $perusahaan->id,
+            ]);
 
-        // Buat akun pengguna untuk karyawan di tabel users
-        \App\Models\User::create([
-            'name'          => $request->nama_lengkap,
-            'email'         => $request->email,
-            'password'      => Hash::make($request->password), // Enkripsi password
-            'role'          => 'karyawan', // Tetapkan role sebagai karyawan
-            'perusahaan_id' => $perusahaan->id, // Hubungkan dengan perusahaan
-        ]);
+            // Simpan data karyawan di tabel karyawans
+            $karyawan = Karyawan::create([
+                'nama_lengkap'  => $validated['nama_lengkap'],
+                'email'         => $validated['email'],
+                'password'      => Hash::make($validated['password']),
+                'role'          => 'karyawan',
+                'no_telp'       => $validated['no_telp'],
+                'foto'          => $fotoPath,
+                'perusahaan_id' => $perusahaan->id,
+                'user_id'       => $user->id,
+            ]);
 
-        return redirect()->route('karyawans.index')->with('success', 'Karyawan berhasil ditambahkan dan akun pengguna telah dibuat.');
+            return redirect()->route('karyawans.index')->with('success', 'Karyawan berhasil ditambahkan dan akun pengguna telah dibuat.');
+        } catch (Exception $e) {
+            // Jika terjadi error, hapus foto yang sudah diupload
+            if ($fotoPath && Storage::disk('public')->exists($fotoPath)) {
+                Storage::disk('public')->delete($fotoPath);
+            }
+            Log::error('Error creating karyawan: ' . $e->getMessage());
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
+        }
     }
 
     /**
@@ -89,12 +116,8 @@ class KaryawanController extends Controller
      */
     public function edit($id)
     {
-        // Ambil data karyawan menggunakan model Eloquent
-        $karyawan = \App\Models\Karyawan::findOrFail($id);
-
-        // Ambil data perusahaan untuk dropdown
-        $perusahaans = \App\Models\Perusahaan::all();
-
+        $karyawan    = Karyawan::findOrFail($id);
+        $perusahaans = Perusahaan::all();
         return view('karyawans.edit', compact('karyawan', 'perusahaans'));
     }
 
@@ -103,46 +126,60 @@ class KaryawanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $karyawan = Karyawan::findOrFail($id);
         // Validasi input
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'email'        => 'required|email|unique:karyawans,email,' . $id,
-            'password'     => 'nullable|min:6|confirmed',
-            'role'         => 'required|in:admin,manajer,karyawan',
-            'no_telp'      => 'nullable|string|max:20',
-            'foto'         => 'nullable|image|max:2048',
+            'password'     => 'nullable|min:8|confirmed',
+            'no_telp'      => 'nullable|string|max:30',
+            'foto'         => 'nullable|image|mimes:jpeg,jpg,png|max:4096', // max 4MB
         ]);
 
-        // Mengambil data karyawan berdasarkan ID menggunakan DB Facade
-        $karyawan = DB::table('karyawans')->where('id', $id)->first();
-
-        // Jika password diisi, lakukan hashing
-        if ($request->filled('password')) {
-            $validated['password'] = bcrypt($request->password);
-        } else {
-            unset($validated['password']);
-        }
-
-        // Menyimpan foto baru jika ada dan menghapus foto lama jika ada
-        if ($request->hasFile('foto')) {
-            if ($karyawan && $karyawan->foto) {
-                Storage::disk('public')->delete($karyawan->foto);
+        try {
+            // Update password jika diisi
+            if ($request->filled('password')) {
+                $karyawan->password = Hash::make($validated['password']);
             }
-            $validated['foto'] = $request->file('foto')->store('foto_karyawan', 'public');
+            // Update foto jika ada
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                if ($file->isValid()) {
+                    // Hapus foto lama jika ada
+                    if ($karyawan->foto && Storage::disk('public')->exists($karyawan->foto)) {
+                        Storage::disk('public')->delete($karyawan->foto);
+                    }
+                    // Simpan foto baru
+                    $karyawan->foto = $file->store('foto_karyawan', 'public');
+                } else {
+                    return redirect()->back()
+                        ->withInput()
+                        ->with('error', 'File foto tidak valid. Silakan coba lagi.');
+                }
+            }
+            $karyawan->nama_lengkap = $validated['nama_lengkap'];
+            $karyawan->email        = $validated['email'];
+            $karyawan->no_telp      = $validated['no_telp'];
+            $karyawan->save();
+
+            // Update data user terkait
+            if ($karyawan->user) {
+                $user        = $karyawan->user;
+                $user->name  = $validated['nama_lengkap'];
+                $user->email = $validated['email'];
+                if ($request->filled('password')) {
+                    $user->password = Hash::make($validated['password']);
+                }
+                $user->save();
+            }
+
+            return redirect()->route('karyawans.index')->with('success', 'Karyawan berhasil diperbarui.');
+        } catch (Exception $e) {
+            Log::error('Error updating karyawan: ' . $e->getMessage());
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Terjadi kesalahan saat memperbarui data. Silakan coba lagi.');
         }
-
-        // Mengupdate data karyawan menggunakan DB Facade
-        DB::table('karyawans')->where('id', $id)->update([
-            'nama_lengkap' => $validated['nama_lengkap'],
-            'email'        => $validated['email'],
-            'password'     => $validated['password'] ?? $karyawan->password,
-            'role'         => $validated['role'],
-            'no_telp'      => $validated['no_telp'],
-            'foto'         => $validated['foto'] ?? $karyawan->foto,
-            'updated_at'   => now(),
-        ]);
-
-        return redirect()->route('karyawans.index')->with('success', 'Karyawan berhasil diperbarui.');
     }
 
     /**
@@ -150,17 +187,22 @@ class KaryawanController extends Controller
      */
     public function destroy($id)
     {
-        // Mengambil data karyawan berdasarkan ID
-        $karyawan = DB::table('karyawans')->where('id', $id)->first();
-
-        // Menghapus foto karyawan jika ada
-        if ($karyawan && $karyawan->foto) {
-            Storage::disk('public')->delete($karyawan->foto);
+        try {
+            $karyawan = Karyawan::findOrFail($id);
+            // Hapus foto jika ada
+            if ($karyawan->foto && Storage::disk('public')->exists($karyawan->foto)) {
+                Storage::disk('public')->delete($karyawan->foto);
+            }
+            // Hapus user terkait
+            if ($karyawan->user) {
+                $karyawan->user->delete();
+            }
+            // Hapus karyawan
+            $karyawan->delete();
+            return redirect()->route('karyawans.index')->with('success', 'Karyawan dan akun pengguna berhasil dihapus.');
+        } catch (Exception $e) {
+            Log::error('Error deleting karyawan: ' . $e->getMessage());
+            return redirect()->route('karyawans.index')->with('error', 'Terjadi kesalahan saat menghapus karyawan.');
         }
-
-        // Menghapus karyawan dari database
-        DB::table('karyawans')->where('id', $id)->delete();
-
-        return redirect()->route('karyawans.index')->with('success', 'Karyawan berhasil dihapus.');
     }
 }

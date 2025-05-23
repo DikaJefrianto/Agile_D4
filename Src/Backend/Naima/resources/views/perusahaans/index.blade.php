@@ -6,13 +6,22 @@
 
 @section('content')
 
-<div class="container-fluid mt-4">
+<div class="container-fluid mt-2">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="mb-0">Daftar Perusahaan</h3>
         <a href="{{ route('perusahaans.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-circle"></i> Tambah Perusahaan
         </a>
     </div>
+
+    <form method="GET" action="{{ route('perusahaans.index') }}" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari perusahaan...">
+            <button type="submit" class="btn btn-primary">Cari</button>
+        </div>
+    </form>
+
+
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered align-middle">
@@ -54,5 +63,7 @@
         </table>
     </div>
 </div>
+{{ $perusahaans->links('pagination::bootstrap-5') }}
+
 
 @endsection

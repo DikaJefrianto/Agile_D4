@@ -7,7 +7,7 @@
     <h1 class="mb-4">Edit Data Karyawan</h1>
 
     {{-- Menampilkan notifikasi error validasi --}}
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Whoops!</strong> Ada kesalahan dalam input:<br><br>
             <ul>
@@ -16,7 +16,7 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+    @endif --}}
 
     {{-- Form Edit Karyawan --}}
     <form action="{{ route('karyawans.update', $karyawan->id) }}" method="POST" enctype="multipart/form-data">
@@ -52,13 +52,6 @@
         <div class="mb-3">
             <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
             <input type="password" name="password_confirmation" class="form-control">
-        </div>
-
-        <div class="mb-3">
-            <label for="role" class="form-label">Role</label>
-            <select name="role" class="form-select" required>
-                <option value="karyawan" {{ $karyawan->role == 'karyawan' ? 'selected' : '' }}>Karyawan</option>
-            </select>
         </div>
 
         <div class="mb-3">

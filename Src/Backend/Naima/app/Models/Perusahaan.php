@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
 
 class Perusahaan extends Model
 {
@@ -17,6 +17,7 @@ class Perusahaan extends Model
         'nama',
         'username',
         'email',
+        'foto',
         'password',
         'alamat',
         'keterangan',
@@ -50,4 +51,9 @@ class Perusahaan extends Model
     {
         return $this->hasMany(Karyawan::class, 'perusahaan_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
 }

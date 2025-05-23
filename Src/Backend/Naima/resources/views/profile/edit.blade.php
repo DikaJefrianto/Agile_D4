@@ -45,6 +45,18 @@
     </form>
 
     <!-- Form untuk mengedit password -->
+
+    @if (session('status') === 'password-updated')
+        <div class="alert alert-success">
+            Password Berhasil Diperbaharui
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <form action="{{ route('profile.update-password') }}" method="POST">
         @csrf
         @method('PATCH')

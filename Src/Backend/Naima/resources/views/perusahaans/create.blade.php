@@ -9,16 +9,7 @@ Tambah Perusahaan
     <h1 class="mb-4">Tambah Data Perusahaan</h1>
 
     {{-- Menampilkan notifikasi jika ada error --}}
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> Ada kesalahan dalam input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+   
 
     {{-- Form Tambah Perusahaan --}}
     <div class="container justify-content-between align-items-center">

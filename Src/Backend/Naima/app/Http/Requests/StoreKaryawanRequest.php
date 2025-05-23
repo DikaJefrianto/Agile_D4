@@ -3,6 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rules\Unique;
+use Illuminate\Validation\Rules\Enum;
 
 class StoreKaryawanRequest extends FormRequest
 {
@@ -26,8 +30,14 @@ class StoreKaryawanRequest extends FormRequest
             'email'        => 'required|email|unique:karyawans,email|unique:users,email',
             'password'     => 'required|min:8|confirmed',
             'role'         => 'required|in:karyawan',
-            'no_telp'      => 'nullable|digits_between:9,13',
-            'foto'         => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'no_telp'      => 'nullable|digits_between:9,13', // max:4096 = 4MB
+            'perusahaan_id' => 'required|exists:perusahaans,id',
+            'foto' => [
+                'nullable',
+                'file',
+                'mimes:jpg,jpeg,png',
+                'max:10048', // max 4MB
+            ],
         ];
     }
 
@@ -49,7 +59,7 @@ class StoreKaryawanRequest extends FormRequest
             'no_telp.digits_between' => 'Nomor telepon harus antara 9 hingga 13 digit.',
             'foto.file'             => 'Foto harus berupa file.',
             'foto.mimes'            => 'Foto harus memiliki format jpg, jpeg, atau png.',
-            'foto.max'              => 'Ukuran foto maksimal adalah 2MB.',
+            'foto.max'              => 'Ukuran foto maksimal adalah 4MB.',
         ];
     }
 }

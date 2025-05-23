@@ -1,66 +1,60 @@
-@extends('layouts.app') <!-- Pastikan ini sesuai dengan file layout utamamu -->
-
-@section('title', 'Manajemen Karyawan')
-
-@section('page_title', 'Manajemen Karyawan')
+@extends('layouts.app')
 
 @section('content')
-
-<div class="container-fluid mt-4">
+<div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="mb-0">Daftar Karyawan</h3>
+        <h1>Daftar Karyawan</h1>
         <a href="{{ route('karyawans.create') }}" class="btn btn-primary">
             <i class="bi bi-plus-circle"></i> Tambah Karyawan
         </a>
     </div>
 
+    <form method="GET" action="{{ route('perusahaans.index') }}" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari perusahaan...">
+            <button type="submit" class="btn btn-primary">Cari</button>
+        </div>
+    </form>
+
     <div class="table-responsive">
         <table class="table table-striped table-bordered align-middle">
             <thead class="table-success text-center">
                 <tr>
-                    <th>No</th>
-                    <th>Foto</th> <!-- Tambahkan kolom Foto -->
-                    <th>Nama Karyawan</th>
+                    <th>Nama Lengkap</th>
                     <th>Email</th>
-                    <th>Role</th>
-                    <th>No. Telepon</th>
-                    <th>Perusahaan</th>
+                    <th>No Telepon</th>
+                    <th>Foto</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($karyawans as $index => $karyawan)
+                @foreach ($karyawans as $karyawan)
                     <tr>
-                        <td class="text-center">{{ $index + 1 }}</td>
-                        <td class="text-center">
-                            @if ($karyawan->foto)
-                                <img src="{{ asset('storage/' . $karyawan->foto) }}" alt="Foto Karyawan" class="img-thumbnail" style="width: 50px; height: 50px;">
-                            @else
-                                <span>-</span>
-                            @endif
-                        </td>
                         <td>{{ $karyawan->nama_lengkap }}</td>
                         <td>{{ $karyawan->email }}</td>
-                        <td>{{ ucfirst($karyawan->role) }}</td>
                         <td>{{ $karyawan->no_telp }}</td>
-                        <td>{{ $karyawan->perusahaan->nama ?? '-' }}</td> <!-- Menampilkan nama perusahaan -->
                         <td>
-                            <a href="{{ route('karyawans.edit', $karyawan->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('karyawans.destroy', $karyawan->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data karyawan ini?')">
+                            @if ($karyawan->foto)
+                                <img src="{{ asset('storage/' . $karyawan->foto) }}" alt="Foto Karyawan" width="50">
+                            @else
+                                <img src="{{ asset('storage/default.png') }}" alt="Foto Karyawan" width="50">
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{ route('karyawans.edit', $karyawan->id) }}" class="btn btn-warning">Edit</a>
+                            <form action="{{ route('karyawans.destroy', $karyawan->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm">Hapus</button>
+                                <button type="submit" class="btn btn-danger">Hapus</button>
                             </form>
                         </td>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="8" class="text-center">Belum ada data karyawan.</td>
-                    </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
     </div>
-</div>
 
+    {{ $karyawans->links('pagination::bootstrap-5') }}
+<!-- Menampilkan pagination -->
+</div>
 @endsection

@@ -26,34 +26,41 @@ class ProfileController extends Controller
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-{
-    $user = $request->user();
+    {
+        $user = $request->user();
+        $validated = $request->validated();
 
-    $validated = $request->validated();
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama dari storage
+            if ($user->foto) {
+                Storage::disk('public')->delete($user->foto);
+            }
 
-    // Tambahkan logika upload foto
-    if ($request->hasFile('foto')) {
-        // Hapus foto lama jika ada
-        if ($user->foto) {
-            Storage::disk('public')->delete($user->foto);
+            // Simpan foto baru
+            $path = $request->file('foto')->store('foto_karyawan', 'public');
+            $validated['foto'] = $path;
+
+            // Simpan ke tabel users
+            $user->foto = $path;
+
+            // Jika user adalah perusahaan dan punya relasi ke perusahaans, simpan juga ke sana
+            if ($user->role === 'perusahaan' && $user->perusahaan) {
+                $user->perusahaan->foto = $path;
+                $user->perusahaan->save();
+            }
         }
 
-        // Simpan foto baru
-        $path = $request->file('foto')->store('foto_karyawan', 'public');
-        $validated['foto'] = $path;
+        // Simpan data lain
+        $user->fill($validated);
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
-
-    $user->fill($validated);
-
-    if ($user->isDirty('email')) {
-        $user->email_verified_at = null;
-    }
-
-    $user->save();
-
-    return Redirect::route('profile.edit')->with('status', 'profile-updated');
-}
-
 
     /**
      * Delete the user's account.
@@ -84,7 +91,7 @@ class ProfileController extends Controller
         $request->validate([
             'current_password' => ['required', 'current_password'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'foto' => ['nullable', 'image', 'max:2048'], // Validasi foto
+            'foto' => ['nullable', 'image', 'max:2048'],
         ]);
 
         $user = $request->user();
@@ -93,6 +100,4 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'password-updated');
     }
-
-
 }

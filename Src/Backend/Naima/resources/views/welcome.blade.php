@@ -96,7 +96,7 @@
                         <a href="#"
                             class="d-flex align-items-center justify-content-end text-decoration-none dropdown-toggle gap-2"
                             id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="text-sm text-gray-800">{{ Auth::user()->name }}</span>
+                            <span class="text-sm text-black-800">{{ Auth::user()->name }}</span>
                             <img src="{{ Auth::user()->foto ? asset('storage/' . Auth::user()->foto) : asset('/images/default-avatar.png') }}"
                                 alt="profile" class="rounded-circle object-cover" style="width: 36px; height: 36px;">
                         </a>
@@ -173,7 +173,7 @@
             </div>
             <div>
                 <h3 class="font-semibold text-gray-800">Alamat Kantor</h3>
-                <p class="text-sm text-gray-700 mt-2">Jl. Ilmu Mains</p>
+                <p class="text-sm text-gray-700 mt-2">Jl. Ilmu Manis</p>
                 <p class="text-sm text-gray-700">Email Marketing: contactnaima@gmail.com</p>
                 <p class="text-sm text-gray-700">+62 870-8381-7392</p>
             </div>

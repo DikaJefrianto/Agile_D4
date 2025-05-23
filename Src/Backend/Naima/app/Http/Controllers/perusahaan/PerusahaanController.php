@@ -13,12 +13,24 @@ class PerusahaanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        // Menampilkan semua perusahaan menggunakan Eloquent
-        $perusahaans = Perusahaan::all();
-        return view('perusahaans.index', compact('perusahaans'));
-    }
+    public function index(Request $request)
+{
+    // Ambil query pencarian dari input
+    $search = $request->input('search');
+
+    // Jika ada pencarian, lakukan filter
+    $perusahaans = Perusahaan::when($search, function ($query, $search) {
+            return $query->where('nama', 'like', "%{$search}%")
+                         ->orWhere('email', 'like', "%{$search}%")
+                         ->orWhere('username', 'like', "%{$search}%");
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(5); // Batasi hasil per halaman
+
+    // Bawa hasil dan query pencarian ke view
+    return view('perusahaans.index', compact('perusahaans', 'search'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -39,6 +51,7 @@ class PerusahaanController extends Controller
             'nama'       => 'required|string|max:255',
             'username'   => 'required|string|unique:perusahaans,username|max:255',
             'email'      => 'required|email|unique:perusahaans,email|max:255|unique:users,email',
+            'foto'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'password'   => 'required|string|min:8|confirmed',
             'alamat'     => 'nullable|string',
             'keterangan' => 'nullable|string',
@@ -97,6 +110,7 @@ class PerusahaanController extends Controller
             'nama'       => 'required|string|max:255',
             'username'   => 'required|string|unique:perusahaans,username,' . $id . '|max:255',
             'email'      => 'required|email|unique:perusahaans,email,' . $id . '|max:255',
+            'foto'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'password'   => 'nullable|string|min:8|confirmed', // Password boleh kosong
             'alamat'     => 'nullable|string',
             'keterangan' => 'nullable|string',

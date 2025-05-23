@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,20 +18,33 @@ class Karyawan extends Model
         'role',
         'no_telp',
         'foto',
-        'perusahaan_id', // Pastikan kolom ini ada di tabel karyawans
+        'perusahaan_id',
+        'user_id', // pastikan kolom ini juga ada di tabel
     ];
 
-    // Enkripsi password secara otomatis saat diset
+    /**
+     * Enkripsi password secara otomatis saat diset
+     */
     public function setPasswordAttribute($value)
     {
-        if (!empty($value)) {
+        if (! empty($value)) {
             $this->attributes['password'] = Hash::make($value);
         }
     }
 
-    // Relasi ke model Perusahaan
+    /**
+     * Relasi ke model Perusahaan
+     */
     public function perusahaan()
     {
         return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
+    }
+
+    /**
+     * Relasi ke model User (akun login)
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

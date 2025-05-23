@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="row row-cols-2 row-cols-md-4 g-3 mb-4">
+    {{-- <div class="row row-cols-2 row-cols-md-4 g-3 mb-4">
         @if (auth()->user()->role == 'admin')
         <div class="col">
             <div class="card card-box text-center" onclick="window.location.href='{{ route('perusahaans.index') }}'">
@@ -65,6 +65,6 @@
                 <h5 class="mt-2">Feedback</h5>
             </div>
         </div>
-    </div>
+    </div> --}}
     </div>
 @endsection
