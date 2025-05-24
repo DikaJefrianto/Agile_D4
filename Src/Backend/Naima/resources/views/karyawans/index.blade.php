@@ -9,9 +9,9 @@
         </a>
     </div>
 
-    <form method="GET" action="{{ route('perusahaans.index') }}" class="mb-3">
+    <form method="GET" action="{{ route('karyawans.index') }}" class="mb-3">
         <div class="input-group">
-            <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari perusahaan...">
+            <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari karyawan...">
             <button type="submit" class="btn btn-primary">Cari</button>
         </div>
     </form>
