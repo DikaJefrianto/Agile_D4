@@ -4,8 +4,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\perusahaan\PerusahaanController;
 use App\Http\Controllers\karyawan\KaryawanController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\dashboard\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,5 +38,8 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 });
+//Route strategi
+
+Route::resource('strategi', StrategiController::class);
 
 require __DIR__.'/auth.php';

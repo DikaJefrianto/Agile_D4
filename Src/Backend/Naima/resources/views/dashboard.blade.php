@@ -48,11 +48,12 @@
             </div>
         </div>
         <div class="col">
-            <div class="card card-box text-center" onclick="window.location.href='#'">
+            <div class="card card-box text-center" onclick="window.location.href='{{ route('strategi.index') }}'">
                 <i class="bi bi-lightbulb fs-3"></i>
                 <h5 class="mt-2">Strategi</h5>
             </div>
         </div>
+
         <div class="col">
             <div class="card card-box text-center" onclick="window.location.href='#'">
                 <i class="bi bi-journal-text fs-3"></i>
