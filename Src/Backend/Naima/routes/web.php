@@ -21,13 +21,13 @@ Route::get('/', function () {
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/dashboard/admin', [DashboardController::class, 'admin'])->name('dashboard.admin');
         Route::resource('perusahaans', PerusahaanController::class);
+        // Rute untuk perusahaan
     });
-
-    // Rute untuk perusahaan
-    Route::middleware(['auth', 'perusahaan'])->group(function () {
+    Route::middleware(['auth','perusahaan'])->group(function () {
         Route::get('/dashboard/perusahaan', [DashboardController::class, 'perusahaan'])->name('dashboard.perusahaan');
         Route::resource('karyawans', KaryawanController::class);
     });
+
 
     // Rute untuk karyawan
     Route::middleware(['auth', 'karyawan'])->group(function () {

@@ -13,7 +13,7 @@
             </div>
         </div>
         @endif
-        @if (auth()->user()->role == 'perusahaan')
+        @if (auth()->user()->role == 'admin')
 
         <div class="col">
             <div class="card card-box text-center" onclick="window.location.href='{{ route('karyawans.index') }}'">
