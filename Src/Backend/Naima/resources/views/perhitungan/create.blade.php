@@ -7,26 +7,72 @@
         {{-- Pilihan metode --}}
         <form action="{{ route('perhitungan.create') }}" method="GET" class="mb-4">
             <div class="mb-3">
-                <label for="metode" class="form-label">Pilih Metode Perhitungan Emisi</label>
-                <select name="metode" id="metode" class="form-select" onchange="this.form.submit()">
-                    <option value="">-- Pilih Metode --</option>
-                    <option value="bahan_bakar" {{ request('metode') == 'bahan_bakar' ? 'selected' : '' }}>Bahan Bakar
-                    </option>
-                    <option value="jarak_tempuh" {{ request('metode') == 'jarak_tempuh' ? 'selected' : '' }}>Jarak Tempuh
-                    </option>
-                    <option value="biaya" {{ request('metode') == 'biaya' ? 'selected' : '' }}>Biaya</option>
-                </select>
+                <h4 class="row justify-content-center">Pilih Metode Perhitungan Emisi yang kamu ketahui</h4>
+                <div class="row justify-content-center">
+                    <div class="col-md-3">
+                        <button type="submit" name="metode" value="bahan_bakar" class="card border-success text-center p-3 h-100" style="cursor:pointer;">
+                            <div class="card-body">
+                                <h5 class="card-title text-success"><i class="bi bi-fuel-pump"></i> Bahan Bakar</h5>
+                                <p class="card-text text-muted">Gunakan data konsumsi bahan bakar.</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" name="metode" value="jarak_tempuh" class="card border-primary text-center p-3 h-100" style="cursor:pointer;">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary"><i class="bi bi-geo-alt-fill"></i> Jarak Tempuh</h5>
+                                <p class="card-text text-muted">Gunakan data jarak perjalanan.</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" name="metode" value="biaya" class="card border-warning text-center p-3 h-100" style="cursor:pointer;">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning"><i class="bi bi-cash-stack"></i> Biaya</h5>
+                                <p class="card-text text-muted">Gunakan data biaya perjalanan.</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
             </div>
+            
 
             <div class="mb-3">
-                <label for="kategori" class="form-label">Kategori Transportasi</label>
-                <select name="kategori" id="kategori" class="form-select" onchange="this.form.submit()">
-                    <option value="">-- Pilih Kategori --</option>
-                    <option value="Darat" {{ request('kategori') == 'Darat' ? 'selected' : '' }}>Darat</option>
-                    <option value="Laut" {{ request('kategori') == 'Laut' ? 'selected' : '' }}>Laut</option>
-                    <option value="Udara" {{ request('kategori') == 'Udara' ? 'selected' : '' }}>Udara</option>
-                </select>
+                <h4 class="row justify-content-center">Kategori Transportasi yang anda Gunakan</h4>
+                <div class="row justify-content-center">
+                    <div class="col-md-3">
+                        <button type="submit" name="kategori" value="Darat"
+                            class="card border-success text-center p-3 h-100 {{ request('kategori') == 'Darat' ? 'border-3 border-success' : '' }}"
+                            style="cursor:pointer;">
+                            <div class="card-body">
+                                <h5 class="card-title text-success"><i class="bi bi-truck"></i> Darat</h5>
+                                <p class="card-text text-muted">Transportasi darat seperti mobil, motor.</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" name="kategori" value="Laut"
+                            class="card border-primary text-center p-3 h-100 {{ request('kategori') == 'Laut' ? 'border-3 border-primary' : '' }}"
+                            style="cursor:pointer;">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary"><i class="bi bi-ship"></i> Laut</h5>
+                                <p class="card-text text-muted">Transportasi laut seperti kapal, ferry.</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" name="kategori" value="Udara"
+                            class="card border-warning text-center p-3 h-100 {{ request('kategori') == 'Udara' ? 'border-3 border-warning' : '' }}"
+                            style="cursor:pointer;">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning"><i class="bi bi-airplane-engines"></i> Udara</h5>
+                                <p class="card-text text-muted">Transportasi udara seperti pesawat.</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
             </div>
+            
         </form>
 
 

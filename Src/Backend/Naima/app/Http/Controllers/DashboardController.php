@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Perhitungan;
+use App\Models\HasilPerhitungan;
 
 class DashboardController extends Controller
 {
@@ -12,7 +12,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $perhitungan = Perhitungan::all();
+        $perhitungan = HasilPerhitungan::all();
 
         $totalPerhitungan = $perhitungan->count();
         $totalEmisi = $perhitungan->sum('emisi_dihasilkan');

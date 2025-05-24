@@ -3,84 +3,86 @@
 @section('title', 'Tambah Bahan Bakar')
 
 @section('content')
-<style>
-    .card-custom {
-        max-width: 600px;
-        margin: 40px auto;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        background: #ffffff;
-    }
+<div class="container py-10">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-7">
 
-    .card-header-custom {
-        background-color: #007bff;
-        color: white;
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
-        padding: 20px;
-        text-align: center;
-    }
+            {{-- Notifikasi sukses --}}
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
 
-    .form-label {
-        font-weight: 600;
-    }
+            {{-- Notifikasi error --}}
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <strong>Terjadi kesalahan:</strong>
+                    <ul class="mb-0 mt-1">
+                        @foreach ($errors->all() as $error)
+                            <li class="small">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-    .btn-custom {
-        background-color: #28a745;
-        color: white;
-        font-weight: bold;
-        transition: 0.3s ease;
-    }
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">Form Tambah Bahan Bakar</h4>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('BahanBakar.store') }}" method="POST">
+                        @csrf
 
-    .btn-custom:hover {
-        background-color: #218838;
-    }
+                        {{-- Kategori --}}
+                        <div class="mb-3">
+                            <label for="kategori" class="form-label">Kategori Transportasi</label>
+                            <select name="kategori" id="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
+                                <option value="">-- Pilih Kategori --</option>
+                                <option value="darat" {{ old('kategori') == 'darat' ? 'selected' : '' }}>Darat</option>
+                                <option value="laut" {{ old('kategori') == 'laut' ? 'selected' : '' }}>Laut</option>
+                                <option value="udara" {{ old('kategori') == 'udara' ? 'selected' : '' }}>Udara</option>
+                            </select>
+                            @error('kategori')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-    .btn-secondary-custom {
-        background-color: #6c757d;
-        color: white;
-        transition: 0.3s ease;
-    }
+                        {{-- Jenis Bahan Bakar --}}
+                        <div class="mb-3">
+                            <label for="Bahan_bakar" class="form-label">Jenis Bahan Bakar</label>
+                            <input type="text" name="Bahan_bakar" id="Bahan_bakar" class="form-control @error('Bahan_bakar') is-invalid @enderror"
+                                placeholder="Contoh: bensin, solar, avtur" value="{{ old('Bahan_bakar') }}" required>
+                            @error('Bahan_bakar')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-    .btn-secondary-custom:hover {
-        background-color: #5a6268;
-    }
+                        {{-- Faktor Emisi --}}
+                        <div class="mb-3">
+                            <label for="factorEmisi" class="form-label">Faktor Emisi (kg CO₂e)</label>
+                            <input type="number" name="factorEmisi" id="factorEmisi" class="form-control @error('factorEmisi') is-invalid @enderror"
+                                placeholder="Contoh: 0.3456" step="0.0001" value="{{ old('factorEmisi') }}" required>
+                            @error('factorEmisi')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-</style>
-
-<div class="card card-custom">
-    <div class="card-header card-header-custom">
-        <h4>Form Tambah Bahan Bakar</h4>
-    </div>
-    <div class="card-body p-4">
-        <form action="{{ route('BahanBakar.store') }}" method="POST">
-            @csrf
-
-            <div class="mb-3">
-                <label for="kategori" class="form-label">Kategori Transportasi</label>
-                <select name="kategori" id="kategori" class="form-select" required>
-                    <option value="">-- Pilih Kategori --</option>
-                    <option value="darat">Darat</option>
-                    <option value="laut">Laut</option>
-                    <option value="udara">Udara</option>
-                </select>
+                        {{-- Tombol --}}
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{{ route('BahanBakar.index') }}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left-circle"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save2"></i> Simpan
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label for="jenis" class="form-label">Jenis Bahan Bakar</label>
-                <input type="text" name="Bahan_bakar" id="Bahan_bakar" class="form-control" placeholder="Contoh: bensin,avtur,batu bara" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="factor_emisi" class="form-label">Faktor Emisi (kg CO₂e)</label>
-                <input type="number" name="factorEmisi" id="factorEmisi" class="form-control" step="0.0001" placeholder="Contoh: 0,45" required>
-            </div>
-
-            <div class="d-flex justify-content-between mt-4">
-                <a href="{{ route('BahanBakar.index') }}" class="btn btn-secondary-custom">← Kembali</a>
-                <button type="submit" class="btn btn-custom">Simpan</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 @endsection
