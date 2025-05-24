@@ -1,54 +1,52 @@
 <div class="mb-3">
-    <label for="kategori_transportasi" class="form-label">Kategori Transportasi</label>
-    <select name="kategori_transportasi" id="kategori_transportasi_biaya" class="form-select" onchange="updateJenisKendaraanBiaya()">
-        <option value="">-- Pilih Kategori --</option>
-        <option value="darat">Darat</option>
-        <option value="laut">Laut</option>
-        <option value="udara">Udara</option>
-    </select>
+    <label for="jenisKendaraan" class="form-label">Jenis Kendaraan</label>
+    <select name="jenisKendaraan" id="jenisKendaraan" class="form-select" >
+        <option value="">-- Pilih jenis Kendaraan --</option>
+        @foreach($jenisKendaraan as $item)
+            <option value="{{ $item->id }}" data-kategori="{{ $item->kategori }}">
+                {{ $item->jenisKendaraan }} ({{ ucfirst($item->kategori) }})
+            </option>
+        @endforeach
+    </select>   
 </div>
 
+{{-- Input jumlah bahan bakar --}}
 <div class="mb-3">
-    <label for="jenis_kendaraan" class="form-label">Jenis Kendaraan</label>
-    <select name="jenis_kendaraan" id="jenis_kendaraan_biaya" class="form-select">
-        <option value="">-- Pilih Jenis Kendaraan --</option>
-    </select>
+    <label for="nilai_input" class="form-label">Biaya yang di keluarkan (USD)</label>
+    <input type="number" name="nilai_input" id="nilai_input" class="form-control"  min="0" step="any">
 </div>
 
-<div class="mb-3">
-    <label for="biaya" class="form-label">Biaya (Rp)</label>
-    <input type="number" name="biaya" class="form-control">
-</div>
-
-<div class="mb-3">
-    <label for="jumlah_orang" class="form-label">Jumlah Orang</label>
-    <input type="number" name="jumlah_orang" class="form-control">
-</div>
-
-<div class="mb-3">
+{{-- Input tanggal --}}
+{{-- <div class="mb-3">
     <label for="tanggal" class="form-label">Tanggal</label>
-    <input type="date" name="tanggal" class="form-control">
-</div>
+    <input type="date" name="tanggal" id="tanggal" class="form-control" >
+</div> --}}
 
 <script>
-    const kendaraanBiayaOptions = {
-        darat: ['Mobil', 'Motor', 'Bus', 'Kereta'],
-        laut: ['Kapal Ferry', 'Speedboat'],
-        udara: ['Pesawat Komersial', 'Helikopter']
-    };
+    // Fungsi ini bisa dipanggil dari onchange kategori (misal kategori ada di halaman induk)
+    function filterBahanBakar() {
+        const kategori = document.getElementById('kategori').value;
+        const bahanSelect = document.getElementById('jenis');
+        const options = bahanSelect.querySelectorAll('option');
 
-    function updateJenisKendaraanBiaya() {
-        const kategori = document.getElementById('kategori_transportasi_biaya').value;
-        const kendaraanSelect = document.getElementById('jenis_kendaraan_biaya');
-        kendaraanSelect.innerHTML = '<option value="">-- Pilih Jenis Kendaraan --</option>';
+        options.forEach(option => {
+            // Keep placeholder always visible
+            if (!option.value) {
+                option.style.display = 'block';
+                option.disabled = false;
+                return;
+            }
 
-        if (kategori && kendaraanBiayaOptions[kategori]) {
-            kendaraanBiayaOptions[kategori].forEach(kendaraan => {
-                const option = document.createElement('option');
-                option.value = kendaraan;
-                option.textContent = kendaraan;
-                kendaraanSelect.appendChild(option);
-            });
-        }
+            if (kategori === '' || option.dataset.kategori === kategori) {
+                option.style.display = 'block';
+                option.disabled = false;
+            } else {
+                option.style.display = 'none';
+                option.disabled = true;
+            }
+        });
+
+        // Reset pilihan dropdown saat kategori berubah
+        bahanSelect.value = '';
     }
 </script>

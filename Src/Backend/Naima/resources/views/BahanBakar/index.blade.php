@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.main')
 
 @section('title', 'Data Bahan Bakar')
 
@@ -7,7 +7,7 @@
     <h3 class="mb-4">Daftar Bahan Bakar</h3>
 
     <a href="{{ route('BahanBakar.create') }}" class="btn btn-success mb-3">
-        Tambah Bahan Bakar
+        Tambah Data
     </a>
     <div class="card">
         <div class="card-body table-responsive">

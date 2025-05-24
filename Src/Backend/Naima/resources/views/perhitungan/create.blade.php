@@ -1,79 +1,75 @@
-@extends('layouts.dashboard')
+@extends('layouts.main')
 
 @section('content')
-<div class="container">
-    <h2 class="mb-4">Perhitungan Emisi</h2>
+    <div class="container">
+        <h2 class="mb-4">Perhitungan Emisi</h2>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Terjadi kesalahan!</strong>
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+        {{-- Pilihan metode --}}
+        <form action="{{ route('perhitungan.create') }}" method="GET" class="mb-4">
+            <div class="mb-3">
+                <label for="metode" class="form-label">Pilih Metode Perhitungan Emisi</label>
+                <select name="metode" id="metode" class="form-select" onchange="this.form.submit()">
+                    <option value="">-- Pilih Metode --</option>
+                    <option value="bahan_bakar" {{ request('metode') == 'bahan_bakar' ? 'selected' : '' }}>Bahan Bakar
+                    </option>
+                    <option value="jarak_tempuh" {{ request('metode') == 'jarak_tempuh' ? 'selected' : '' }}>Jarak Tempuh
+                    </option>
+                    <option value="biaya" {{ request('metode') == 'biaya' ? 'selected' : '' }}>Biaya</option>
+                </select>
+            </div>
 
-    <form action="{{ route('perhitungan.store') }}" method="POST">
-        @csrf
+            <div class="mb-3">
+                <label for="kategori" class="form-label">Kategori Transportasi</label>
+                <select name="kategori" id="kategori" class="form-select" onchange="this.form.submit()">
+                    <option value="">-- Pilih Kategori --</option>
+                    <option value="Darat" {{ request('kategori') == 'Darat' ? 'selected' : '' }}>Darat</option>
+                    <option value="Laut" {{ request('kategori') == 'Laut' ? 'selected' : '' }}>Laut</option>
+                    <option value="Udara" {{ request('kategori') == 'Udara' ? 'selected' : '' }}>Udara</option>
+                </select>
+            </div>
+        </form>
 
-        {{-- Pertanyaan 1 --}}
-        <div class="mb-4">
-            <label class="form-label">1. Apakah kamu mengetahui berapa bahan bakar yang terpakai?</label><br>
-            <input type="radio" name="tahu_bahan_bakar" value="ya" onchange="handleAnswer(this, 'form-bahan-bakar', 'pertanyaan-jarak')"> Ya
-            <input type="radio" name="tahu_bahan_bakar" value="tidak" onchange="handleAnswer(this, null, 'pertanyaan-jarak')"> Tidak
-        </div>
 
-        <div id="form-bahan-bakar" style="display: none;">
-            @include('perhitungan.partials.form_bahan_bakar')
-        </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>Terjadi kesalahan!</strong>
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        {{-- Pertanyaan 2 --}}
-        <div id="pertanyaan-jarak" style="display: none;" class="mb-4">
-            <label class="form-label">2. Apakah kamu mengetahui berapa Jarak tempuhnya?</label><br>
-            <input type="radio" name="tahu_jarak" value="ya" onchange="handleAnswer(this, 'form-jarak', 'pertanyaan-biaya')"> Ya
-            <input type="radio" name="tahu_jarak" value="tidak" onchange="handleAnswer(this, null, 'pertanyaan-biaya')"> Tidak
-        </div>
+        <form action="{{ route('perhitungan.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="kategori" value="{{ $kategori }}">
+            <input type="hidden" name="metode" value="{{ $metode }}">
 
-        <div id="form-jarak" style="display: none;">
-            @include('perhitungan.partials.form_jarak')
-        </div>
+            @if ($metode == 'bahan_bakar')
+                @include('perhitungan.partials.form_bahan_bakar', ['bahanBakar' => $bahanBakar])
+            @elseif($metode == 'jarak_tempuh')
+                @include('perhitungan.partials.form_jarak', ['transportasi' => $jenis])
+            @elseif($metode == 'biaya')
+                @include('perhitungan.partials.form_biaya', ['biaya' => $jenisKendaraan])
+            @else
+                <p class="text-muted">Silakan pilih metode dan kategori terlebih dahulu.</p>
+            @endif
 
-        {{-- Pertanyaan 3 --}}
-        <div id="pertanyaan-biaya" style="display: none;" class="mb-4">
-            <label class="form-label">3. Apakah kamu mengetahui berapa biaya yang kamu keluarkan?</label><br>
-            <input type="radio" name="tahu_biaya" value="ya" onchange="handleAnswer(this, 'form-biaya', null)"> Ya
-            <input type="radio" name="tahu_biaya" value="tidak" onchange="window.location='{{ route('dashboard') }}'"> Tidak
-        </div>
+            @if ($metode)
+                <div class="mb-3">
+                    <label for="jumlah_orang" class="form-label">Jumlah Orang</label>
+                    <input type="number" name="jumlah_orang" class="form-control" min="1" value="1">
+                </div>
 
-        <div id="form-biaya" style="display: none;">
-            @include('perhitungan.partials.form_biaya')
-        </div>
+                <div class="mb-3">
+                    <label for="tanggal" class="form-label">Tanggal</label>
+                    <input type="date" name="tanggal" class="form-control">
+                </div>
 
-        <div class="mt-4 d-flex gap-2">
-            <button type="submit" class="btn btn-success">Hitung & Simpan</button>
-            <a href="{{ route('perhitungan.index') }}" class="btn btn-secondary">Kembali</a>
-        </div>
-    </form>
-</div>
+                <button type="submit" class="btn btn-success">Hitung & Simpan</button>
+            @endif
+        </form>
 
-<script>
-    function handleAnswer(radio, formId, nextQuestionId) {
-        // Sembunyikan semua form
-        document.getElementById('form-bahan-bakar').style.display = 'none';
-        document.getElementById('form-jarak').style.display = 'none';
-        document.getElementById('form-biaya').style.display = 'none';
-
-        // Tampilkan form jika pilih "ya"
-        if (radio.value === 'ya' && formId) {
-            document.getElementById(formId).style.display = 'block';
-        }
-
-        // Tampilkan pertanyaan berikutnya jika pilih "tidak"
-        if (radio.value === 'tidak' && nextQuestionId) {
-            document.getElementById(nextQuestionId).style.display = 'block';
-        }
-    }
-</script>
+    </div>
 @endsection

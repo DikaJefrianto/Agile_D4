@@ -5,6 +5,9 @@ use App\Http\Controllers\KonsultasiController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\TransportasiController;
 use App\Http\Controllers\BahanBakarController;
+use App\Http\Controllers\BiayaController;
+use App\Http\Controllers\HasilPerhitunganController;
+use App\Http\Controllers\MetodeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,18 +33,29 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard'
 //     return 'Halaman login belum dibuat';
 // })->name('login');
 
-Route::get('perhitungan', [PerhitunganController::class, 'index'])->name('perhitungan.index');
-Route::get('perhitungan/create', [PerhitunganController::class, 'create'])->name('perhitungan.create');
-Route::post('perhitungan', [PerhitunganController::class, 'store'])->name('perhitungan.store');
-Route::get('perhitungan/{id}/edit', [PerhitunganController::class, 'edit'])->name('perhitungan.edit');
-Route::put('perhitungan/{id}', [PerhitunganController::class, 'update'])->name('perhitungan.update');
-Route::delete('perhitungan/{id}', [PerhitunganController::class, 'destroy'])->name('perhitungan.destroy');
+// Route::get('perhitungan', [PerhitunganController::class, 'index'])->name('perhitungan.index');
+// Route::get('perhitungan/create', [PerhitunganController::class, 'create'])->name('perhitungan.create');
+// Route::post('perhitungan', [PerhitunganController::class, 'store'])->name('perhitungan.store');
+// Route::get('perhitungan/{id}/edit', [PerhitunganController::class, 'edit'])->name('perhitungan.edit');
+// Route::put('perhitungan/{id}', [PerhitunganController::class, 'update'])->name('perhitungan.update');
+// Route::delete('perhitungan/{id}', [PerhitunganController::class, 'destroy'])->name('perhitungan.destroy');
 
-// Tampilkan form dan hasil (jika ada)
-Route::get('perhitungan/hitung', [PerhitunganController::class, 'hitungForm'])->name('perhitungan.hitungForm');
+// // Tampilkan form dan hasil (jika ada)
+// Route::get('perhitungan/hitung', [PerhitunganController::class, 'hitungForm'])->name('perhitungan.hitungForm');
 
-// Proses perhitungan
-Route::post('perhitungan/hitung', [PerhitunganController::class, 'hitungEmisi'])->name('perhitungan.hitungEmisi');
+// // Proses perhitungan
+// Route::post('perhitungan/hitung', [PerhitunganController::class, 'hitungEmisi'])->name('perhitungan.hitungEmisi');
+
+
+// Route::resource('perhitungan', HasilPerhitunganController::class);
+
+Route::get('perhitungan', [HasilPerhitunganController::class, 'index'])->name('perhitungan.index');
+Route::get('perhitungan/create', [HasilPerhitunganController::class, 'create'])->name('perhitungan.create');
+Route::post('perhitungan', [HasilPerhitunganController::class, 'store'])->name('perhitungan.store');
+Route::get('perhitungan/{id}/edit', [HasilPerhitunganController::class, 'edit'])->name('perhitungan.edit');
+Route::put('perhitungan/{id}', [HasilPerhitunganController::class, 'update'])->name('perhitungan.update');
+Route::delete('perhitungan/{id}', [HasilPerhitunganController::class, 'destroy'])->name('perhitungan.destroy');
+
 
 Route::get('/transportasi', [TransportasiController::class, 'index'])->name('transportasi.index');
 
@@ -59,4 +73,11 @@ Route::get('BahanBakar/{id}/edit', [BahanBakarController::class, 'edit'])->name(
 Route::put('BahanBakar/{id}', [BahanBakarController::class, 'update'])->name('BahanBakar.update');
 Route::delete('BahanBakar/{id}', [BahanBakarController::class, 'destroy'])->name('BahanBakar.destroy');
 
-Route::get('konsultasi', [BahanBakarController::class, 'index'])->name('Konsultasi.index');
+Route::get('biaya', [BiayaController::class, 'index'])->name('biaya.index');
+Route::get('biaya/create', [BiayaController::class, 'create'])->name('biaya.create');
+Route::post('biaya', [BiayaController::class, 'store'])->name('biaya.store');
+Route::get('biaya/{id}/edit', [BiayaController::class, 'edit'])->name('biaya.edit');
+Route::put('biaya/{id}', [BiayaController::class, 'update'])->name('biaya.update');
+Route::delete('biaya/{id}', [BiayaController::class, 'destroy'])->name('biaya.destroy');
+
+// Route::get('konsultasi', [BahanBakarController::class, 'index'])->name('Konsultasi.index');

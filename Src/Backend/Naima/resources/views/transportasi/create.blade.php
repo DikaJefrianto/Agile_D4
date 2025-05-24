@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.main')
 
 @section('title', 'Tambah Transportasi')
 
@@ -6,51 +6,75 @@
 <style>
     .card-custom {
         max-width: 600px;
-        margin: 40px auto;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        background: #ffffff;
+        margin: 50px auto;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(180deg, #ffffff 0%, #f9f9f9 100%);
+        overflow: hidden;
     }
 
     .card-header-custom {
-        background-color: #007bff;
-        color: white;
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
-        padding: 20px;
+        background: #0d6efd;
+        color: #fff;
+        padding: 24px;
+        font-size: 1.5rem;
+        font-weight: bold;
         text-align: center;
     }
 
     .form-label {
         font-weight: 600;
+        color: #333;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 10px 14px;
+        transition: 0.3s;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
     }
 
     .btn-custom {
-        background-color: #28a745;
-        color: white;
-        font-weight: bold;
-        transition: 0.3s ease;
+        background-color: #198754;
+        border: none;
+        font-weight: 600;
+        padding: 10px 24px;
+        border-radius: 8px;
+        transition: background 0.3s ease;
     }
 
     .btn-custom:hover {
-        background-color: #218838;
+        background-color: #157347;
     }
 
     .btn-secondary-custom {
         background-color: #6c757d;
-        color: white;
-        transition: 0.3s ease;
+        border: none;
+        font-weight: 600;
+        padding: 10px 24px;
+        border-radius: 8px;
+        transition: background 0.3s ease;
     }
 
     .btn-secondary-custom:hover {
-        background-color: #5a6268;
+        background-color: #565e64;
     }
 
+    .form-icon {
+        margin-right: 8px;
+    }
 </style>
 
 <div class="card card-custom">
     <div class="card-header card-header-custom">
-        <h4>Form Tambah Transportasi</h4>
+        Tambah Transportasi
     </div>
     <div class="card-body p-4">
         <form action="{{ route('transportasi.store') }}" method="POST">
@@ -73,12 +97,16 @@
 
             <div class="mb-3">
                 <label for="factor_emisi" class="form-label">Faktor Emisi (kg CO₂e)</label>
-                <input type="number" name="factor_emisi" id="factor_emisi" class="form-control" step="0.0001" placeholder="Contoh: 0,45" required>
+                <input type="number" name="factor_emisi" id="factor_emisi" class="form-control" step="0.0001" placeholder="Contoh: 0.000015" required>
             </div>
 
             <div class="d-flex justify-content-between mt-4">
-                <a href="{{ route('transportasi.index') }}" class="btn btn-secondary-custom">← Kembali</a>
-                <button type="submit" class="btn btn-custom">Simpan</button>
+                <a href="{{ route('transportasi.index') }}" class="btn btn-secondary-custom">
+                    ← Kembali
+                </a>
+                <button type="submit" class="btn btn-custom">
+                    Simpan
+                </button>
             </div>
         </form>
     </div>

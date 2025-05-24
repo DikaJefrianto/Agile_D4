@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Tambah Bahan Bakar')
+@section('title', 'Tambah Biaya Transportasi')
 
 @section('content')
 <style>
@@ -50,10 +50,10 @@
 
 <div class="card card-custom">
     <div class="card-header card-header-custom">
-        <h4>Form Tambah Bahan Bakar</h4>
+        <h4>Form Tambah Biaya Transportasi</h4>
     </div>
     <div class="card-body p-4">
-        <form action="{{ route('BahanBakar.store') }}" method="POST">
+        <form action="{{ route('biaya.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
@@ -67,17 +67,17 @@
             </div>
 
             <div class="mb-3">
-                <label for="jenis" class="form-label">Jenis Bahan Bakar</label>
-                <input type="text" name="Bahan_bakar" id="Bahan_bakar" class="form-control" placeholder="Contoh: bensin,avtur,batu bara" required>
+                <label for="jenisKendaraan" class="form-label">Jenis Kendaraan</label>
+                <input type="text" name="jenisKendaraan" id="jenisKendaraan" class="form-control" placeholder="Contoh: Mobil, Kapal, Pesawat" required>
             </div>
 
             <div class="mb-3">
-                <label for="factor_emisi" class="form-label">Faktor Emisi (kg CO₂e)</label>
+                <label for="factorEmisi" class="form-label">Faktor Emisi (kg CO₂e)</label>
                 <input type="number" name="factorEmisi" id="factorEmisi" class="form-control" step="0.0001" placeholder="Contoh: 0,45" required>
             </div>
 
             <div class="d-flex justify-content-between mt-4">
-                <a href="{{ route('BahanBakar.index') }}" class="btn btn-secondary-custom">← Kembali</a>
+                <a href="{{ route('transportasi.index') }}" class="btn btn-secondary-custom">← Kembali</a>
                 <button type="submit" class="btn btn-custom">Simpan</button>
             </div>
         </form>

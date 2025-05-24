@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('title')
-Edit Data Bahan Bakar
+Edit Data Biaya Transportasi
 @endsection
 @section('content')
 
@@ -73,35 +73,35 @@ Edit Data Bahan Bakar
 </style>
 
 <div class="form-container">
-    <h1>Edit Data Bahan Bakar</h1>
+    <h1>Edit Data Biaya Transportasi</h1>
 
     @if(session('error'))
         <p style="color: red; text-align: center;">{{ session('error') }}</p>
     @endif
 
-    <form action="{{ route('BahanBakar.update', $BahanBakar->id) }}" method="POST">
+    <form action="{{ route('biaya.update', $biaya->id) }}" method="POST">
         @csrf
         @method('PUT')
 
         <div class="form-group">
             <label for="kategori">Kategori Transportasi:</label>
-            <input type="text" id="kategori" name="kategori" value="{{ $BahanBakar->kategori }}" required>
+            <input type="text" id="kategori" name="kategori" value="{{ $biaya->kategori }}" required>
         </div>
 
         <div class="form-group">
-            <label for="jenis">Jenis Kendaraan:</label>
-            <input type="text" id="Bahan_bakar" name="Bahan_bakar" value="{{ $BahanBakar->Bahan_bakar }}" required>
+            <label for="jenisKendaraan">Jenis Kendaraan:</label>
+            <input type="text" id="jenisKendaraan" name="jenisKendaraan" value="{{ $biaya->jenisKendaraan }}" required>
         </div>
 
         <div class="form-group">
             <label for="factorEmisi">Faktor Emisi (kg CO₂e):</label>
-            <input type="number" step="0.0001" id="factorEmisi" name="factorEmisi" value="{{ $BahanBakar->factorEmisi }}" required>
+            <input type="number" step="0.0001" id="factorEmisi" name="factorEmisi" value="{{ $biaya->factorEmisi }}" required>
         </div>
 
         <button type="submit">Simpan Perubahan</button>
     </form>
 
-    <a href="{{ route('BahanBakar.index') }}" class="back-link">Kembali ke Daftar Bahan Bakar</a>
+    <a href="{{ route('biaya.index') }}" class="back-link">Kembali ke Daftar Transportasi</a>
 </div>
 
 @endsection

@@ -4,9 +4,9 @@
 
 @section('content')
 <div class="container py-4">
-    <h3 class="mb-4">Daftar Transportasi</h3>
+    <h3 class="mb-4">Daftar Biaya Transportasi</h3>
 
-    <a href="{{ route('transportasi.create') }}" class="btn btn-success mb-3">
+    <a href="{{ route('biaya.create') }}" class="btn btn-success mb-3">
         Tambah Data
     </a>
     <div class="card">
@@ -16,21 +16,21 @@
                     <tr>
                         <th>No</th>
                         <th>Kategori</th>
-                        <th>Jenis</th>
+                        <th>Jenis Kendaraan</th>
                         <th>Faktor Emisi (kg CO₂e)</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($transportasis as $item)
+                    @forelse($biayas as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td class="text-capitalize">{{ $item->kategori }}</td>
-                            <td>{{ $item->jenis }}</td>
-                            <td>{{ $item->factor_emisi }}</td>
+                            <td>{{ $item->jenisKendaraan }}</td>
+                            <td>{{ $item->factorEmisi }}</td>
                             <td>
-                                <a href="{{ route('transportasi.edit', $item->id) }}" class="btn btn-sm btn-warning me-2">Edit</a>
-                                <form action="{{ route('transportasi.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                <a href="{{ route('biaya.edit', $item->id) }}" class="btn btn-sm btn-warning me-2">Edit</a>
+                                <form action="{{ route('biaya.destroy', $item->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" onclick="return confirm('Yakin hapus?')" class="btn btn-sm btn-danger">Hapus</button>
@@ -39,7 +39,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-muted">Belum ada data transportasi.</td>
+                            <td colspan="4" class="text-muted">Belum ada data Manajemen biaya.</td>
                         </tr>
                     @endforelse
                 </tbody>

@@ -1,85 +1,66 @@
-<div class="mb-3">
-    <label for="kategori_transportasi" class="form-label">Kategori Transportasi</label>
-    <select name="kategori_transportasi" id="kategori_transportasi" class="form-select" onchange="updateJenisKendaraan()">
+{{-- Dropdown kategori --}}
+{{-- <div class="mb-3">
+    <label for="kategori" class="form-label">Kategori</label>
+    <select name="kategori" id="kategori" class="form-select" onchange="filterBahanBakar()">
         <option value="">-- Pilih Kategori --</option>
-        <option value="darat">Darat</option>
-        <option value="laut">Laut</option>
-        <option value="udara">Udara</option>
+        @php
+            $kategoriOptions = $bahanBakar->pluck('kategori')->unique();
+        @endphp
+        @foreach ($kategoriOptions as $kategori)
+            <option value="{{ $kategori }}">{{ ucfirst($kategori) }}</option>
+        @endforeach
     </select>
-</div>
+</div> --}}
 
+{{-- Dropdown bahan bakar --}}
 <div class="mb-3">
-    <label for="jenis_kendaraan" class="form-label">Jenis Kendaraan</label>
-    <select name="jenis_kendaraan" id="jenis_kendaraan" class="form-select" onchange="updateJenisBahanBakar()">
-        <option value="">-- Pilih Jenis Kendaraan --</option>
-    </select>
-</div>
-
-<div class="mb-3">
-    <label for="jenis_bahan_bakar" class="form-label">Jenis Bahan Bakar</label>
-    <select name="jenis_bahan_bakar" id="jenis_bahan_bakar" class="form-select">
+    <label for="Bahan_bakar" class="form-label">Bahan Bakar</label>
+    <select name="Bahan_bakar" id="Bahan_bakar" class="form-select" >
         <option value="">-- Pilih Bahan Bakar --</option>
-    </select>
+        @foreach($bahanBakar as $item)
+            <option value="{{ $item->id }}" data-kategori="{{ $item->kategori }}">
+                {{ $item->Bahan_bakar }} ({{ ucfirst($item->kategori) }})
+            </option>
+        @endforeach
+    </select>   
 </div>
 
+{{-- Input jumlah bahan bakar --}}
 <div class="mb-3">
-    <label for="jumlah_bahan_bakar" class="form-label">Jumlah Bahan Bakar (liter)</label>
-    <input type="number" name="jumlah_bahan_bakar" id="jumlah_bahan_bakar" class="form-control">
+    <label for="nilai_input" class="form-label">Jumlah Bahan Bakar (liter)</label>
+    <input type="number" name="nilai_input" id="nilai_input" class="form-control"  min="0" step="any">
 </div>
 
-<div class="mb-3">
+{{-- Input tanggal --}}
+{{-- <div class="mb-3">
     <label for="tanggal" class="form-label">Tanggal</label>
-    <input type="date" name="tanggal" class="form-control">
-</div>
+    <input type="date" name="tanggal" id="tanggal" class="form-control" >
+</div> --}}
 
 <script>
-    const kendaraanOptions = {
-        darat: ['Mobil', 'Motor', 'Bus', 'Truk'],
-        laut: ['Kapal Ferry', 'Speedboat'],
-        udara: ['Pesawat Komersial', 'Helikopter']
-    };
+    function filterBahanBakar() {
+        const kategori = document.getElementById('kategori').value;
+        const bahanSelect = document.getElementById('jenis');
+        const options = bahanSelect.querySelectorAll('option');
 
-    const bahanBakarOptions = {
-        Mobil: ['Bensin', 'Solar', 'Listrik'],
-        Motor: ['Bensin', 'Listrik'],
-        Bus: ['Solar', 'Listrik'],
-        Truk: ['Solar'],
-        'Kapal Ferry': ['Solar', 'LNG'],
-        Speedboat: ['Bensin', 'Solar'],
-        'Pesawat Komersial': ['Avtur'],
-        Helikopter: ['Avtur']
-    };
+        options.forEach(option => {
+            // Keep placeholder always visible
+            if (!option.value) {
+                option.style.display = 'block';
+                option.disabled = false;
+                return;
+            }
 
-    function updateJenisKendaraan() {
-        const kategori = document.getElementById('kategori_transportasi').value;
-        const kendaraanSelect = document.getElementById('jenis_kendaraan');
-        kendaraanSelect.innerHTML = '<option value="">-- Pilih Jenis Kendaraan --</option>';
+            if (kategori === '' || option.dataset.kategori === kategori) {
+                option.style.display = 'block';
+                option.disabled = false;
+            } else {
+                option.style.display = 'none';
+                option.disabled = true;
+            }
+        });
 
-        if (kategori && kendaraanOptions[kategori]) {
-            kendaraanOptions[kategori].forEach(kendaraan => {
-                const option = document.createElement('option');
-                option.value = kendaraan;
-                option.textContent = kendaraan;
-                kendaraanSelect.appendChild(option);
-            });
-        }
-
-        // Reset bahan bakar
-        document.getElementById('jenis_bahan_bakar').innerHTML = '<option value="">-- Pilih Bahan Bakar --</option>';
-    }
-
-    function updateJenisBahanBakar() {
-        const kendaraan = document.getElementById('jenis_kendaraan').value;
-        const bahanBakarSelect = document.getElementById('jenis_bahan_bakar');
-        bahanBakarSelect.innerHTML = '<option value="">-- Pilih Bahan Bakar --</option>';
-
-        if (kendaraan && bahanBakarOptions[kendaraan]) {
-            bahanBakarOptions[kendaraan].forEach(bahan => {
-                const option = document.createElement('option');
-                option.value = bahan;
-                option.textContent = bahan;
-                bahanBakarSelect.appendChild(option);
-            });
-        }
+        // Reset pilihan dropdown saat kategori berubah
+        bahanSelect.value = '';
     }
 </script>

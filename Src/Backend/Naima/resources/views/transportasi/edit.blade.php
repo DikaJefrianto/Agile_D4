@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.main')
 @section('title')
 Edit Data Transportasi
 @endsection
