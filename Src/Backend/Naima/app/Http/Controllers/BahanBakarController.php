@@ -11,10 +11,17 @@ class BahanBakarController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $kategori = $request->query('kategori');
+
+        if ($kategori) {
+            $bahan_bakars = BahanBakar::where('kategori', $kategori)->get();
+        } else {
+            $bahan_bakars = BahanBakar::all();
+        }
         // Ambil semua data transportasi dari database
-        $bahan_bakars = BahanBakar::orderBy('kategori')->get();
+        // $bahan_bakars = BahanBakar::orderBy('kategori')->get();
 
         // Kirim ke view
         return view('BahanBakar.index', compact('bahan_bakars'));

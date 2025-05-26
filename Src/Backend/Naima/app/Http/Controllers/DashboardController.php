@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HasilPerhitungan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -12,32 +15,39 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $perhitungan = HasilPerhitungan::all();
+        $userId = Auth::id();
 
-        $totalPerhitungan = $perhitungan->count();
-        $totalEmisi = $perhitungan->sum('emisi_dihasilkan');
+        // Total perjalanan user
+        $jumlahPerjalanan = HasilPerhitungan::where('user_id', $userId)->count();
 
-        $metodeFavorit = $perhitungan->groupBy('metode')
-            ->sortByDesc(fn($group) => $group->count())
-            ->keys()
-            ->first();
+        // Total emisi keseluruhan
+        $totalEmisi = HasilPerhitungan::where('user_id', $userId)->sum('hasil_emisi');
 
-        // Untuk grafik
-        $data = $perhitungan->groupBy(function ($item) {
-            return \Carbon\Carbon::parse($item->tanggal_perjalanan)->format('M Y');
-        });
+        // Rata-rata emisi per perjalanan
+        $rataRataEmisi = $jumlahPerjalanan > 0 ? $totalEmisi / $jumlahPerjalanan : 0;
 
-        $bulan = $data->keys()->toArray();
-        $dataEmisi = $data->map(function ($group) {
-            return round($group->sum('emisi_dihasilkan'), 2);
-        })->values()->toArray();
+        // Emisi per bulan (grafik)
+        $dataBulanan = HasilPerhitungan::selectRaw('MONTH(tanggal) as bulan, SUM(hasil_emisi) as total')
+            ->where('user_id', $userId)
+            ->groupBy('bulan')
+            ->orderBy('bulan')
+            ->get();
+
+        // Format data untuk Chart.js
+        $bulan = [];
+        $totalEmisiBulanan = [];
+
+        foreach ($dataBulanan as $row) {
+            $bulan[] = Carbon::create()->month($row->bulan)->translatedFormat('F'); // contoh: Januari
+            $totalEmisiBulanan[] = round($row->total, 2);
+        }
 
         return view('dashboard', compact(
-            'totalPerhitungan',
+            'jumlahPerjalanan',
             'totalEmisi',
-            'metodeFavorit',
+            'rataRataEmisi',
             'bulan',
-            'dataEmisi'
+            'totalEmisiBulanan'
         ));
     }
 }

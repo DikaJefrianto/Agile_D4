@@ -74,9 +74,9 @@
                                     {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d M Y') }}
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ route('perhitungan.edit', $item->id) }}" class="btn btn-warning btn-sm me-1" title="Edit">
+                                    {{-- <a href="{{ route('perhitungan.edit', $item->id) }}" class="btn btn-warning btn-sm me-1" title="Edit">
                                         <i class="bi bi-pencil-fill"></i>
-                                    </a>
+                                    </a> --}}
                                     <form action="{{ route('perhitungan.destroy', $item->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')

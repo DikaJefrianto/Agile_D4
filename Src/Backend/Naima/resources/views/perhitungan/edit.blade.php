@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Edit Perhitungan Emisi')
+
 @section('content')
 <div class="container">
     <h2 class="mb-4">Edit Perhitungan Emisi</h2>
@@ -19,71 +21,80 @@
         @csrf
         @method('PUT')
 
+        {{-- Hidden input --}}
+        <input type="hidden" name="metode" value="{{ $perhitungan->metode }}">
+        <input type="hidden" name="kategori" value="{{ $perhitungan->kategori }}">
+
+        {{-- Tampilkan metode --}}
         <div class="mb-3">
-            <label for="transportasi" class="form-label">Jenis Transportasi</label>
-            <input
-                type="text"
-                id="transportasi"
-                name="transportasi"
-                class="form-control @error('transportasi') is-invalid @enderror"
-                value="{{ old('transportasi', $perhitungan->transportasi) }}"
-                required
-            >
-            @error('transportasi')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+            <h5>Metode Perhitungan Emisi yang Dipilih</h5>
+            <div class="row">
+                @php $metodes = ['bahan_bakar' => 'Bahan_Bakar', 'jarak_tempuh' => 'Jarak Tempuh', 'biaya' => 'Biaya']; @endphp
+                @foreach($metodes as $key => $label)
+                    <div class="col-md-4">
+                        <div class="card text-center border-{{ $perhitungan->metode == $key ? 'success border-3' : 'secondary' }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $label }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- Kategori --}}
+        <div class="mb-3">
+            <h5>Kategori Transportasi</h5>
+            <div class="row">
+                @php $kategoris = ['Darat', 'Laut', 'Udara']; @endphp
+                @foreach($kategoris as $kat)
+                    <div class="col-md-4">
+                        <div class="card text-center border-{{ $perhitungan->kategori == $kat ? 'success border-3' : 'secondary' }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $kat }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- Form input sesuai metode --}}
+        @if ($perhitungan->metode == 'bahan_bakar')
+            @include('perhitungan.partialss.form_bahan_bakar', [
+                'bahanBakar' => $bahanBakar,
+                'edit' => true,
+                'data' => $perhitungan
+            ])
+        @elseif($perhitungan->metode == 'jarak_tempuh')
+            @include('perhitungan.partials.form_jarak', [
+                'transportasi' => $jenis,
+                'edit' => true,
+                'data' => $perhitungan
+            ])
+        @elseif($perhitungan->metode == 'biaya')
+            @include('perhitungan.partials.form_biaya', [
+                'biaya' => $jenisKendaraan,
+                'edit' => true,
+                'data' => $perhitungan
+            ])
+        @endif
+
+        {{-- Tambahan input --}}
+        <div class="mb-3">
+            <label for="jumlah_orang" class="form-label">Jumlah Orang</label>
+            <input type="number" name="jumlah_orang" class="form-control" min="1"
+                value="{{ old('jumlah_orang', $perhitungan->jumlah_orang) }}">
         </div>
 
         <div class="mb-3">
-            <label for="bahan_bakar" class="form-label">Jenis Bahan Bakar</label>
-            <input
-                type="text"
-                id="bahan_bakar"
-                name="bahan_bakar"
-                class="form-control @error('bahan_bakar') is-invalid @enderror"
-                value="{{ old('bahan_bakar', $perhitungan->bahan_bakar) }}"
-                required
-            >
-            @error('bahan_bakar')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+            <label for="tanggal" class="form-label">Tanggal</label>
+            <input type="date" name="tanggal" class="form-control"
+                value="{{ old('tanggal', \Carbon\Carbon::parse($perhitungan->tanggal)->format('Y-m-d')) }}">
         </div>
 
-        <div class="mb-3">
-            <label for="jarak_tempuh" class="form-label">Jarak Tempuh (km)</label>
-            <input
-                type="number"
-                step="0.01"
-                id="jarak_tempuh"
-                name="jarak_tempuh"
-                class="form-control @error('jarak_tempuh') is-invalid @enderror"
-                value="{{ old('jarak_tempuh', $perhitungan->jarak_tempuh) }}"
-                required
-            >
-            @error('jarak_tempuh')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="tanggal_perjalanan" class="form-label">Tanggal Perjalanan</label>
-            <input
-                type="date"
-                id="tanggal_perjalanan"
-                name="tanggal_perjalanan"
-                class="form-control @error('tanggal_perjalanan') is-invalid @enderror"
-                value="{{ old('tanggal_perjalanan', $perhitungan->tanggal_perjalanan->format('Y-m-d')) }}"
-                required
-            >
-            @error('tanggal_perjalanan')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-success">Update</button>
-            <a href="{{ route('perhitungan.index') }}" class="btn btn-secondary">Batal</a>
-        </div>
+        <button type="submit" class="btn btn-success">Update</button>
+        <a href="{{ route('perhitungan.index') }}" class="btn btn-secondary">Batal</a>
     </form>
 </div>
 @endsection

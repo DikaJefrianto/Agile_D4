@@ -112,4 +112,17 @@ class HasilPerhitunganController extends Controller
 
         return redirect()->route('perhitungan.index')->with('success', 'Perhitungan emisi berhasil disimpan: ' . round($emisi, 4) . ' kg CO₂');
     }
+    public function destroy($id)
+    {
+        $data = HasilPerhitungan::findOrFail($id);
+
+        // Pastikan hanya data milik user yang sedang login yang boleh dihapus
+        if ($data->user_id !== Auth::id()) {
+            return redirect()->route('perhitungan.index')->withErrors('Anda tidak memiliki izin untuk menghapus data ini.');
+        }
+
+        $data->delete();
+
+        return redirect()->route('perhitungan.index')->with('success', 'Data perhitungan berhasil dihapus.');
+    }
 }
