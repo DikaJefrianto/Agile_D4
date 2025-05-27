@@ -162,44 +162,50 @@
                     </a>
                 </li>
             @endif
+            @if (auth()->user()->role == 'admin')
+                <li>
+                    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="collapse" href="#submenuPerhitungan"
+                        role="button" aria-expanded="false" aria-controls="submenuPerhitungan">
+                        <i class="bi bi-list-ul me-2"></i> Tabel
+                    </a>
+                    <div class="collapse ps-2 @if (request()->routeIs('perhitungan.') || request()->routeIs('transportasi.') || request()->routeIs('bahanbakar.*')) show @endif" id="submenuPerhitungan">
+                        <ul class="nav flex-column">
+                            <li>
+                                <a href="{{ route('perhitungan.index') }}" class="nav-link text-white">
+                                    <i class="bi bi-calculator me-2"></i> Hasil Perhitungan
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('transportasi.index') }}" class="nav-link text-white">
+                                    <i class="bi bi-truck me-2"></i> Emisi Transportasi
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('BahanBakar.index') }}" class="nav-link text-white ">
+                                    <i class="bi bi-fuel-pump me-2"></i> Emisi Bahan Bakar
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('biaya.index') }}"
+                                    class="nav-link @if (request()->routeIs('biaya.*')) active @endif">
+                                    <i class="bi bi-cash-coin me-2"></i> Emisi Biaya
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endif
+            @if (auth()->user()->role == 'admin' || auth()->user()->role == 'perusahaan')
+                <li>
+                    <a href="{{ route('strategi.index') }}" class="nav-link text-white">
+                        <i class="bi bi-lightbulb me-2"></i> Strategi
+                    </a>
+                </li>
+            @endif
+
             <li>
-                <a href="#" class="nav-link text-white">
-                    <i class="bi bi-calculator me-2"></i> Perhitungan
-                </a>
-            </li>
-            <li>
-                <a class="nav-link text-white dropdown-toggle" data-bs-toggle="collapse" href="#submenuPerhitungan"
-                    role="button" aria-expanded="false" aria-controls="submenuPerhitungan">
-                    <i class="bi bi-list-ul me-2"></i> Tabel
-                </a>
-                <div class="collapse ps-2" id="submenuPerhitungan">
-                    <ul class="nav flex-column">
-                        <li>
-                            <a href="#" class="nav-link text-white">
-                                <i class="bi bi-calculator me-2"></i> Hasil Perhitungan
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link text-white">
-                                <i class="bi bi-truck me-2"></i> Jenis Transportasi
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link text-white">
-                                <i class="bi bi-fuel-pump me-2"></i> Bahan Bakar
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white">
-                    <i class="bi bi-chat-left-dots me-2"></i> Konsultasi
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white">
-                    <i class="bi bi-cash-coin me-2"></i> Manajemen Biaya
+                <a href="{{ route('profile.update') }}" class="nav-link text-white">
+                    <i class="bi bi-person-circle me-2"></i> Profile
                 </a>
             </li>
             <li>
@@ -207,14 +213,20 @@
                     <i class="bi bi-lightbulb me-2"></i> Strategi
                 </a>
             </li>
-            <li>
-                <a href="#" class="nav-link text-white">
-                    <i class="bi bi-journal-text me-2"></i> Panduan
-                </a>
-            </li>
+
             <li>
                 <a href="#" class="nav-link text-white">
                     <i class="bi bi-chat-square-quote me-2"></i> Feedback
+                </a>
+            </li>
+            {{-- Menu Dropdown Perhitungan --}}
+            <li>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <a href="#" class="nav-link text-white"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <button class="btn btn-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</button>
                 </a>
             </li>
         </ul>

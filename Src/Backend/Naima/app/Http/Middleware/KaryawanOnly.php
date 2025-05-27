@@ -8,7 +8,7 @@ class KaryawanOnly
 {
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role !== 'karyawan') {
+        if (auth()->user()->role === 'karyawan') {
             abort(403, 'Hanya Karyawan yang dapat mengakses halaman ini');
         }
 
