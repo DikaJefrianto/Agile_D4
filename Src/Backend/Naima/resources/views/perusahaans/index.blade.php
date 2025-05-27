@@ -27,7 +27,7 @@
                 <tr>
                     <th>No</th>
                     <th>Nama Perusahaan</th>
-                    <th>Alamat</th>
+                    <th>Username</th>
                     <th>Email</th>
                     <th>Alamat</th>
                     <th>Keterangan</th>
@@ -39,7 +39,7 @@
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{ $perusahaan->nama }}</td>
-                        <td>{{ $perusahaan->alamat }}</td>
+                        <td>{{ $perusahaan->username }}</td>
                         <td>{{ $perusahaan->email }}</td>
                         <td>{{ $perusahaan->alamat }}</td>
                         <td>{{ $perusahaan->keterangan }}</td>
