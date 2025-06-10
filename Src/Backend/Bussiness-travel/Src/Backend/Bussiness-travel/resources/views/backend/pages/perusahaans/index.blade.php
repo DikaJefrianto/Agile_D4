@@ -19,6 +19,7 @@
                     </a>
                 </li>
                 <li class="text-sm text-gray-800 dark:text-white/90">{{ __('Perusahaan') }}</li>
+
             </ol>
         </nav>
     </div>
@@ -58,6 +59,10 @@
                             <td class="px-5 py-4 sm:px-6">{{ $perusahaan->alamat }}</td>
                             <td class="px-5 py-4 sm:px-6">{{ $perusahaan->keterangan }}</td>
                             <td class="flex px-5 py-4 sm:px-6 text-center gap-1">
+                                <a class="btn-secondary !p-3" href="{{ route('perusahaans.detail', $perusahaan->id) }}">
+                                    <i class="bi bi-eye text-sm"></i>
+                                </a>
+
                                 <a class="btn-default !p-3" href="{{ route('admin.perusahaans.edit', $perusahaan->id) }}">
                                     <i class="bi bi-pencil text-sm"></i>
                                 </a>

@@ -312,5 +312,6 @@
     "Calculation Create": "Buat Perhitungan",
     "Calculation Edit": "Edit Perhitungan",
     "Calculation Type:": "Tipe Perhitungan:",
-    "Calculation Value:": "Nilai Perhitungan:"
+    "Calculation Value:": "Nilai Perhitungan:",
+    "The password must be at least 8 characters.": "Password Harus minimal 8 karakter"
 }

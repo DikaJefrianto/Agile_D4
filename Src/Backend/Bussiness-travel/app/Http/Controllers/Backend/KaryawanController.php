@@ -50,7 +50,7 @@ class KaryawanController extends Controller
         $data = $request->validate([
             'nama_lengkap'  => 'required|string|max:255',
             'email'         => 'required|email|unique:users,email',
-            'password'      => 'required|string|min:6|confirmed',
+            'password'      => 'required|string|min:8|confirmed',
             'perusahaan_id' => 'required|exists:perusahaans,id',
             'no_hp'         => 'required|string|max:15',
             'alamat'        => 'required|string|max:255',
@@ -112,7 +112,7 @@ class KaryawanController extends Controller
         $data = $request->validate([
             'nama_lengkap'  => 'required|string|max:255',
             'email'         => ['required', 'email', Rule::unique('users', 'email')->ignore($karyawan->user_id)],
-            'password'      => 'nullable|string|min:6|confirmed',
+            'password'      => 'nullable|string|min:8|confirmed',
             'perusahaan_id' => 'required|exists:perusahaans,id',
             'no_hp'         => 'nullable|string|max:15',
             'alamat'        => 'nullable|string|max:255',

@@ -209,32 +209,6 @@ class AdminMenuService
             ],
         ]);
         $this->addMenuItem([
-            'label'       => __('Perhitungan'),
-            'icon'        => 'calculate.svg', // sesuaikan icon jika ada
-            'id'          => 'perhitungans-submenu',
-            'active'      => Route::is('admin.perhitungans.*'),
-            'priority'    => 25,
-            'permissions' => ['perhitungan.view', 'perhitungann.create', 'perhitungan.edit', 'perhitungan.delete'],
-            'children'    => [
-                [
-                    'label'       => __('Daftar Perhitungan'),
-                    'route'       => route('admin.perhitungans.index'),
-                    'active'      => Route::is('admin.perthitungans.index') || Route::is('admin.perhitungans.edit'),
-                    'priority'    => 10,
-                    'permissions' => 'perhitungan.view',
-                ],
-                [
-                    'label'       => __('Tambah Perhitungan'),
-                    'route'       => route('admin.perhitungans.create'),
-                    'active'      => Route::is('admin.perhitungans.create'),
-                    'priority'    => 20,
-                    'permissions' => 'perhitungan.create',
-                ],
-            ],
-        ]);
-
-
-        $this->addMenuItem([
             'label'       => __('Settings'),
             'icon'        => 'settings.svg',
             'id'          => 'settings-submenu',

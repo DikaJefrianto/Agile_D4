@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title'); ?>
     <?php echo e(__('Dashboard')); ?> | <?php echo e(config('app.name')); ?>
 
@@ -60,31 +58,6 @@
             </div>
         </div>
 
-        
-        <div class="mt-6">
-            <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-4"><?php echo e(__('Quick Access to CRUD Modules')); ?></h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                <?php
-                    $crudModules = [
-                        ['label' => 'Perusahaans', 'route' => 'admin.perusahaans.index', 'icon' => 'bi bi-buildings', 'color' => '#0EA5E9'],
-                        ['label' => 'Karyawans', 'route' => 'admin.karyawans.index', 'icon' => 'bi bi-person-badge', 'color' => '#9333EA'],
-                        ['label' => 'Strategis', 'route' => 'admin.strategis.index', 'icon' => 'bi bi-lightbulb', 'color' => '#F59E0B'],
-                        ['label' => 'Bahan Bakars', 'route' => 'admin.bahan-bakars.index', 'icon' => 'bi bi-fuel-pump', 'color' => '#EF4444'],
-                        ['label' => 'Kendaraans', 'route' => 'admin.kendaraans.index', 'icon' => 'bi bi-truck-front', 'color' => '#10B981'],
-                        ['label' => 'Feedbacks', 'route' => 'admin.feedbacks.index', 'icon' => 'bi bi-chat-left-text', 'color' => '#3B82F6'],
-                        ['label' => 'Perjalanan Dinas', 'route' => 'admin.perjalanan-dinas.index', 'icon' => 'bi bi-geo-alt', 'color' => '#8B5CF6'],
-                        ['label' => 'Perhitungans', 'route' => 'admin.perhitungans.index', 'icon' => 'bi bi-calculator', 'color' => '#F97316'],
-                    ];
-                ?>
-
-                <?php $__currentLoopData = $crudModules; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $modul): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <a href="<?php echo e(route($modul['route'])); ?>" class="rounded-xl p-4 text-white shadow hover:shadow-md transition-all duration-200 flex items-center gap-3" style="background-color: <?php echo e($modul['color']); ?>">
-                        <i class="<?php echo e($modul['icon']); ?> text-xl"></i>
-                        <span class="text-sm font-semibold"><?php echo e(__($modul['label'])); ?></span>
-                    </a>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
-        </div>
 
         
         <div class="mt-6">

@@ -1,16 +1,17 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Perusahaan;
+use App\Models\Karyawan;
 use App\Models\User;
 use App\Services\RolesService;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Hash;
 
 class PerusahaanController extends Controller
@@ -36,9 +37,9 @@ class PerusahaanController extends Controller
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('nama', 'like', '%' . $search . '%')
-                  ->orWhereHas('user', function ($q2) use ($search) {
-                      $q2->where('email', 'like', '%' . $search . '%');
-                  });
+                    ->orWhereHas('user', function ($q2) use ($search) {
+                        $q2->where('email', 'like', '%' . $search . '%');
+                    });
             });
         }
 
@@ -46,7 +47,6 @@ class PerusahaanController extends Controller
 
         return view('backend.pages.perusahaans.index', compact('perusahaans'));
     }
-
 
     public function create(): Renderable
     {
@@ -60,12 +60,12 @@ class PerusahaanController extends Controller
         $this->checkAuthorization(auth()->user(), ['perusahaan.create']);
 
         $data = $request->validate([
-            'nama'      => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,username',
-            'email'     => 'required|email|unique:users,email',
-            'password'  => 'required|string|min:6|confirmed',
-            'alamat'    => 'required|string|max:255',
-            'logo'      => 'nullable|image|max:2048',
+            'nama'       => 'required|string|max:255',
+            'username'   => 'required|string|max:255|unique:users,username',
+            'email'      => 'required|email|unique:users,email',
+            'password'   => 'required|string|min:6|confirmed',
+            'alamat'     => 'required|string|max:255',
+            'logo'       => 'nullable|image|max:2048',
             'keterangan' => 'nullable|string|max:1000',
         ]);
 
@@ -85,23 +85,23 @@ class PerusahaanController extends Controller
 
         // Buat perusahaan dan kaitkan dengan user
         Perusahaan::create([
-            'user_id' => $user->id,
-            'nama'    => $data['nama'],
-            'username' => $data['username'],
-            'email'   => $data['email'],
-            'alamat'  => $data['alamat'],
-            'logo'    => $data['logo'] ?? null,
+            'user_id'    => $user->id,
+            'nama'       => $data['nama'],
+            'username'   => $data['username'],
+            'email'      => $data['email'],
+            'alamat'     => $data['alamat'],
+            'logo'       => $data['logo'] ?? null,
             'keterangan' => $data['keterangan'] ?? null,
         ]);
 
         return redirect()->route('admin.perusahaans.index')
-                         ->with('success', 'Perusahaan dan akun berhasil dibuat.');
+            ->with('success', 'Perusahaan dan akun berhasil dibuat.');
     }
 
     public function show(Perusahaan $perusahaan): Renderable
     {
         $this->checkAuthorization(auth()->user(), ['perusahaan.view']);
-
+        $perusahaan = Perusahaan::withCount('karyawans')->findOrFail($id);
         $perusahaan->load('user');
         return view('backend.pages.perusahaans.show', compact('perusahaan'));
     }
@@ -118,11 +118,11 @@ class PerusahaanController extends Controller
         $this->checkAuthorization(auth()->user(), ['perusahaan.edit']);
 
         $data = $request->validate([
-            'nama'   => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,username,' . $perusahaan->user_id,
-            'email'  => 'required|email|unique:users,email,' . $perusahaan->user_id,
-            'alamat' => 'required|string|max:255',
-            'logo'   => 'nullable|image|max:2048',
+            'nama'       => 'required|string|max:255',
+            'username'   => 'required|string|max:255|unique:users,username,' . $perusahaan->user_id,
+            'email'      => 'required|email|unique:users,email,' . $perusahaan->user_id,
+            'alamat'     => 'required|string|max:255',
+            'logo'       => 'nullable|image|max:2048',
             'keterangan' => 'nullable|string|max:1000',
         ]);
 
@@ -131,24 +131,24 @@ class PerusahaanController extends Controller
         }
 
         // Update user terkait
-        $user = $perusahaan->user;
-        $user->name  = $data['nama'];
-        $user->email = $data['email'];
+        $user           = $perusahaan->user;
+        $user->name     = $data['nama'];
+        $user->email    = $data['email'];
         $user->username = $data['username'];
         $user->save();
 
         // Update data perusahaan
         $perusahaan->update([
-            'nama'   => $data['nama'],
-            'email'  => $data['email'],
-            'username' => $data['username'],
-            'alamat' => $data['alamat'],
-            'logo'   => $data['logo'] ?? $perusahaan->logo,
+            'nama'       => $data['nama'],
+            'email'      => $data['email'],
+            'username'   => $data['username'],
+            'alamat'     => $data['alamat'],
+            'logo'       => $data['logo'] ?? $perusahaan->logo,
             'keterangan' => $data['keterangan'] ?? $perusahaan->keterangan,
         ]);
 
         return redirect()->route('admin.perusahaans.index')
-                         ->with('success', 'Perusahaan berhasil diperbarui.');
+            ->with('success', 'Perusahaan berhasil diperbarui.');
     }
 
     public function destroy(Perusahaan $perusahaan): RedirectResponse
@@ -159,6 +159,12 @@ class PerusahaanController extends Controller
         $perusahaan->delete();
 
         return redirect()->route('admin.perusahaans.index')
-                         ->with('success', 'Perusahaan dan akun berhasil dihapus.');
+            ->with('success', 'Perusahaan dan akun berhasil dihapus.');
+    }
+    public function detail(Perusahaan $perusahaan): Renderable
+    {
+        $this->checkAuthorization(auth()->user(), ['perusahaan.view']);
+
+        return view('backend.pages.perusahaans.detail', compact('perusahaan'));
     }
 }
