@@ -6,7 +6,7 @@
 
 @section('admin-content')
 
-<div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+<div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6" >
     <div x-data="{ pageName: '{{ __('Karyawan') }}' }">
         <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
             <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">
@@ -48,12 +48,12 @@
                 <table class="w-full dark:text-gray-400">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr class="border-b border-gray-100 dark:border-gray-800">
-                            <th class="p-2 text-left px-5">{{ __('Sl') }}</th>
-                            <th class="p-2 text-left px-5">{{ __('Nama Lengkap') }}</th>
+                            <th class="p-2 text-left px-5">{{ __('No.') }}</th>
+                            <th class="p-2 text-left px-5">{{ __('Full Name') }}</th>
                             <th class="p-2 text-left px-5">{{ __('Email') }}</th>
                             <th class="p-2 text-left px-5">{{ __('Username') }}</th>
                             <th class="p-2 text-left px-5">{{ __('Telepon') }}</th>
-                            <th class="p-2 text-left px-5">{{ __('Foto') }}</th>
+                            {{-- <th class="p-2 text-left px-5">{{ __('Foto') }}</th> --}}
                             <th class="p-2 text-left px-5">{{ __('Alamat') }}</th>
                             <th class="p-2 text-left px-5">{{ __('Jabatan') }}</th>
                             <th class="p-2 text-left px-5">{{ __('Action') }}</th>
@@ -67,13 +67,14 @@
                                 <td class="px-5 py-4">{{ $item->user->email }}</td>
                                 <td class="px-5 py-4">{{ $item->user->username }}</td>
                                 <td class="px-5 py-4">{{ $item->no_hp ?? '-' }}</td>
-                                <td class="px-5 py-4">
-                                    @if($item->foto)
-                                        <img src="{{ Storage::url($item->foto) }}" class="w-10 h-10 rounded" alt="">
-                                    @else
-                                        —
-                                    @endif
-                                </td>
+                                {{-- <td class="px-5 py-4"> --}}
+                                    {{-- @if($item->foto) --}}
+                                        {{-- Pastikan ini menghasilkan URL yang benar ke symbolic link --}}
+                                        {{-- <img src="{{ asset('storage/' . $item->foto) }}" alt="Foto {{ $item->nama_lengkap }}" class="w-16 h-16 rounded-full object-cover"> --}}
+                                    {{-- @else --}}
+                                        {{-- <span class="text-gray-500">{{ __('Tidak Ada Foto') }}</span> --}}
+                                    {{-- @endif --}}
+                                {{-- </td> --}}
                                 <td class="px-5 py-4">{{ $item->alamat ?? '-' }}</td>
                                 <td class="px-5 py-4">{{ $item->jabatan ?? '-' }}</td>
                                 <td class="flex items-center px-5 py-4 gap-2">

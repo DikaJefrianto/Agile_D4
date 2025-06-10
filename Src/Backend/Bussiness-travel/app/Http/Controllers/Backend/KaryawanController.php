@@ -10,7 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\Storage;
 class KaryawanController extends Controller
 {
     public function index(Request $request): Renderable
@@ -55,13 +55,15 @@ class KaryawanController extends Controller
             'no_hp'         => 'required|string|max:15',
             'alamat'        => 'required|string|max:255',
             'jabatan'       => 'required|string|max:255',
-            'foto'          => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
         // Handle upload foto jika ada
         $fotoPath = null;
         if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('karyawan_foto', 'public');
+            // Menggunakan Storage facade secara eksplisit untuk clarity
+            // Ini tetap akan menyimpan di storage/app/public/karyawan
+            $fotoPath = Storage::disk('public')->put('karyawan', $request->file('foto'));
+            // Anda bisa menambahkan log di sini untuk debugging, misalnya:
+            // \Log::info('Foto uploaded to: ' . $fotoPath);
         }
 
         // Buat akun user
@@ -79,7 +81,6 @@ class KaryawanController extends Controller
             'no_hp'         => $data['no_hp'] ?? null,
             'alamat'        => $data['alamat'] ?? null,
             'jabatan'       => $data['jabatan'] ?? null,
-            'foto'          => $fotoPath,
             'user_id'       => $user->id,
             'perusahaan_id' => $data['perusahaan_id'],
         ]);
@@ -117,7 +118,6 @@ class KaryawanController extends Controller
             'no_hp'         => 'nullable|string|max:15',
             'alamat'        => 'nullable|string|max:255',
             'jabatan'       => 'nullable|string|max:255',
-            'foto'          => 'nullable|image|max:2048',
         ]);
 
         // Update akun user
@@ -131,8 +131,14 @@ class KaryawanController extends Controller
 
         // Handle upload foto baru
         if ($request->hasFile('foto')) {
-            $fotoPath       = $request->file('foto')->store('karyawan_foto', 'public');
+            // Hapus foto lama jika ada
+            if ($karyawan->foto && Storage::disk('public')->exists($karyawan->foto)) {
+                Storage::disk('public')->delete($karyawan->foto);
+                // \Log::info('Old foto deleted: ' . $karyawan->foto); // Debugging
+            }
+            $fotoPath       = Storage::disk('public')->put('karyawan', $request->file('foto'));
             $karyawan->foto = $fotoPath;
+            // \Log::info('New foto uploaded to: ' . $fotoPath); // Debugging
         }
 
         // Update data karyawan

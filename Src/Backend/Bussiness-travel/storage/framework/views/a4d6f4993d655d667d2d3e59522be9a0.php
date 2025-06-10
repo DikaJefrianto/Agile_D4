@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?>
     <?php echo e(__('Dashboard')); ?> | <?php echo e(config('app.name')); ?>
 

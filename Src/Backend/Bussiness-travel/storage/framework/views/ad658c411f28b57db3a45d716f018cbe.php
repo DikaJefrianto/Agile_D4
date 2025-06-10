@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -98,9 +96,7 @@
                         <div class="dropdown">
                             <a href="#" class="d-flex align-items-center dropdown-toggle gap-2"
                                 data-bs-toggle="dropdown">
-                                <span class="text-sm text-black-800"><?php echo e(Auth::user()->name); ?></span>
-                                <img src="<?php echo e(Auth::user()->foto ? asset('storage/' . Auth::user()->foto) : asset('/images/default-avatar.png')); ?>"
-                                    alt="profile" class="rounded-circle" style="width: 36px; height: 36px;">
+                                <span class="text-sm text-black-800"><b><?php echo e(Auth::user()->name); ?></b></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="<?php echo e(route('profile.edit')); ?>">Edit Profile</a></li>

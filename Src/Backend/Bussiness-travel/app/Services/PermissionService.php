@@ -156,6 +156,7 @@ class PermissionService
                 'perusahaan.create',
                 'perusahaan.edit',
                 'perusahaan.delete',
+                'perusahaan.detail',
             ],
         ],
     ];

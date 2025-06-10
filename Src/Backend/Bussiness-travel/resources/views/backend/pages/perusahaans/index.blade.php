@@ -40,9 +40,11 @@
             </div>
 
             <div class="space-y-3 border-t border-gray-100 dark:border-gray-800 overflow-x-auto">
+                @include('backend.layouts.partials.messages')
                 <table class="w-full dark:text-gray-400">
                     <thead>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('No.') }}</th>
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Nama') }}</th>
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Email') }}</th>
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Alamat') }}</th>
@@ -53,11 +55,15 @@
                     <tbody>
                         @foreach ($perusahaans as $perusahaan)
                         <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="px-5 py-4">{{ $loop->iteration }}</td>
                             <td class="px-5 py-4 sm:px-6">{{ $perusahaan->nama }}</td>
                             <td class="px-5 py-4 sm:px-6">{{ $perusahaan->email }}</td>
                             <td class="px-5 py-4 sm:px-6">{{ $perusahaan->alamat }}</td>
                             <td class="px-5 py-4 sm:px-6">{{ $perusahaan->keterangan }}</td>
                             <td class="flex px-5 py-4 sm:px-6 text-center gap-1">
+                                <a class="btn-secondary !p-3" href="{{ route('admin.perusahaans.show', $perusahaan->id) }}">
+                                    <i class="bi bi-eye text-sm"></i>
+                                </a>
                                 <a class="btn-default !p-3" href="{{ route('admin.perusahaans.edit', $perusahaan->id) }}">
                                     <i class="bi bi-pencil text-sm"></i>
                                 </a>

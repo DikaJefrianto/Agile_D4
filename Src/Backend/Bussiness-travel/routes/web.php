@@ -45,6 +45,7 @@ Route::middleware(['auth', 'role:superadmin|admin'])
 
         Route::resource('roles', RolesController::class);
         Route::resource('perusahaans', PerusahaanController::class);
+        Route::get('/perusahaans/{id}/detail', [PerusahaanController::class, 'show'])->name('perusahaans.show');
 
         // Permissions
         Route::get('/permissions', [PermissionsController::class, 'index'])->name('permissions.index');

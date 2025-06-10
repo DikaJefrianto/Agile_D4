@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Perusahaan;
-use App\Models\Karyawan;
 use App\Models\User;
 use App\Services\RolesService;
 use Illuminate\Contracts\Support\Renderable;
@@ -60,7 +59,7 @@ class PerusahaanController extends Controller
         $this->checkAuthorization(auth()->user(), ['perusahaan.create']);
 
         $data = $request->validate([
-            'nama'       => 'required|string|max:255',
+            'nama'       => 'required|string|max:100',
             'username'   => 'required|string|max:255|unique:users,username',
             'email'      => 'required|email|unique:users,email',
             'password'   => 'required|string|min:6|confirmed',
@@ -98,11 +97,21 @@ class PerusahaanController extends Controller
             ->with('success', 'Perusahaan dan akun berhasil dibuat.');
     }
 
-    public function show(Perusahaan $perusahaan): Renderable
+    public function show(int $id): Renderable
     {
         $this->checkAuthorization(auth()->user(), ['perusahaan.view']);
-        $perusahaan = Perusahaan::withCount('karyawans')->findOrFail($id);
+        $perusahaan = Perusahaan::withCount(['karyawans'])->findOrFail($id);
         $perusahaan->load('user');
+        // Pastikan perusahaan memiliki relasi dengan user
+        if (!$perusahaan->user) {
+            return redirect()->route('admin.perusahaans.index')
+                ->with('error', 'Perusahaan tidak ditemukan atau tidak memiliki akun terkait.');
+        }
+        // Jika perusahaan memiliki relasi dengan user, tampilkan detailnya
+        $perusahaan->load('user');
+        $perusahaan->loadCount('karyawans');
+        $perusahaan->load('karyawans');
+
         return view('backend.pages.perusahaans.show', compact('perusahaan'));
     }
 
@@ -161,10 +170,11 @@ class PerusahaanController extends Controller
         return redirect()->route('admin.perusahaans.index')
             ->with('success', 'Perusahaan dan akun berhasil dihapus.');
     }
-    public function detail(Perusahaan $perusahaan): Renderable
-    {
-        $this->checkAuthorization(auth()->user(), ['perusahaan.view']);
-
-        return view('backend.pages.perusahaans.detail', compact('perusahaan'));
-    }
+    // public function detail(Perusahaan $perusahaan): Renderable
+    // {
+    //     $this->checkAuthorization(auth()->user(), ['perusahaan.view']);
+    //     $perusahaan->load('user');
+    //     $perusahaan = Perusahaan::withCount('karyawans')->findOrFail($id);
+    //     return view('backend.pages.perusahaans.detail', compact('perusahaan'));
+    // }
 }

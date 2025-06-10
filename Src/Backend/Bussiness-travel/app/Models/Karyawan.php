@@ -21,7 +21,6 @@ class Karyawan extends Model
         'no_hp',
         'alamat',
         'jabatan',
-        'foto',
         'user_id',
         'perusahaan_id',
     ];

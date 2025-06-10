@@ -30,4 +30,5 @@ class Perusahaan extends Model
     {
         return $this->hasMany(Karyawan::class);
     }
+    
 }

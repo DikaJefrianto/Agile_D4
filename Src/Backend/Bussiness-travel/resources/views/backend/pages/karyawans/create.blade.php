@@ -87,11 +87,11 @@
                                        dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30">
                         </div>
                         {{-- Foto --}}
-                        <div>
+                        {{-- <div>
                             <label for="foto" class="block text-sm font-medium text-gray-700 dark:text-gray-400">{{ __('Foto (opsional)') }}</label>
                             <input type="file" name="foto" id="foto"
                                 class="mt-1 block w-full text-gray-700 dark:text-gray-300">
-                        </div>
+                        </div> --}}
                         {{-- Jabatan --}}
                         <div>
                             <label for="jabatan" class="block text-sm font-medium text-gray-700 dark:text-gray-400">{{ __('Jabatan (opsional)') }}</label>
