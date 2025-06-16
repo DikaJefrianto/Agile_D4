@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <a id="readme-top"></a>
 
 [![Contributors][contributors-shield]][contributors-url]
@@ -434,3 +435,6 @@ Maniruzzaman Akash - [@LinkedIn](https://www.linkedin.com/in/maniruzzamanakash) 
 [TailwindCSS-url]: https://tailwindcss.com
 [AlpineJS.com]: https://img.shields.io/badge/Alpine.js-8BC0D0?style=for-the-badge&logo=alpine.js&logoColor=black
 [AlpineJS-url]: https://alpinejs.dev
+=======
+# Agile_D4
+>>>>>>> 67f804b1a865a6bc9e98ee724e66b9278c70b577
