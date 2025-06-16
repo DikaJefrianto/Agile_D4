@@ -1,5 +1,7 @@
 @extends('auth.layouts.app')
-
+@section('title')
+    {{ __('Verify Email') }} | {{ config('app.name') }}
+@endsection
 @section('admin-content')
     <div class="container">
         <div class="row justify-content-center">

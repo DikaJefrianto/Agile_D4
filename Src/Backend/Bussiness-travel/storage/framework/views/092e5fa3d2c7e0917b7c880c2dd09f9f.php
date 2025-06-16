@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?php echo $__env->yieldContent('title', config('app.name')); ?></title>
-    <link rel="icon" href="<?php echo e(asset('favicon.ico')); ?>" type="image/x-icon">
-    
+    <link rel="icon" href="<?php echo e(config('settings.site_favicon') ?? asset('favicon.ico')); ?>" type="image/x-icon">
+
+
     <?php echo $__env->make('backend.layouts.partials.theme-colors', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
     <?php echo $__env->yieldContent('before_vite_build'); ?>
 
     <?php echo app('Illuminate\Foundation\Vite')->reactRefresh(); ?>
     <?php echo app('Illuminate\Foundation\Vite')(['resources/js/app.js', 'resources/css/app.css']); ?>
-    
+
     <?php if(!empty(config('settings.global_custom_css'))): ?>
     <style>
         <?php echo config('settings.global_custom_css'); ?>
@@ -22,7 +23,7 @@
     <?php endif; ?>
 
     <?php echo $__env->make('backend.layouts.partials.integration-scripts', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-    
+
     <?php echo $__env->yieldContent('styles'); ?>
 </head>
 
@@ -87,7 +88,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
     </div>
 
     <?php echo $__env->yieldPushContent('scripts'); ?>
-    
+
     <?php if(!empty(config('settings.global_custom_js'))): ?>
     <script>
         <?php echo config('settings.global_custom_js'); ?>

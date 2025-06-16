@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title')
+    {{ __('Landing Page') }} | {{ config('app.name') }}
+@endsection
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +12,8 @@
     <title>Naima Sustainability</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="icon" href="{{ config('settings.site_favicon') ?? asset('favicon.ico') }}" type="image/x-icon">
+
     <style>
         .logo {
             height: 50px;
