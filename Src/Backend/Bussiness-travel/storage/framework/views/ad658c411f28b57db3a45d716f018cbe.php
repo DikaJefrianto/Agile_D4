@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?>
     <?php echo e(__('Landing Page')); ?> | <?php echo e(config('app.name')); ?>
 
