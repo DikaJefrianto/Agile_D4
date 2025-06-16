@@ -67,7 +67,7 @@
                     </button>
                 </div>
                 <nav class="hidden md:flex ml-10 space-x-6" data-auth="<?php echo e(Auth::check() ? 'true' : 'false'); ?>">
-                    <a href="#" class="nav-link">Beranda</a>
+                    <a href="/" class="nav-link">Beranda</a>
                     <a href="<?php echo e(route('admin.dashboard')); ?>" class="nav-link">Dashboard</a>
                     <a href="#" class="nav-link">Perhitungan</a>
                     <a href="#" class="nav-link">Konsultasi</a>

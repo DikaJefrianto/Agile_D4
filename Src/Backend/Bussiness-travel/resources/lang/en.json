@@ -318,6 +318,12 @@
     "Perhitungan tidak ditemukan.": "Calculation not found.",
     "Apakah Anda yakin ingin menghapus perhitungan ini?": "Are you sure you want to delete this calculation?",
     "Daftar Perhitungan": "List of Calculations",
-    "Nama Lengkap": "Full Name"
+    "Nama Lengkap": "Full Name",
+    "Verifikasi Alamat Email Kamu" : "Verify Your Email Address"  ,
+    "Sebelum melanjutkan, harap periksa email Anda untuk mendapatkan tautan verifikasi.": "Before proceeding, please check your email for a verification link." ,
+    "Tautan verifikasi baru telah dikirim ke alamat email Anda.": "A fresh verification link has been sent to your email address." ,
+    "Jika Anda tidak menerima email." : "If you did not receive the email ." ,
+    "Klik Di Sini untuk Mengirim Ulang Tautan Verifikasi" : "Click Here to Resend Verification Link"
+
 
 }

@@ -20,7 +20,9 @@ use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Backend\StrategiController;
 use App\Http\Controllers\Backend\TranslationController;
 use App\Http\Controllers\Backend\UserLoginAsController;
-use App\Http\Controllers\Backend\UsersController;use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\UsersController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
@@ -28,10 +30,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 /**
  * Dashboard routes based on roles
  */
-Route::middleware(['auth', 'role:superadmin|admin'])
+Auth::routes(['verify' => true]);
+Route::middleware(['auth', 'verified','role:superadmin|admin'])
     ->prefix('dashboard')->as('admin.')
     ->group(function () {
-        // …
+        // …x
         Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard');
         // …

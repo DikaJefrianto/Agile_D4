@@ -311,6 +311,10 @@
     "Calculation Create": "Buat Perhitungan",
     "Calculation Edit": "Edit Perhitungan",
     "Calculation Type:": "Tipe Perhitungan:",
-    "Calculation Value:": "Nilai Perhitungan:"
-
+    "Calculation Value:": "Nilai Perhitungan:",
+    "Verify Your Email Address" : "Verifikasi Alamat Email Kamu",
+    "Before proceeding, please check your email for a verification link." : "Sebelum melanjutkan, harap periksa email Anda untuk mendapatkan tautan verifikasi.",
+    "A fresh verification link has been sent to your email address." : "Tautan verifikasi baru telah dikirim ke alamat email Anda.",
+    "If you did not receive the email ." : "Jika Anda tidak menerima email.",
+    "Click Here to Resend Verification Link" : "Klik Di Sini untuk Mengirim Ulang Tautan Verifikasi"
 }
