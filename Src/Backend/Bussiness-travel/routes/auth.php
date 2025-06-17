@@ -18,10 +18,15 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // User authentication routes.
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'guest'], function () {
+Route::group(['prefix' => '', 'as' => 'admin.', 'middleware' => 'guest'], function () {
+});
+
+// Authenticated routes.
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     // Login Routes.
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login/submit', [LoginController::class, 'login'])->name('login.submit');
+    // Route::post('/login/submit', [LoginController::class, 'login'])->name('login.submit');
 
     // Reset Password Routes.
     Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
@@ -30,10 +35,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'guest'], f
     // Forget Password Routes.
     Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('/password/reset-password/submit', [ForgotPasswordController::class, 'reset'])->name('password.update');
-});
-
-// Authenticated routes.
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     // Logout Routes.
+    Route::get('/logout', [LoginController::class, 'logoutForm'])->name('logout');
     Route::post('/logout/submit', [LoginController::class, 'logout'])->name('logout.submit');
 });

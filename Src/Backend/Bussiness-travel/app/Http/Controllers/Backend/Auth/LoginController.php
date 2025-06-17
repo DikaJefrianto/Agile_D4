@@ -42,15 +42,15 @@ class LoginController extends Controller
     public function showLoginForm(): Renderable
     {
         if (Auth::guard('web')->check()) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.wdashboard');
         }
 
-        $this->demoAppService->maybeSetDemoLocaleToEnByDefault();
+        // $this->demoAppService->maybeSetDemoLocaleToEnByDefault();
 
-        $email = app()->environment('local') ? 'superadmin@example.com' : '';
-        $password = app()->environment('local') ? '12345678' : '';
+        // $email = app()->environment('local') ? 'superadmin@example.com' : '';
+        // $password = app()->environment('local') ? '12345678' : '';
 
-        return view('backend.auth.login')->with(compact('email', 'password'));
+        return view('auth.login');
     }
 
     /**
@@ -87,6 +87,6 @@ class LoginController extends Controller
     {
         Auth::guard('web')->logout();
 
-        return redirect()->route('admin.login');
+        return redirect()->route('login');
     }
 }

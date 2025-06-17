@@ -1,4 +1,4 @@
-@extends('backend.auth.layouts.app')
+@extends('auth.layouts.app')
 
 @section('title')
     403 - {{ __('Access Denied') }} - {{ config('app.name') }}

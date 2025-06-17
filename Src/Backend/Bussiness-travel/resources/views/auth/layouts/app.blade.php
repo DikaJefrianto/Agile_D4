@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', config('app.name'))</title>
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-    
+    <link rel="icon" href="{{ config('settings.site_favicon') ?? asset('favicon.ico') }}" type="image/x-icon">
+
+
     @include('backend.layouts.partials.theme-colors')
     @yield('before_vite_build')
 
     @viteReactRefresh
     @vite(['resources/js/app.js', 'resources/css/app.css'])
-    
+
     @if (!empty(config('settings.global_custom_css')))
     <style>
         {!! config('settings.global_custom_css') !!}
@@ -21,7 +22,7 @@
     @endif
 
     @include('backend.layouts.partials.integration-scripts')
-    
+
     @yield('styles')
 </head>
 
@@ -106,7 +107,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
     </div>
 
     @stack('scripts')
-    
+
     @if (!empty(config('settings.global_custom_js')))
     <script>
         {!! config('settings.global_custom_js') !!}

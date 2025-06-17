@@ -1,4 +1,4 @@
-@extends('backend.auth.layouts.app')
+@extends('auth.layouts.app')
 
 @section('title')
     500 - {{ __('Internal Server Error') }} - {{ config('app.name') }}
