@@ -1,147 +1,251 @@
 <?php
+
 namespace App\Http\Controllers\Backend\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Karyawan;
-use App\Models\User;
+use App\Models\Karyawan; // Pastikan ini diimpor dengan benar
+use App\Models\User;     // Import model User
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash; // Import Hash Facade
+use Illuminate\Validation\ValidationException; // Import ValidationException
 
 class KaryawanController extends Controller
 {
+    /**
+     * Menampilkan daftar karyawan.
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
-        $karyawans = Karyawan::with('user')->get();
+        // Anda bisa menambahkan paginasi, filter, atau pencarian di sini jika diperlukan
+        $karyawans = Karyawan::with('user', 'perusahaan')->get(); // Load relasi user dan perusahaan
         return response()->json([
-            'status' => 'success',
-            'data'   => $karyawans,
+            'success' => true,
+            'message' => 'Daftar karyawan berhasil diambil',
+            'data' => $karyawans
         ], 200);
     }
 
+    /**
+     * Menyimpan data karyawan baru beserta akun user-nya.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nama'          => 'required|string|max:255',
-            'email'         => 'required|email|unique:users,email',
-            'password'      => 'required|string|min:6|confirmed',
-            'perusahaan_id' => 'required|exists:perusahaans,id',
-            'no_hp'         => 'required|string|max:15',
-            'alamat'        => 'required|string|max:255',
-            'jabatan'       => 'required|string|max:255',
-            'foto'          => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        try {
+            // Validasi data untuk pembuatan User dan Karyawan
+            $validatedData = $request->validate([
+                'perusahaan_id' => 'required|exists:perusahaans,id', // Karyawan harus terkait perusahaan
+                'nama'          => 'required|string|max:255',
+                'username'      => 'required|string|max:255|unique:users,username', // Unique di tabel users
+                'email'         => 'required|email|max:255|unique:users,email', // Unique di tabel users
+                'password'      => 'required|string|min:8|confirmed', // 'confirmed' butuh password_confirmation
+                'no_telepon'    => 'nullable|string|max:20',
+                'alamat'        => 'nullable|string|max:255',
+                'jabatan'       => 'nullable|string|max:100',
+            ]);
 
-        if ($request->hasFile('foto')) {
-            $validatedData['foto'] = $request->file('foto')->store('karyawan-photos', 'public');
+            // Buat User baru untuk karyawan ini
+            $user = User::create([
+                'name'     => $validatedData['nama'], // Gunakan nama karyawan sebagai nama user
+                'email'    => $validatedData['email'],
+                'username' => $validatedData['username'],
+                'password' => Hash::make($validatedData['password']),
+            ]);
+
+            // Anda bisa menambahkan logika untuk assign role di sini jika diperlukan
+            // $user->assignRole('Karyawan'); // Misalnya, jika menggunakan Spatie Permission
+
+            // Buat Karyawan baru dan kaitkan dengan user dan perusahaan
+            $karyawan = Karyawan::create([
+                'user_id'       => $user->id, // Kaitkan dengan ID user yang baru dibuat
+                'perusahaan_id' => $validatedData['perusahaan_id'],
+                'nama'          => $validatedData['nama'],
+                'username'      => $validatedData['username'], // Simpan username di karyawan juga jika perlu
+                'email'         => $validatedData['email'],       // Simpan email di karyawan juga jika perlu
+                'no_telepon'    => $validatedData['no_telepon'] ?? null,
+                'alamat'        => $validatedData['alamat'] ?? null,
+                'jabatan'       => $validatedData['jabatan'] ?? null,
+            ]);
+
+            // Load user dan perusahaan relation untuk response
+            $karyawan->load('user', 'perusahaan');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Karyawan dan akun berhasil ditambahkan',
+                'data' => $karyawan,
+            ], 201); // 201 Created
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $e->errors()
+            ], 422); // 422 Unprocessable Entity
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menyimpan karyawan',
+                'error' => $e->getMessage()
+            ], 500); // 500 Internal Server Error
         }
-
-        // Simpan user terlebih dahulu
-        $user = User::create([
-            'name'     => $data['nama_lengkap'],
-            'email'    => $data['email'],
-            'username' => strtolower(str_replace(' ', '_', $data['nama_lengkap'])),
-            'password' => Hash::make($data['password']),
-        ]);
-        $user->assignRole('Karyawan');
-
-        // Simpan data karyawan
-        Karyawan::create([
-            'nama_lengkap'  => $data['nama_lengkap'],
-            'no_hp'         => $data['no_hp'] ?? null,
-            'alamat'        => $data['alamat'] ?? null,
-            'jabatan'       => $data['jabatan'] ?? null,
-            'foto'          => $fotoPath,
-            'user_id'       => $user->id,
-            'perusahaan_id' => $data['perusahaan_id'],
-        ]);
-
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Karyawan dan User berhasil ditambahkan',
-            'data'    => $karyawan,
-        ], 201);
     }
 
+    /**
+     * Menampilkan detail karyawan berdasarkan ID.
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show($id)
     {
-        $karyawan = Karyawan::with('user')->find($id);
-        if (! $karyawan) {
+        $karyawan = Karyawan::with('user', 'perusahaan')->find($id);
+
+        if (!$karyawan) {
             return response()->json([
-                'status'  => 'error',
+                'success' => false,
                 'message' => 'Karyawan tidak ditemukan',
             ], 404);
         }
 
         return response()->json([
-            'status' => 'success',
-            'data'   => $karyawan,
-        ]);
+            'success' => true,
+            'message' => 'Detail karyawan berhasil diambil',
+            'data' => $karyawan
+        ], 200);
     }
 
+    /**
+     * Memperbarui data karyawan dan akun user terkait.
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, $id)
     {
-        $karyawan = Karyawan::find($id);
-        if (! $karyawan) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'Karyawan tidak ditemukan',
-            ], 404);
-        }
+        try {
+            $karyawan = Karyawan::with('user', 'perusahaan')->find($id);
 
-        $validatedData = $request->validate([
-            'nama_lengkap'  => 'nullable|string|max:255',
-            'email'         => 'nullable|email|unique:users,email,' . $karyawan->user_id,
-            'password'      => 'nullable|string|min:6',
-            'role'          => 'nullable|string',
-            'no_telp'       => 'nullable|string|max:15',
-            'foto'          => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'perusahaan_id' => 'nullable|exists:perusahaans,id',
-        ]);
-
-        if ($request->hasFile('foto')) {
-            if ($karyawan->foto) {
-                Storage::disk('public')->delete($karyawan->foto);
+            if (!$karyawan) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Karyawan tidak ditemukan',
+                ], 404);
             }
-            $validatedData['foto'] = $request->file('foto')->store('karyawan-photos', 'public');
-        }
 
-        // Update karyawan
-        $karyawan->update($validatedData);
+            // Dapatkan user terkait
+            $user = $karyawan->user;
 
-        // Update user terkait
-        $user = $karyawan->user;
-        if ($user) {
-            $user->update([
-                'name'          => $validatedData['nama_lengkap'] ?? $user->name,
-                'email'         => $validatedData['email'] ?? $user->email,
-                'role'          => $validatedData['role'] ?? $user->role,
-                'password'      => isset($validatedData['password']) ? bcrypt($validatedData['password']) : $user->password,
-                'perusahaan_id' => $validatedData['perusahaan_id'] ?? $user->perusahaan_id,
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Akun user terkait karyawan tidak ditemukan. Tidak dapat memperbarui.',
+                ], 404);
+            }
+
+            // Validasi data. Perhatikan 'sometimes' untuk opsional.
+            // Unique rule untuk username dan email harus mengecualikan ID user yang sedang diupdate.
+            $validatedData = $request->validate([
+                'perusahaan_id' => 'sometimes|required|exists:perusahaans,id', // perusahaan_id bisa diupdate, tapi tetap required jika disertakan
+                'nama'          => 'sometimes|string|max:255',
+                'username'      => 'sometimes|string|max:255|unique:users,username,' . $user->id,
+                'email'         => 'sometimes|email|max:255|unique:users,email,' . $user->id,
+                'password'      => 'sometimes|string|min:8|confirmed', // Jika password diupdate
+                'no_telepon'    => 'nullable|string|max:20',
+                'alamat'        => 'nullable|string|max:255',
+                'jabatan'       => 'nullable|string|max:100',
             ]);
-        }
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Karyawan dan User berhasil diperbarui',
-            'data'    => $karyawan,
-        ]);
+            // Update data user
+            $userUpdateData = [];
+            if (isset($validatedData['nama'])) {
+                $userUpdateData['name'] = $validatedData['nama'];
+            }
+            if (isset($validatedData['email'])) {
+                $userUpdateData['email'] = $validatedData['email'];
+            }
+            if (isset($validatedData['username'])) {
+                $userUpdateData['username'] = $validatedData['username'];
+            }
+            if (isset($validatedData['password'])) {
+                $userUpdateData['password'] = Hash::make($validatedData['password']);
+            }
+            if (!empty($userUpdateData)) {
+                $user->update($userUpdateData);
+            }
+
+            // Update data karyawan
+            $karyawanUpdateData = [];
+            if (isset($validatedData['perusahaan_id'])) {
+                $karyawanUpdateData['perusahaan_id'] = $validatedData['perusahaan_id'];
+            }
+            if (isset($validatedData['nama'])) {
+                $karyawanUpdateData['nama'] = $validatedData['nama'];
+            }
+            if (isset($validatedData['email'])) {
+                $karyawanUpdateData['email'] = $validatedData['email'];
+            }
+            if (isset($validatedData['username'])) {
+                $karyawanUpdateData['username'] = $validatedData['username'];
+            }
+            if (isset($validatedData['no_telepon'])) {
+                $karyawanUpdateData['no_telepon'] = $validatedData['no_telepon'];
+            }
+            if (isset($validatedData['alamat'])) {
+                $karyawanUpdateData['alamat'] = $validatedData['alamat'];
+            }
+            if (isset($validatedData['jabatan'])) {
+                $karyawanUpdateData['jabatan'] = $validatedData['jabatan'];
+            } else if ($request->has('jabatan') && $validatedData['jabatan'] === null) {
+                // Handle case where jabatan is explicitly set to null
+                $karyawanUpdateData['jabatan'] = null;
+            }
+
+            if (!empty($karyawanUpdateData)) {
+                $karyawan->update($karyawanUpdateData);
+            }
+
+            // Reload user dan perusahaan relation for response
+            $karyawan->load('user', 'perusahaan');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Karyawan dan akun berhasil diperbarui',
+                'data' => $karyawan,
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat memperbarui karyawan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
+    /**
+     * Menghapus data karyawan dan akun user terkait.
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id)
     {
         $karyawan = Karyawan::find($id);
-        if (! $karyawan) {
+
+        if (!$karyawan) {
             return response()->json([
-                'status'  => 'error',
+                'success' => false,
                 'message' => 'Karyawan tidak ditemukan',
             ], 404);
         }
 
-        if ($karyawan->foto) {
-            Storage::disk('public')->delete($karyawan->foto);
-        }
-
-        // Hapus user terkait
+        // Hapus user terkait jika ada (penting: pastikan ada foreign key cascade delete di database,
+        // atau hapus secara manual di sini jika user_id adalah foreign key)
         if ($karyawan->user) {
             $karyawan->user->delete();
         }
@@ -149,8 +253,8 @@ class KaryawanController extends Controller
         $karyawan->delete();
 
         return response()->json([
-            'status'  => 'success',
-            'message' => 'Karyawan dan User berhasil dihapus',
-        ]);
+            'success' => true,
+            'message' => 'Karyawan dan akun terkait berhasil dihapus',
+        ], 200);
     }
 }

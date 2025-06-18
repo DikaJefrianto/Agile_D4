@@ -37,7 +37,6 @@ class PerusahaanSeeder extends Seeder
                 'nama' => $faker->company,
                 'email' => $faker->unique()->companyEmail,
                 'alamat' => $faker->address,
-                'logo' => 'logo_' . Str::random(10) . '.png',
                 'created_at' => Carbon::now()->subDays(rand(1, 365)),
                 'updated_at' => Carbon::now(),
             ]);

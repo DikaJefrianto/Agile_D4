@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('nama', 255);
             $table->string('email', 255)->unique();
             $table->string('alamat')->nullable();
-            $table->string('logo')->nullable(); // disamakan dengan 'foto'
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });

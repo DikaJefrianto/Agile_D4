@@ -64,13 +64,10 @@ class PerusahaanController extends Controller
             'email'      => 'required|email|unique:users,email',
             'password'   => 'required|string|min:6|confirmed',
             'alamat'     => 'required|string|max:255',
-            'logo'       => 'nullable|image|max:2048',
             'keterangan' => 'nullable|string|max:1000',
         ]);
 
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $request->file('logo')->store('logos', 'public');
-        }
+
 
         // Buat user baru untuk perusahaan ini
         $user = User::create([
@@ -89,7 +86,6 @@ class PerusahaanController extends Controller
             'username'   => $data['username'],
             'email'      => $data['email'],
             'alamat'     => $data['alamat'],
-            'logo'       => $data['logo'] ?? null,
             'keterangan' => $data['keterangan'] ?? null,
         ]);
 
@@ -131,7 +127,6 @@ class PerusahaanController extends Controller
             'username'   => 'required|string|max:255|unique:users,username,' . $perusahaan->user_id,
             'email'      => 'required|email|unique:users,email,' . $perusahaan->user_id,
             'alamat'     => 'required|string|max:255',
-            'logo'       => 'nullable|image|max:2048',
             'keterangan' => 'nullable|string|max:1000',
         ]);
 
@@ -152,7 +147,6 @@ class PerusahaanController extends Controller
             'email'      => $data['email'],
             'username'   => $data['username'],
             'alamat'     => $data['alamat'],
-            'logo'       => $data['logo'] ?? $perusahaan->logo,
             'keterangan' => $data['keterangan'] ?? $perusahaan->keterangan,
         ]);
 
@@ -170,11 +164,5 @@ class PerusahaanController extends Controller
         return redirect()->route('admin.perusahaans.index')
             ->with('success', 'Perusahaan dan akun berhasil dihapus.');
     }
-    // public function detail(Perusahaan $perusahaan): Renderable
-    // {
-    //     $this->checkAuthorization(auth()->user(), ['perusahaan.view']);
-    //     $perusahaan->load('user');
-    //     $perusahaan = Perusahaan::withCount('karyawans')->findOrFail($id);
-    //     return view('backend.pages.perusahaans.detail', compact('perusahaan'));
-    // }
+    
 }
