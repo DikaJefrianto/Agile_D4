@@ -1,0 +1,6 @@
+# pack-refs with: peeled fully-peeled sorted 
+49a77308a64fdc752209c805014d1a00e138dc66 refs/remotes/origin/inventarisasi-sumber-emisi
+c1e70df7ec0bc43e4f601be9f0c7c89201440f22 refs/remotes/origin/main
+49a77308a64fdc752209c805014d1a00e138dc66 refs/remotes/origin/manajemen-data-emisi-karbon
+49a77308a64fdc752209c805014d1a00e138dc66 refs/remotes/origin/manajemen-klien-dan-konsultasi
+49a77308a64fdc752209c805014d1a00e138dc66 refs/remotes/origin/testing

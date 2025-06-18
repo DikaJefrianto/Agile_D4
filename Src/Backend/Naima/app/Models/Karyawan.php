@@ -2,37 +2,57 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Karyawan extends Model
 {
     use HasFactory;
 
-    protected $table = 'karyawans'; // Nama tabel di database
+    protected $table = 'karyawans';
 
+    /**
+     * Mass assignable attributes.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'nama_lengkap',
-        'email',
-        'password',
-        'role',
-        'no_telp',
+        'no_hp',
+        'alamat',
+        'jabatan',
         'foto',
+        'user_id',
         'perusahaan_id',
     ];
 
-    // Enkripsi password secara otomatis saat diset
-    public function setPasswordAttribute($value)
+    /**
+     * Relasi Karyawan ke User (satu karyawan punya satu user).
+     */
+    public function user()
     {
-        if (!empty($value)) {
-            $this->attributes['password'] = Hash::make($value);
-        }
+        return $this->belongsTo(User::class);
     }
 
-    // Relasi ke model Perusahaan
+    /**
+     * Relasi Karyawan ke Perusahaan (satu karyawan bekerja di satu perusahaan).
+     */
     public function perusahaan()
     {
         return $this->belongsTo(Perusahaan::class);
+    }
+
+    /**
+     * Boot method to hook into model events.
+     * Saat karyawan dihapus, user terkait juga dihapus.
+     */
+    protected static function booted()
+    {
+        static::deleting(function ($karyawan) {
+            // Hapus user yang berelasi dengan karyawan ini
+            if ($karyawan->user) {
+                $karyawan->user->delete();
+            }
+        });
     }
 }
