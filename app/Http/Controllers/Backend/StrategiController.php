@@ -27,7 +27,7 @@ class StrategiController extends Controller
     $query = Strategi::with('perusahaan')->latest();
 
     if (auth()->user()->role === 'perusahaan') {
-        $query->where('perusahaan_id', auth()->user()->perusahaan_id);
+        $query->where('perusahaan_id', auth()->user()->perusahaan->id);
     }
 
     $strategis = $query->paginate(10);
@@ -107,47 +107,87 @@ class StrategiController extends Controller
     /**
      * Update the specified strategi in storage.
      */
+    // public function update(Request $request, Strategi $strategi): RedirectResponse
+    // {
+    //     // No authentication. Validation applies to all input.
+    //     $validationRules = [
+    //         'nama_program' => 'required|string|max:255',
+    //         'deskripsi' => 'nullable|string',
+    //         'status' => 'required|in:aktif,nonaktif',
+    //         'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+    //         // With no roles, 'perusahaan_id' must always be provided for updates as well
+    //         'perusahaan_id' => 'required|exists:perusahaans,id',
+    //     ];
+
+    //     $validatedData = $request->validate($validationRules);
+
+    //     // Handle document upload
+    //     if ($request->hasFile('dokumen')) {
+    //         // Delete old document if it exists
+    //         if ($strategi->dokumen && Storage::disk('public')->exists($strategi->dokumen)) {
+    //             Storage::disk('public')->delete($strategi->dokumen);
+    //         }
+    //         $validatedData['dokumen'] = $request->file('dokumen')->store('strategi_docs', 'public');
+    //     } else if ($request->boolean('remove_dokumen')) { // Option to remove document
+    //         if ($strategi->dokumen && Storage::disk('public')->exists($strategi->dokumen)) {
+    //             Storage::disk('public')->delete($strategi->dokumen);
+    //         }
+    //         $validatedData['dokumen'] = null;
+    //     }
+
+    //     // Always set perusahaan_id from validated data since there are no roles
+    //     $strategi->perusahaan_id = $validatedData['perusahaan_id'];
+
+
+    //     $strategi->fill([
+    //         'nama_program' => $validatedData['nama_program'],
+    //         'deskripsi' => $validatedData['deskripsi'],
+    //         'status' => $validatedData['status'],
+    //         'dokumen' => $validatedData['dokumen'] ?? $strategi->dokumen, // Keep existing if no new upload and not removed
+    //     ])->save();
+
+    //     return redirect()->route('admin.strategis.index')->with('success', 'Strategy successfully updated.');
+    // }
+
+
+    //refactoring
     public function update(Request $request, Strategi $strategi): RedirectResponse
     {
-        // No authentication. Validation applies to all input.
-        $validationRules = [
-            'nama_program' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'status' => 'required|in:aktif,nonaktif',
-            'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            // With no roles, 'perusahaan_id' must always be provided for updates as well
-            'perusahaan_id' => 'required|exists:perusahaans,id',
-        ];
+        $validated = $request->validate([
+            'nama_program'   => 'required|string|max:255',
+            'deskripsi'      => 'nullable|string',
+            'status'         => 'required|in:aktif,nonaktif',
+            'dokumen'        => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'perusahaan_id'  => 'required|exists:perusahaans,id',
+            'remove_dokumen' => 'nullable|boolean',
+        ]);
 
-        $validatedData = $request->validate($validationRules);
-
-        // Handle document upload
+        // Handle dokumen upload or removal
         if ($request->hasFile('dokumen')) {
-            // Delete old document if it exists
             if ($strategi->dokumen && Storage::disk('public')->exists($strategi->dokumen)) {
                 Storage::disk('public')->delete($strategi->dokumen);
             }
-            $validatedData['dokumen'] = $request->file('dokumen')->store('strategi_docs', 'public');
-        } else if ($request->boolean('remove_dokumen')) { // Option to remove document
-            if ($strategi->dokumen && Storage::disk('public')->exists($strategi->dokumen)) {
+            $validated['dokumen'] = $request->file('dokumen')->store('strategi_docs', 'public');
+        } elseif ($request->boolean('remove_dokumen') && $strategi->dokumen) {
+            if (Storage::disk('public')->exists($strategi->dokumen)) {
                 Storage::disk('public')->delete($strategi->dokumen);
             }
-            $validatedData['dokumen'] = null;
+            $validated['dokumen'] = null;
+        } else {
+            $validated['dokumen'] = $strategi->dokumen;
         }
 
-        // Always set perusahaan_id from validated data since there are no roles
-        $strategi->perusahaan_id = $validatedData['perusahaan_id'];
-
-
-        $strategi->fill([
-            'nama_program' => $validatedData['nama_program'],
-            'deskripsi' => $validatedData['deskripsi'],
-            'status' => $validatedData['status'],
-            'dokumen' => $validatedData['dokumen'] ?? $strategi->dokumen, // Keep existing if no new upload and not removed
-        ])->save();
+        $strategi->update([
+            'perusahaan_id' => $validated['perusahaan_id'],
+            'nama_program'  => $validated['nama_program'],
+            'deskripsi'     => $validated['deskripsi'],
+            'status'        => $validated['status'],
+            'dokumen'       => $validated['dokumen'],
+        ]);
 
         return redirect()->route('admin.strategis.index')->with('success', 'Strategy successfully updated.');
     }
+
 
     /**
      * Remove the specified strategi from storage.

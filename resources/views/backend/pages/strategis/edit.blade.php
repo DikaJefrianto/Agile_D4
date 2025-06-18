@@ -47,6 +47,27 @@
                         @method('PUT')
 
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <div class="sm:col-span-2">
+                                    <label for="perusahaan_id"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        {{ __('Perusahaan') }} <span class="text-red-500">*</span>
+                                    </label>
+                                    <select name="perusahaan_id" id="perusahaan_id" required
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                        <option value="">-- Pilih Perusahaan --</option>
+                                        {{-- $perusahaans will only be available if the user is an admin or superadmin --}}
+                                        @if (isset($perusahaans))
+                                            @foreach($perusahaans as $perusahaan)
+                                            <option value="{{ $perusahaan->id }}" {{ old('user_id') == $perusahaan->id ? 'selected' : '' }}>
+                                                {{ $perusahaan->nama }}
+                                            </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    @error('perusahaan_id')
+                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
                             {{-- Nama Program --}}
                             <div class="sm:col-span-2">
                                 <label for="nama_program"
