@@ -11,9 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Storage;
-// Removed: use Illuminate\Support\Facades\Auth; // No longer needed for authentication
-// Removed: use Illuminate\Support\Facades\Validator; // Not used in provided code
-// Removed: use Illuminate\Support\Str; // Not used in provided code
+
 
 class StrategiController extends Controller
 {

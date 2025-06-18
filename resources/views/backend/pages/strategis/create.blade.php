@@ -6,9 +6,9 @@
 
 @section('admin-content')
     <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
-        <div x-data="{ pageName: '{{ __('New Strategy') }}' }">
+        <div x-data="{ pageName: '{{ __('Strategi Baru') }}' }">
             <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-                <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{{ __('New Strategy') }}</h2>
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{{ __('Strategi Baru') }}</h2>
                 <nav>
                     <ol class="flex items-center gap-1.5">
                         <li>
@@ -59,7 +59,7 @@
                                         {{-- $perusahaans will only be available if the user is an admin or superadmin --}}
                                         @if (isset($perusahaans))
                                             @foreach($perusahaans as $perusahaan)
-                                            <option value="{{ $perusahaan->id }}" {{ old('user_id') == $perusahaan->id ? 'selected' : '' }}>
+                                            <option value="{{ $perusahaan->id }}" {{ old('perusahaan_id') == $perusahaan->id ? 'selected' : '' }}>
                                                 {{ $perusahaan->nama }}
                                             </option>
                                             @endforeach
