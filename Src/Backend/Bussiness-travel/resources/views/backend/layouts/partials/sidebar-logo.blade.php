@@ -34,7 +34,11 @@
             <span class="logo transition-opacity duration-300" :class="sidebarToggle && !isHovered ? 'hidden opacity-0' : 'opacity-100'">
                 <img
                     class="dark:hidden max-h-[80px]"
+
                     src="{{ config('settings.site_logo_lite') ?? asset('images/logo/ns.png') }}"
+
+                    src="{{ config('settings.site_logo_lite') ?? asset('images/logo/lara-dashboard.png') }}"
+
                     alt="{{ config('app.name') }}"
                 />
                 <img

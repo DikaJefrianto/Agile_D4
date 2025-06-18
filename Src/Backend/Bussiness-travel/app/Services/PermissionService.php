@@ -25,39 +25,12 @@ class PermissionService
             ],
         ],
         [
-            'group_name' => 'bahan-bakar',
-            'permissions' => [
-                'bahan-bakar.create',
-                'bahan-bakar.view',
-                'bahan-bakar.edit',
-                'bahan-bakar.delete',
-            ],
-        ],
-        [
             'group_name' => 'karyawan',
             'permissions' => [
                 'karyawan.create',
                 'karyawan.view',
                 'karyawan.edit',
                 'karyawan.delete',
-            ],
-        ],
-        [
-            'group_name' => 'transportasi',
-            'permissions' => [
-                'transportasi.create',
-                'transportasi.view',
-                'transportasi.edit',
-                'transportasi.delete',
-            ],
-        ],
-        [
-            'group_name' => 'perjalanan',
-            'permissions' => [
-                'perjalanan.create',
-                'perjalanan.view',
-                'perjalanan.edit',
-                'perjalanan.delete',
             ],
         ],
         [
@@ -69,25 +42,6 @@ class PermissionService
                 'feedback.delete',
             ],
         ],
-        [
-            'group_name' => 'perhitungan',
-            'permissions' => [
-                'perhitungan.create',
-                'perhitungan.view',
-                'perhitungan.edit',
-                'perhitungan.delete',
-            ],
-        ],
-        [
-            'group_name' => 'strategi',
-            'permissions' => [
-                'strategi.create',
-                'strategi.view',
-                'strategi.edit',
-                'strategi.delete',
-            ],
-        ],
-
         [
             'group_name' => 'user',
             'permissions' => [
@@ -157,6 +111,43 @@ class PermissionService
                 'perusahaan.edit',
                 'perusahaan.delete',
                 'perusahaan.detail',
+            ],
+        ],
+        [
+            'group_name' => 'bahanbakar',
+            'permissions' => [
+                'bahanbakar.view',
+                'bahanbakar.create',
+                'bahanbakar.edit',
+                'bahanbakar.delete',
+            ],
+        ],
+        [
+            'group_name' => 'transportasi',
+            'permissions' => [
+                'transportasi.view',
+                'transportasi.create',
+                'transportasi.edit',
+                'transportasi.delete',
+            ],
+        ],
+        [
+            'group_name' => 'biaya',
+            'permissions' => [
+                'biaya.view',
+                'biaya.create',
+                'biaya.edit',
+                'biaya.delete',
+            ],
+        ],
+        [
+            'group_name' => 'perhitungan',
+            'permissions' => [
+                'perhitungan.view',
+                'perhitungan.create',
+                'perhitungan.edit',
+                'perhitungan.delete',
+                'perhitungan.detail',
             ],
         ],
     ];

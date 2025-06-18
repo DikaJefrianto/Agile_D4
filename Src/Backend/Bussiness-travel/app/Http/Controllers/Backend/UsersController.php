@@ -14,7 +14,6 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 
-
 class UsersController extends Controller
 {
     public function __construct(

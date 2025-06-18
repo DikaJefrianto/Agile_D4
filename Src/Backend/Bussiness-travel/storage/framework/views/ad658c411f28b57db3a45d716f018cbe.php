@@ -226,4 +226,7 @@
 
 </html>
 
+</html>
+
+
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH F:\Project\Agile_D4\Src\Backend\Bussiness-travel\resources\views/home.blade.php ENDPATH**/ ?>

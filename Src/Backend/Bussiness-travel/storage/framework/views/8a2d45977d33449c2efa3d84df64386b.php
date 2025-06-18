@@ -7,7 +7,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
+
     <title><?php echo e(config('app.name', 'Naima Sustainbility')); ?></title>
+
+    <title><?php echo e(config('app.name', 'Laravel')); ?></title>
+
 
     <!-- Scripts -->
     <script src="<?php echo e(asset('js/app.js')); ?>" defer></script>
@@ -20,6 +24,7 @@
     <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
 </head>
 
+
         
             
                 
@@ -30,6 +35,17 @@
 
         
     
+
+
+                </div>
+            </div>
+        </nav>
+
+        <main class="py-4">
+            <?php echo $__env->yieldContent('content'); ?>
+        </main>
+    </div>
+</body>
 
 </html>
 <?php /**PATH F:\Project\Agile_D4\Src\Backend\Bussiness-travel\resources\views/layouts/app.blade.php ENDPATH**/ ?>

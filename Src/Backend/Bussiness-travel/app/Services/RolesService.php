@@ -179,12 +179,7 @@ class RolesService
             'feedback.create',
             'feedback.view',
             'feedback.edit',
-            'perjalanan.create',
-            'perjalanan.view',
-            'perjalanan.edit',
-            'transportasi.create',
             'transportasi.view',
-            'transportasi.edit',
             'karyawan.create',
             'karyawan.view',
             'karyawan.edit',
@@ -195,6 +190,7 @@ class RolesService
             'profile.update',
             // Translations
             'translations.view',
+
         ];
 
         $roles['perusahaan'] = $this->createRole('Perusahaan', $perusahaanPermissions);
@@ -205,11 +201,16 @@ class RolesService
             'profile.view',
             'profile.edit',
             'profile.update',
+            'feedback.create',
+            'feedback.view',
+            'feedback.edit',
+            'perhitungan.create',
+            'perhitungan.view',
         ];
 
         $roles['karyawan'] = $this->createRole('Karyawan', $karyawanPermissions);
 
-        
+
         return $roles;
     }
 
@@ -250,13 +251,12 @@ class RolesService
             case 'perusahaan':
                 return [
                     'dashboard.view',
-                    'blog.create',
-                    'blog.view',
-                    'blog.edit',
                     'profile.view',
                     'profile.edit',
                     'profile.update',
                     'translations.view',
+                    'perhitungan.create',
+                    'perhitungan.view',
                 ];
 
             case 'karyawan':

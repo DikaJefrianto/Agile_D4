@@ -55,9 +55,44 @@
                         'class' => 'bg-white',
                         'url' => route('admin.translations.index'),
                     ])
+
+                    {{-- @include('backend.pages.dashboard.partials.card', [
+                        'icon' => 'bi bi-cloud-check',
+                        'label' => __('Total Emisi'),
+                        'value' => number_format($totalEmisi, 2) . ' kg CO₂',
+                        'bg' => '#F97316',
+                        'class' => 'bg-white',
+                        'url' => route('admin.perhitungan.index'),
+                    ]) --}}
+
                 </div>
             </div>
         </div>
+        {{-- ✨ Tambahan: Menu CRUD --}}
+        {{-- <div class="mt-6">
+            <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-4">{{ __('Quick Access to CRUD Modules') }}</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                @php
+                    $crudModules = [
+                        ['label' => 'Perusahaans', 'route' => 'admin.perusahaans.index', 'icon' => 'bi bi-buildings', 'color' => '#0EA5E9'],
+                        ['label' => 'Karyawans', 'route' => 'admin.karyawans.index', 'icon' => 'bi bi-person-badge', 'color' => '#9333EA'],
+                        ['label' => 'Strategis', 'route' => 'admin.strategis.index', 'icon' => 'bi bi-lightbulb', 'color' => '#F59E0B'],
+                        ['label' => 'bahan-bakar', 'route' => 'admin.bahan-bakar.index', 'icon' => 'bi bi-fuel-pump', 'color' => '#EF4444'],
+                        ['label' => 'transportasi', 'route' => 'admin.transportasi.index', 'icon' => 'bi bi-truck-front', 'color' => '#10B981'],
+                        ['label' => 'Feedbacks', 'route' => 'admin.feedbacks.index', 'icon' => 'bi bi-chat-left-text', 'color' => '#3B82F6'],
+                        ['label' => 'Perjalanan Dinas', 'route' => 'admin.perjalanan-dinas.index', 'icon' => 'bi bi-geo-alt', 'color' => '#8B5CF6'],
+                        ['label' => 'Perhitungan', 'route' => 'admin.perhitungan.index', 'icon' => 'bi bi-calculator', 'color' => '#F97316'],
+                    ];
+                @endphp
+
+                @foreach ($crudModules as $modul)
+                    <a href="{{ route($modul['route']) }}" class="rounded-xl p-4 text-white shadow hover:shadow-md transition-all duration-200 flex items-center gap-3" style="background-color: {{ $modul['color'] }}">
+                        <i class="{{ $modul['icon'] }} text-xl"></i>
+                        <span class="text-sm font-semibold">{{ __($modul['label']) }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </div> --}}
 
 
         {{-- Grafik & History --}}

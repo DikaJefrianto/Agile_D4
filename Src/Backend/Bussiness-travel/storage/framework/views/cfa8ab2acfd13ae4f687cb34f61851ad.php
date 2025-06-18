@@ -34,7 +34,11 @@
             <span class="logo transition-opacity duration-300" :class="sidebarToggle && !isHovered ? 'hidden opacity-0' : 'opacity-100'">
                 <img
                     class="dark:hidden max-h-[80px]"
+
                     src="<?php echo e(config('settings.site_logo_lite') ?? asset('images/logo/ns.png')); ?>"
+
+                    src="<?php echo e(config('settings.site_logo_lite') ?? asset('images/logo/lara-dashboard.png')); ?>"
+
                     alt="<?php echo e(config('app.name')); ?>"
                 />
                 <img
