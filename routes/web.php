@@ -95,17 +95,17 @@ Route::middleware(['auth', 'role:superadmin|admin'])
             });
 
 
-        Route::middleware(['auth', 'role:perusahaan'])->prefix('dashboard')->name('perusahaan.')->group(function () {
-            Route::resource('consultations', ConsultationController::class)->only([
-                'index', 'create', 'store', 'show'
-            ]);
-        });
+        // Route::middleware(['auth', 'role:perusahaan'])->prefix('dashboard')->name('perusahaan.')->group(function () {
+        //     Route::resource('consultations', ConsultationController::class)->only([
+        //         'index', 'create', 'store', 'show'
+        //     ]);
+        // });
 
-        Route::middleware(['auth', 'role:admin'])->group(function () {
-            Route::get('consultations', [ConsultationController::class, 'adminIndex'])->name('consultations.index');
-            Route::get('consultations/{id}/edit', [ConsultationController::class, 'edit'])->name('admin.consultations.edit');
-            Route::put('consultations/{id}', [ConsultationController::class, 'update'])->name('admin.consultations.update');
-        });
+        // Route::middleware(['auth', 'role:admin'])->group(function () {
+        //     Route::get('consultations', [ConsultationController::class, 'adminIndex'])->name('consultations.index');
+        //     Route::get('consultations/{id}/edit', [ConsultationController::class, 'edit'])->name('admin.consultations.edit');
+        //     Route::put('consultations/{id}', [ConsultationController::class, 'update'])->name('admin.consultations.update');
+        // });
         // Umum untuk semua role (auth)
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
         Route::post('/settings', [SettingsController::class, 'store'])->name('settings.store');
@@ -121,7 +121,7 @@ Route::middleware(['auth', 'role:superadmin|admin'])
         Route::get('/action-log', [ActionLogController::class, 'index'])->name('actionlog.index');
 
         // Route::resource('strategis', StrategiController::class);
-        // Route::resource('consultations', ConsultationController::class);
+        Route::resource('consultations', ConsultationController::class);
         Route::resource('bahan-bakars', BahanBakarController::class);
         Route::resource('kendaraans', KendaraanController::class);
         Route::resource('feedbacks', FeedbackController::class);

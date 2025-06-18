@@ -21,15 +21,21 @@ class StrategiController extends Controller
      * Display a listing of the strategi.
      */
     public function index(): Renderable
-    {
-        $this->checkAuthorization(auth()->user(), ['strategi.view']);
+{
+    $this->checkAuthorization(auth()->user(), ['strategi.view']);
 
-        // No authentication or role-based filtering here, all strategies are visible.
-        $strategis = Strategi::with('perusahaan')->latest()->paginate(10);
+    $query = Strategi::with('perusahaan')->latest();
 
-        return view('backend.pages.strategis.index', compact('strategis'));
+    if (auth()->user()->role === 'perusahaan') {
+        $query->where('perusahaan_id', auth()->user()->perusahaan_id);
     }
-    
+
+    $strategis = $query->paginate(10);
+
+    return view('backend.pages.strategis.index', compact('strategis'));
+}
+
+
     /**
      * Show the form for creating a new strategi.
      */
