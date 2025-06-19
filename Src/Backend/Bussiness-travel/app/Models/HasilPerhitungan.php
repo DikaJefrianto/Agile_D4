@@ -50,4 +50,5 @@ class HasilPerhitungan extends Model
     {
         return $this->belongsTo(biaya::class, 'biaya_id');
     }
+    
 }

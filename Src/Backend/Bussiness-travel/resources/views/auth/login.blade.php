@@ -9,7 +9,7 @@
     <div class="bg-white p-10 rounded-md shadow-md border border-blue-200 w-[400px]">
         <!-- Logo & Title -->
         <div class="text-center mb-6">
-            <img src="{{ asset('images/ns-longl-color.png') }}" alt="Logo" class="mx-auto w-50 mb-2">
+            <img src="{{ asset('images/logo/ns-longl-color.png') }}" alt="Logo" class="mx-auto w-50 mb-2">
         </div>
 
         <!-- Heading -->

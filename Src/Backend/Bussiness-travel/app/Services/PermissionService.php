@@ -125,6 +125,7 @@ class PermissionService
                     'perhitungan.create',
                     'perhitungan.edit',
                     'perhitungan.delete',
+                    'perhitungan.detail',
                 ],
             ],
         ];

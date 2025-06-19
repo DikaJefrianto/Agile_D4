@@ -23,6 +23,12 @@
                         <li class="text-sm text-gray-800 dark:text-white/90">{{ __('Perhitungan') }}</li>
                     </ol>
                 </nav>
+                
+            </div>
+            <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+                <a href="{{ route('admin.perhitungan.create') }}" class="btn-primary">
+                    <i class="bi bi-plus-circle mr-2"></i> {{ __('Tambah Data') }}
+                </a>
             </div>
         </div>
 
@@ -31,9 +37,51 @@
                 <div class="px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center">
                     <h3 class="text-base font-medium text-gray-800 dark:text-white/90">{{ __('Daftar Perhitungan Emisi') }}
                     </h3>
-                    <a href="{{ route('admin.perhitungan.create') }}" class="btn-primary">
+                    {{-- <a href="{{ route('admin.perhitungan.create') }}" class="btn-primary">
                         <i class="bi bi-plus-circle mr-2"></i> {{ __('Tambah Data') }}
-                    </a>
+                    </a> --}}
+                    <div class="flex items-center gap-3">
+                        <!-- Filter Dropdown -->
+                        <div class="relative">
+                            <button id="kategoriDropdownButton" data-dropdown-toggle="kategoriDropdown"
+                                class="btn-default flex items-center justify-center gap-2" type="button">
+                                <i class="bi bi-funnel-fill"></i>
+                                {{ __('Filter metode') }}
+                                <i class="bi bi-chevron-down"></i>
+                            </button>
+    
+                            <div id="kategoriDropdown"
+                                class="z-10 hidden w-48 p-3 mt-2 bg-white rounded-lg shadow dark:bg-gray-700 absolute right-0">
+                                <ul class="space-y-2">
+                                    <li class="cursor-pointer text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 px-2 py-1 rounded"
+                                        onclick="handleKategoriFilter('')">
+                                        {{ __('Semua Kategori') }}
+                                    </li>
+                                    @foreach (['bahan_bakar', 'jarak_tempuh', 'biaya'] as $metode)
+                                        <li class="cursor-pointer text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 px-2 py-1 rounded {{ request('kategori') === $metode ? 'bg-gray-200 dark:bg-gray-600' : '' }}"
+                                            onclick="handleKategoriFilter('{{ $metode }}')">
+                                            {{ $metode }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        <script>
+                            function handleKategoriFilter(metode) {
+                                const url = new URL(window.location.href);
+                                if (metode) {
+                                    url.searchParams.set('metode', metode);
+                                } else {
+                                    url.searchParams.delete('metode');
+                                }
+                                window.location.href = url.toString();
+                            }
+                        </script>
+    
+                        @include('backend.partials.search-form', [
+                            'placeholder' => __('Cari jenis kendaraan'),
+                        ])
+                    </div>
                 </div>
 
                 <div class="space-y-3 border-t border-gray-100 dark:border-gray-800 overflow-x-auto">

@@ -21,6 +21,7 @@ use App\Http\Controllers\Backend\RolesController;
 use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Backend\StrategiController;
 use App\Http\Controllers\Backend\TranslationController;
+use App\Http\Controllers\Backend\TransportasiController;
 use App\Http\Controllers\Backend\UserLoginAsController;
 use App\Http\Controllers\Backend\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -47,7 +48,7 @@ Route::middleware(['auth', 'verified','role:superadmin|admin'])
         Route::middleware(['role:admin|superadmin'])->group(function () {
              // Route::resource('strategis', StrategiController::class);
         Route::resource('bahan-bakar', BahanBakarController::class);
-        Route::resource('transportasi', KendaraanController::class);
+        Route::resource('transportasi', TransportasiController::class);
         // Route::resource('feedbacks', FeedbackController::class);
         // Route::resource('perjalanan-dinas', PerjalananDinasController::class);
         Route::resource('perhitungan', HasilPerhitunganController::class);
