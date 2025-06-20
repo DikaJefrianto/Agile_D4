@@ -11,8 +11,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+
 class KaryawanController extends Controller
 {
+    /**
+     * Menampilkan daftar karyawan dengan fitur pencarian.
+     */
     public function index(Request $request): Renderable
     {
         $this->checkAuthorization(auth()->user(), ['karyawan.view']);
@@ -35,6 +39,9 @@ class KaryawanController extends Controller
         return view('backend.pages.karyawans.index', compact('karyawans'));
     }
 
+    /**
+     * Menampilkan form untuk membuat karyawan baru.
+     */
     public function create(): Renderable
     {
         $this->checkAuthorization(auth()->user(), ['karyawan.create']);
@@ -43,6 +50,9 @@ class KaryawanController extends Controller
         return view('backend.pages.karyawans.create', compact('perusahaans'));
     }
 
+    /**
+     * Menyimpan data karyawan baru ke database.
+     */
     public function store(Request $request): RedirectResponse
     {
         $this->checkAuthorization(auth()->user(), ['karyawan.create']);
@@ -56,17 +66,8 @@ class KaryawanController extends Controller
             'alamat'        => 'required|string|max:255',
             'jabatan'       => 'required|string|max:255',
         ]);
-        // Handle upload foto jika ada
-        $fotoPath = null;
-        if ($request->hasFile('foto')) {
-            // Menggunakan Storage facade secara eksplisit untuk clarity
-            // Ini tetap akan menyimpan di storage/app/public/karyawan
-            $fotoPath = Storage::disk('public')->put('karyawan', $request->file('foto'));
-            // Anda bisa menambahkan log di sini untuk debugging, misalnya:
-            // \Log::info('Foto uploaded to: ' . $fotoPath);
-        }
 
-        // Buat akun user
+
         $user = User::create([
             'name'     => $data['nama_lengkap'],
             'email'    => $data['email'],
@@ -75,12 +76,11 @@ class KaryawanController extends Controller
         ]);
         $user->assignRole('Karyawan');
 
-        // Simpan data karyawan
         Karyawan::create([
             'nama_lengkap'  => $data['nama_lengkap'],
-            'no_hp'         => $data['no_hp'] ?? null,
-            'alamat'        => $data['alamat'] ?? null,
-            'jabatan'       => $data['jabatan'] ?? null,
+            'no_hp'         => $data['no_hp'],
+            'alamat'        => $data['alamat'],
+            'jabatan'       => $data['jabatan'],
             'user_id'       => $user->id,
             'perusahaan_id' => $data['perusahaan_id'],
         ]);
@@ -89,26 +89,42 @@ class KaryawanController extends Controller
             ->with('success', 'Karyawan berhasil ditambahkan.');
     }
 
-    public function show(Karyawan $karyawan): Renderable
+    /**
+     * Menampilkan detail karyawan tertentu.
+     */
+    public function show(int $id): Renderable
     {
         $this->checkAuthorization(auth()->user(), ['karyawan.view']);
 
-        $karyawan->load('user', 'perusahaan');
+        // Menggunakan findOrFail secara eksplisit
+        $karyawan = Karyawan::with('user', 'perusahaan')->findOrFail($id);
+
         return view('backend.pages.karyawans.show', compact('karyawan'));
     }
 
-    public function edit(Karyawan $karyawan): Renderable
+    /**
+     * Menampilkan form untuk mengedit karyawan tertentu.
+     */
+    public function edit(int $id): Renderable
     {
         $this->checkAuthorization(auth()->user(), ['karyawan.edit']);
 
+        // Menggunakan findOrFail secara eksplisit
+        $karyawan = Karyawan::with('user')->findOrFail($id);
+
         $perusahaans = Perusahaan::all();
-        $karyawan->load('user');
         return view('backend.pages.karyawans.edit', compact('karyawan', 'perusahaans'));
     }
 
-    public function update(Request $request, Karyawan $karyawan): RedirectResponse
+    /**
+     * Memperbarui data karyawan tertentu di database.
+     */
+    public function update(Request $request, int $id): RedirectResponse
     {
         $this->checkAuthorization(auth()->user(), ['karyawan.edit']);
+
+        // Menggunakan findOrFail secara eksplisit
+        $karyawan = Karyawan::findOrFail($id);
 
         $data = $request->validate([
             'nama_lengkap'  => 'required|string|max:255',
@@ -120,33 +136,19 @@ class KaryawanController extends Controller
             'jabatan'       => 'nullable|string|max:255',
         ]);
 
-        // Update akun user
-        $user        = $karyawan->user;
-        $user->name  = $data['nama_lengkap'];
+        $user = $karyawan->user;
+        $user->name = $data['nama_lengkap'];
         $user->email = $data['email'];
-        if (! empty($data['password'])) {
+        if (!empty($data['password'])) {
             $user->password = Hash::make($data['password']);
         }
         $user->save();
 
-        // Handle upload foto baru
-        if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
-            if ($karyawan->foto && Storage::disk('public')->exists($karyawan->foto)) {
-                Storage::disk('public')->delete($karyawan->foto);
-                // \Log::info('Old foto deleted: ' . $karyawan->foto); // Debugging
-            }
-            $fotoPath       = Storage::disk('public')->put('karyawan', $request->file('foto'));
-            $karyawan->foto = $fotoPath;
-            // \Log::info('New foto uploaded to: ' . $fotoPath); // Debugging
-        }
-
-        // Update data karyawan
         $karyawan->update([
             'nama_lengkap'  => $data['nama_lengkap'],
-            'no_hp'         => $data['no_hp'] ?? null,
-            'alamat'        => $data['alamat'] ?? null,
-            'jabatan'       => $data['jabatan'] ?? null,
+            'no_hp'         => $data['no_hp'],
+            'alamat'        => $data['alamat'],
+            'jabatan'       => $data['jabatan'],
             'perusahaan_id' => $data['perusahaan_id'],
         ]);
 
@@ -154,9 +156,20 @@ class KaryawanController extends Controller
             ->with('success', 'Karyawan berhasil diperbarui.');
     }
 
-    public function destroy(Karyawan $karyawan): RedirectResponse
+    /**
+     * Menghapus karyawan tertentu dari database.
+     */
+    public function destroy(int $id): RedirectResponse
     {
         $this->checkAuthorization(auth()->user(), ['karyawan.delete']);
+
+        // Menggunakan findOrFail secara eksplisit
+        $karyawan = Karyawan::findOrFail($id);
+
+        if ($karyawan->user) {
+            $karyawan->user->delete();
+        }
+
         $karyawan->delete();
 
         return redirect()->route('admin.karyawans.index')

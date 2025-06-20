@@ -38,7 +38,31 @@ class HasilPerhitunganController extends Controller
 
     public function create(Request $request)
     {
+
         $this->checkAuthorization(auth()->user(), ['perhitungan.create']);
+        $metodeOptions = [
+            [
+                'value' => 'bahan_bakar',
+                'icon' => 'bi-fuel-pump',
+                'color' => 'text-black-600',
+                'text' => 'Bahan Bakar', // String asli
+                'desc' => 'Gunakan data konsumsi bahan bakar', // String asli
+            ],
+            [
+                'value' => 'jarak_tempuh',
+                'icon' => 'bi-geo-alt-fill',
+                'color' => 'text-black-600',
+                'text' => 'Jarak Tempuh',
+                'desc' => 'Gunakan data jarak perjalanan',
+            ],
+            [
+                'value' => 'biaya',
+                'icon' => 'bi-cash-stack',
+                'color' => 'text-black-600',
+                'text' => 'Biaya',
+                'desc' => 'Gunakan data biaya perjalanan',
+            ],
+        ];
         $kategori = $request->input('kategori');
         $metode = $request->input('metode');
 
@@ -51,7 +75,8 @@ class HasilPerhitunganController extends Controller
             'jenis',
             'jenisKendaraan',
             'kategori',
-            'metode'
+            'metode',
+            'metodeOptions'
         ));
     }
 

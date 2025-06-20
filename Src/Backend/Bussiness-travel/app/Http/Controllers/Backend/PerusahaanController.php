@@ -12,18 +12,17 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage; // Tambahkan untuk mengelola file storage
 
 class PerusahaanController extends Controller
 {
+    // Penggunaan constructor property promotion (PHP 8.0+) sudah baik
     public function __construct(private readonly RolesService $rolesService)
     {
     }
+
     /**
-     * Check if the user has the required permissions.
-     *
-     * @param \App\Models\User $user
-     * @param array $permissions
-     * @return void
+     * Display a listing of the resource.
      */
     public function index(Request $request): Renderable
     {
@@ -31,18 +30,21 @@ class PerusahaanController extends Controller
 
         $search = $request->query('search');
 
+        // Eager load 'user' untuk menghindari N+1 problem saat menampilkan daftar
         $query = Perusahaan::with('user');
 
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('nama', 'like', '%' . $search . '%')
                     ->orWhereHas('user', function ($q2) use ($search) {
-                        $q2->where('email', 'like', '%' . $search . '%');
+                        // Memperbaiki pencarian: tambahkan pencarian username juga
+                        $q2->where('email', 'like', '%' . $search . '%')
+                           ->orWhere('username', 'like', '%' . $search . '%');
                     });
             });
         }
 
-        $perusahaans = $query->paginate(10)->withQueryString();
+        $perusahaans = $query->latest()->paginate(10)->withQueryString();
 
         return view('backend.pages.perusahaans.index', compact('perusahaans'));
     }
@@ -67,7 +69,10 @@ class PerusahaanController extends Controller
             'keterangan' => 'nullable|string|max:1000',
         ]);
 
-
+        $logoPath = null;
+        if ($request->hasFile('logo')) {
+            $logoPath = $request->file('logo')->store('logos', 'public');
+        }
 
         // Buat user baru untuk perusahaan ini
         $user = User::create([
@@ -77,6 +82,7 @@ class PerusahaanController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
+        // Tetapkan peran 'Perusahaan' kepada user baru
         $user->assignRole('Perusahaan');
 
         // Buat perusahaan dan kaitkan dengan user
@@ -93,20 +99,27 @@ class PerusahaanController extends Controller
             ->with('success', 'Perusahaan dan akun berhasil dibuat.');
     }
 
+    /**
+     * Show the specified resource.
+     * Refactor: Menggabungkan eager loading untuk efisiensi.
+     */
     public function show(int $id): Renderable
     {
         $this->checkAuthorization(auth()->user(), ['perusahaan.view']);
-        $perusahaan = Perusahaan::withCount(['karyawans'])->findOrFail($id);
-        $perusahaan->load('user');
-        // Pastikan perusahaan memiliki relasi dengan user
+
+        // Eager load 'user' dan 'karyawans' (untuk koleksi)
+        // dan juga eager load count 'karyawans' dalam satu query yang efisien.
+        $perusahaan = Perusahaan::with(['user', 'karyawans'])
+                                ->withCount('karyawans')
+                                ->findOrFail($id);
+
+        // Pemeriksaan ini tetap dipertahankan untuk robustness,
+        // jika ada skenario data yang tidak konsisten dimana user_id ada
+        // tapi relasi 'user' tidak ditemukan.
         if (!$perusahaan->user) {
             return redirect()->route('admin.perusahaans.index')
                 ->with('error', 'Perusahaan tidak ditemukan atau tidak memiliki akun terkait.');
         }
-        // Jika perusahaan memiliki relasi dengan user, tampilkan detailnya
-        $perusahaan->load('user');
-        $perusahaan->loadCount('karyawans');
-        $perusahaan->load('karyawans');
 
         return view('backend.pages.perusahaans.show', compact('perusahaan'));
     }
@@ -124,15 +137,13 @@ class PerusahaanController extends Controller
 
         $data = $request->validate([
             'nama'       => 'required|string|max:255',
+            // Pastikan unique rule untuk username dan email mengabaikan user_id yang sedang diedit
             'username'   => 'required|string|max:255|unique:users,username,' . $perusahaan->user_id,
             'email'      => 'required|email|unique:users,email,' . $perusahaan->user_id,
             'alamat'     => 'required|string|max:255',
             'keterangan' => 'nullable|string|max:1000',
-        ]);
 
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $request->file('logo')->store('logos', 'public');
-        }
+        ]);
 
         // Update user terkait
         $user           = $perusahaan->user;
@@ -147,7 +158,7 @@ class PerusahaanController extends Controller
             'email'      => $data['email'],
             'username'   => $data['username'],
             'alamat'     => $data['alamat'],
-            'keterangan' => $data['keterangan'] ?? $perusahaan->keterangan,
+            'keterangan' => $data['keterangan'] ?? null, // Gunakan null coalescing operato
         ]);
 
         return redirect()->route('admin.perusahaans.index')
@@ -157,12 +168,11 @@ class PerusahaanController extends Controller
     public function destroy(Perusahaan $perusahaan): RedirectResponse
     {
         $this->checkAuthorization(auth()->user(), ['perusahaan.delete']);
-
         // Pastikan kalau ada relasi dengan user dihapus juga di model Perusahaan dengan onDelete('cascade')
+        // di migrasi tabel 'perusahaans' atau 'users'.
         $perusahaan->delete();
 
         return redirect()->route('admin.perusahaans.index')
             ->with('success', 'Perusahaan dan akun berhasil dihapus.');
     }
-    
 }

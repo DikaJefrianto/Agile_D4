@@ -14,7 +14,7 @@
 
             @if ($errors->any())
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                    <strong class="font-bold">Terjadi kesalahan!</strong>
+                    <strong class="font-bold">{{ __('Terjadi kesalahan!') }}</strong>
                     <ul class="mt-2 list-disc list-inside text-sm">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -32,39 +32,39 @@
 
                 @if ($perhitungan->metode === 'bahan_bakar')
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Jenis Bahan Bakar</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Jenis Bahan Bakar') }}</label>
                         <select name="Bahan_bakar"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-900 dark:text-white dark:border-gray-700">
                             @foreach ($bahanBakar as $bb)
                                 <option value="{{ $bb->id }}"
                                     {{ $bb->id == $perhitungan->Bahan_bakar ? 'selected' : '' }}>
-                                    {{ $bb->Bahan_bakar }} ({{ $bb->kategori }})
+                                    {{ __($bb->Bahan_bakar) }} ({{ __($bb->kategori) }})
                                 </option>
                             @endforeach
                         </select>
                     </div>
                 @elseif ($perhitungan->metode === 'jarak_tempuh')
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Jenis Kendaraan</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Jenis Kendaraan') }}</label>
                         <select name="jenis"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-900 dark:text-white dark:border-gray-700">
                             @foreach ($jenis as $trans)
                                 <option value="{{ $trans->id }}"
                                     {{ $trans->id == $perhitungan->jenis ? 'selected' : '' }}>
-                                    {{ $trans->jenis }} ({{ $trans->kategori }})
+                                    {{ __($trans->jenis) }} ({{ __($trans->kategori) }})
                                 </option>
                             @endforeach
                         </select>
                     </div>
                 @elseif ($perhitungan->metode === 'biaya')
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Jenis Biaya</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Jenis Biaya') }}</label>
                         <select name="jenisKendaraan"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-900 dark:text-white dark:border-gray-700">
                             @foreach ($jenisKendaraan as $b)
                                 <option value="{{ $b->id }}"
                                     {{ $b->id == $perhitungan->jenisKendaraan ? 'selected' : '' }}>
-                                    {{ $b->jenisKendaraan }} ({{ $b->kategori }})
+                                    {{ __($b->jenisKendaraan) }} ({{ __($b->kategori) }})
                                 </option>
                             @endforeach
                         </select>
@@ -72,36 +72,35 @@
                 @endif
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nilai Input</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Nilai Input') }}</label>
                     <input type="number" name="nilai_input" step="0.01" value="{{ $perhitungan->nilai_input }}"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-900 dark:text-white dark:border-gray-700"
                         required>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Titik Awal</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Titik Awal') }}</label>
                     <input type="text" name="titik_awal" value="{{ old('titik_awal', $perhitungan->titik_awal) }}"
                         required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-900 dark:text-white dark:border-gray-700"
-                        placeholder="Contoh: Padang">
+                        placeholder="{{ __('Contoh: Padang') }}">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Titik Tujuan</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Titik Tujuan') }}</label>
                     <input type="text" name="titik_tujuan" value="{{ old('titik_tujuan', $perhitungan->titik_tujuan) }}"
                         required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-900 dark:text-white dark:border-gray-700"
-                        placeholder="Contoh: Bukittinggi">
+                        placeholder="{{ __('Contoh: Bukittinggi') }}">
                 </div>
 
-
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Jumlah Orang</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Jumlah Orang') }}</label>
                     <input type="number" name="jumlah_orang" min="1" value="{{ $perhitungan->jumlah_orang }}"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-900 dark:text-white dark:border-gray-700">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tanggal</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Tanggal') }}</label>
                     <input type="date" name="tanggal" value="{{ $perhitungan->tanggal }}"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-900 dark:text-white dark:border-gray-700">
                 </div>
