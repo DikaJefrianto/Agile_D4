@@ -1,4 +1,4 @@
-@extends('backend.layouts.app')
+{{-- @extends('backend.layouts.app')
 
 @section('title')
     {{ __('Perusahaan') }} | {{ config('app.name') }}
@@ -59,7 +59,7 @@
                             <td class="px-5 py-4 sm:px-6">{{ $perusahaan->alamat }}</td>
                             <td class="px-5 py-4 sm:px-6">{{ $perusahaan->keterangan }}</td>
                             <td class="flex px-5 py-4 sm:px-6 text-center gap-1">
-                                
+
 
                                 <a class="btn-default !p-3" href="{{ route('admin.perusahaans.edit', $perusahaan->id) }}">
                                     <i class="bi bi-pencil text-sm"></i>
@@ -109,4 +109,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection --}}

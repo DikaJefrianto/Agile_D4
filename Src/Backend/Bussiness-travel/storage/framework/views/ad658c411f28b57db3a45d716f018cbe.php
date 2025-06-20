@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title'); ?>
     <?php echo e(__('Landing Page')); ?> | <?php echo e(config('app.name')); ?>
 
@@ -61,12 +59,10 @@
 
 <body class="font-sans antialiased bg-gray-50 text-gray-800">
     <div class="flex flex-col min-h-screen">
-        <!-- Header -->
         <header class="bg-white shadow">
-            <div class="container mx-auto flex items-center justify-between py-3 px-4 md:px-6">
+            <div class="mx-auto flex items-center justify-between py-3 px-4 md:px-6">
                 <div class="flex items-center justify-between w-full md:w-auto">
                     <img src="/images/ns-longl-color.png" alt="Naima Sustainability" class="logo" />
-                    <!-- Mobile menu toggle -->
                     <button id="menu-toggle" class="md:hidden ml-3">
                         <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -74,31 +70,16 @@
                         </svg>
                     </button>
                 </div>
-                <nav class="hidden md:flex ml-10 space-x-6" data-auth="<?php echo e(Auth::check() ? 'true' : 'false'); ?>">
+                
+                <nav class="hidden md:flex ml-10 space-x-6">
                     <a href="/" class="nav-link">Beranda</a>
-                    <a href="<?php echo e(route('admin.dashboard')); ?>" class="nav-link">Dashboard</a>
-                    <a href="#" class="nav-link">Perhitungan</a>
-                    <a href="#" class="nav-link">Konsultasi</a>
-                    <a href="#" class="nav-link">Tentang Kami</a>
+                    <a href="/aboutme" class="nav-link">Tentang Kami</a>
                     <a href="#" class="nav-link">Panduan</a>
                 </nav>
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const nav = document.querySelector("nav[data-auth]");
-                        const isAuthenticated = nav.dataset.auth === "true";
+                
+                
 
-                        const links = nav.querySelectorAll("a.nav-link");
-                        links.forEach(link => {
-                            link.addEventListener("click", function(e) {
-                                if (!isAuthenticated) {
-                                    e.preventDefault();
-                                    window.location.href = "http://localhost:8000/login";
-                                }
-                            });
-                        });
-                    });
-                </script>
                 <div class="hidden md:flex items-center space-x-3">
                     <?php if(auth()->guard()->check()): ?>
                         <div class="dropdown">
@@ -107,6 +88,10 @@
                                 <span class="text-sm text-black-800"><b><?php echo e(Auth::user()->name); ?></b></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
+                                
+                                <?php if(Auth::user()->can('dashboard.view')): ?>
+                                    <li><a href="<?php echo e(route('admin.dashboard')); ?>" class="dropdown-item">Dashboard</a></li>
+                                <?php endif; ?>
                                 <li><a class="dropdown-item" href="<?php echo e(route('profile.edit')); ?>">Edit Profile</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -125,28 +110,9 @@
                 </div>
             </div>
 
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden bg-white px-4 pb-4">
-                <nav class="flex flex-col space-y-2">
-                    <a href="#" class="nav-link">Beranda</a>
-                    <a href="<?php echo e(route('admin.dashboard')); ?>" class="nav-link">Dashboard</a>
-                    <a href="#" class="nav-link">Perhitungan</a>
-                    <a href="#" class="nav-link">Konsultasi</a>
-                    <a href="#" class="nav-link">Tentang Kami</a>
-                    <a href="#" class="nav-link">Panduan</a>
-                    <?php if(auth()->guard()->check()): ?>
-                        <form action="<?php echo e(route('logout')); ?>" method="POST" class="inline">
-                            <?php echo csrf_field(); ?>
-                            <button type="submit" class="btn btn-secondary">Logout</button>
-                        </form>
-                    <?php else: ?>
-                        <a href="<?php echo e(route('login')); ?>" class="btn btn-primary">Login</a>
-                    <?php endif; ?>
-                </nav>
-            </div>
+            
         </header>
 
-        <!-- Hero Section -->
         <section class="relative bg-cover bg-center"
             style="background-image: url('/images/home-page.png'); height: 450px;">
             <div class="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -159,7 +125,6 @@
             </div>
         </section>
 
-        <!-- Content -->
         <main class="flex-grow container mx-auto px-4 mt-10">
             <div class="grid md:grid-cols-2 gap-6 items-center mb-16">
                 <div>
@@ -187,7 +152,6 @@
             </div>
         </main>
 
-        <!-- Footer -->
         <footer class="bg-green-100 mt-auto">
             <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4 py-10">
                 <div>
@@ -213,20 +177,18 @@
         </footer>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const toggle = document.getElementById('menu-toggle');
-        const menu = document.getElementById('mobile-menu');
-        toggle.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
+        const menu = document.getElementById('mobile-menu'); // Perlu uncomment mobile-menu div agar ini bekerja
+        if (toggle && menu) { // Tambahkan pengecekan null untuk elemen
+            toggle.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        }
     </script>
 </body>
 
 </html>
-
-</html>
-
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH F:\Project\Agile_D4\Src\Backend\Bussiness-travel\resources\views/home.blade.php ENDPATH**/ ?>

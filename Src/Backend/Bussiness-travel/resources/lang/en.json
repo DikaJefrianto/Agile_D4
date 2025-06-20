@@ -197,7 +197,7 @@
     "User Email": "User Email",
     "Username": "Username",
     "Enter Full Name": "Enter Full Name",
-    "Enter Email": "Enter Email",
+    "Masukan Email": "Enter Email",
     "Enter Password": "Enter Password",
     "Search by title or type": "Search by title or type",
     "Title": "Title",
@@ -292,7 +292,7 @@
     "Karyawan tidak ditemukan.": "Employee not found.",
     "Apakah Anda yakin ingin menghapus perusahaan ini?": "Are you sure you want to delete this company?",
     "Apakah Anda yakin ingin menghapus karyawan ini?": "Are you sure you want to delete this employee?",
-    
+
     "Tidak, Batalkan": "No, Cancel",
     "Tidak ada data tersedia": "No data available",
     "Tidak ada perusahaan ditemukan": "No companies found",
@@ -471,5 +471,7 @@
     "Yakin ingin menghapus data ini?": "Are you sure you want to delete this data?",
     "Ya, Hapus": "Yes, Delete",
     "Batal": "Cancel",
-    "Lihat Detail": "View Details"
+    "Lihat Detail": "View Details",
+    "Email Anda": "Your Email",
+    "Password Anda": "Your Password"
 }
