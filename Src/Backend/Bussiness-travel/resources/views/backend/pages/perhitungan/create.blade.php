@@ -167,7 +167,7 @@
                         </div>
                         <div>
                             <label for="nilai_input"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Jumlah Biaya (Rp)</label>
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Jumlah Biaya (USD)</label>
                             <input type="number" step="0.01" name="nilai_input" id="nilai_input" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-900 dark:text-white">
                         </div>
@@ -198,7 +198,7 @@
                     <div>
                         <label for="tanggal"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tanggal</label>
-                        <input type="date" name="tanggal" id="tanggal"
+                        <input type="datetime-local" name="tanggal" id="tanggal"
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-900 dark:text-white">
                     </div>
 
