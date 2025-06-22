@@ -48,19 +48,28 @@
             </h2>
             {{-- Export Buttons --}}
             <div class="space-x-2">
+                {{-- CSV (Hijau Tua) --}}
                 <a href="{{ route('admin.laporan.exportCsv', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
-                    class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-                           dark:border-gray-600 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">
+                    class="px-4 py-2 rounded-md text-sm font-medium
+                           bg-green-700 text-white hover:bg-green-800
+                           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600
+                           dark:bg-green-800 dark:hover:bg-green-700 dark:focus:ring-green-700">
                     {{ __('export_csv') }}
                 </a>
+                {{-- Excel (Hijau Muda) --}}
                 <a href="{{ route('admin.laporan.exportExcel', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
-                    class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-                           dark:border-gray-600 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">
+                    class="px-4 py-2 rounded-md text-sm font-medium
+                           bg-green-500 text-white hover:bg-green-600
+                           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400
+                           dark:bg-green-600 dark:hover:bg-green-500 dark:focus:ring-green-500">
                     {{ __('export_excel') }}
                 </a>
+                {{-- PDF (Merah) --}}
                 <a href="{{ route('admin.laporan.exportPdf', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
-                    class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-                           dark:border-gray-600 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">
+                    class="px-4 py-2 rounded-md text-sm font-medium
+                           bg-red-600 text-white hover:bg-red-700
+                           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+                           dark:bg-red-700 dark:hover:bg-red-600 dark:focus:ring-red-600">
                     {{ __('export_pdf') }}
                 </a>
             </div>

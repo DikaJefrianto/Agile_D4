@@ -92,6 +92,12 @@ Route::middleware(['auth', 'verified'])
         Route::middleware(['role:perusahaan'])->group(function () {
             Route::get('/perusahaan', fn() => view('dashboard.perusahaan'))->name('dashboard.perusahaan');
             // Tambahkan route lain untuk perusahaan di sini jika perlu
+            Route::get('/perhitungans', [HasilPerhitunganController::class, 'index'])->name('perhitungans.index');
+            Route::get('/perhitungans/{id}', [HasilPerhitunganController::class, 'show'])->name('perhitungans.show');
+            Route::get('/perhitungans/create', [HasilPerhitunganController::class, 'create'])->name('perhitungans.create');
+            Route::get('/perhitungans/{id}/edit', [HasilPerhitunganController::class, 'edit'])->name('perhitungans.edit');
+            Route::put('/perhitungans/{id}', [HasilPerhitunganController::class, 'update'])->name('perhitungans.update');
+
         });
 
         /**
@@ -100,6 +106,11 @@ Route::middleware(['auth', 'verified'])
         Route::middleware(['role:karyawan'])->group(function () {
             Route::get('/karyawan', fn() => view('dashboard.karyawan'))->name('dashboard.karyawan');
             // Tambahkan route lain untuk karyawan di sini jika perlu
+            Route::get('/perhitungans', [HasilPerhitunganController::class, 'index'])->name('perhitungans.index');
+            Route::get('/perhitungans/{id}', [HasilPerhitunganController::class, 'show'])->name('perhitungans.show');
+            Route::get('/perhitungans/create', [HasilPerhitunganController::class, 'create'])->name('perhitungans.create');
+            Route::get('/perhitungans/{id}/edit', [HasilPerhitunganController::class, 'edit'])->name('perhitungans.edit');
+            Route::put('/perhitungans/{id}', [HasilPerhitunganController::class, 'update'])->name('perhitungans.update');
         });
 
         /**

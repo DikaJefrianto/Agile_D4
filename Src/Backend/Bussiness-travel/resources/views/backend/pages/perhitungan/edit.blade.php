@@ -61,10 +61,10 @@
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Jenis Biaya') }}</label>
                         <select name="jenisKendaraan"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-900 dark:text-white dark:border-gray-700">
-                            @foreach ($jenisKendaraan as $b)
+                            @foreach ($jenis as $b)
                                 <option value="{{ $b->id }}"
-                                    {{ $b->id == $perhitungan->jenisKendaraan ? 'selected' : '' }}>
-                                    {{ __($b->jenisKendaraan) }} ({{ __($b->kategori) }})
+                                    {{ $b->id == $perhitungan->jenis ? 'selected' : '' }}>
+                                    {{ __($b->jenis) }} ({{ __($b->kategori) }})
                                 </option>
                             @endforeach
                         </select>
@@ -101,7 +101,7 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Tanggal') }}</label>
-                    <input type="date" name="tanggal" value="{{ $perhitungan->tanggal }}"
+                    <input type="datetime-local" name="tanggal" value="{{ $perhitungan->tanggal }}"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-900 dark:text-white dark:border-gray-700">
                 </div>
 

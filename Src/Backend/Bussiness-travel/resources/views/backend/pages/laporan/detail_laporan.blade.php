@@ -49,24 +49,35 @@
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold text-gray-700 dark:text-white">{{ __('list_detailed_emission_calculations') }}</h3>
-                    {{-- Export Buttons untuk Detail Laporan --}}
+
+                    {{-- Tombol untuk halaman Detail Laporan (tambahan baru) --}}
                     <div class="space-x-2">
+                        {{-- CSV Detail (Hijau Tua) --}}
                         <a href="{{ route('admin.laporan.detail.exportCsv', ['perusahaan' => $perusahaan->id, 'bulan' => $bulan, 'tahun' => $tahun]) }}"
-                           class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-                           dark:border-gray-600 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">
+                            class="px-4 py-2 rounded-md text-sm font-medium
+                                   bg-green-700 text-white hover:bg-green-800
+                                   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600
+                                   dark:bg-green-800 dark:hover:bg-green-700 dark:focus:ring-green-700">
                             {{ __('export_csv') }}
                         </a>
+                        {{-- Excel Detail (Hijau Muda) --}}
                         <a href="{{ route('admin.laporan.detail.exportExcel', ['perusahaan' => $perusahaan->id, 'bulan' => $bulan, 'tahun' => $tahun]) }}"
-                           class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-                           dark:border-gray-600 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">
+                            class="px-4 py-2 rounded-md text-sm font-medium
+                                   bg-green-500 text-white hover:bg-green-600
+                                   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400
+                                   dark:bg-green-600 dark:hover:bg-green-500 dark:focus:ring-green-500">
                             {{ __('export_excel') }}
                         </a>
+                        {{-- PDF Detail (Merah) --}}
                         <a href="{{ route('admin.laporan.detail.exportPdf', ['perusahaan' => $perusahaan->id, 'bulan' => $bulan, 'tahun' => $tahun]) }}"
-                           class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-                           dark:border-gray-600 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">
+                            class="px-4 py-2 rounded-md text-sm font-medium
+                                   bg-red-600 text-white hover:bg-red-700
+                                   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+                                   dark:bg-red-700 dark:hover:bg-red-600 dark:focus:ring-red-600">
                             {{ __('export_pdf') }}
                         </a>
                     </div>
+
                 </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

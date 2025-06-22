@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Models;
 
 use App\Notifications\AdminResetPasswordNotification;
-use Illuminate\Auth\Notifications\ResetPassword as DefaultResetPassword;
 use App\Traits\AuthorizationChecker;
 use App\Traits\HasGravatar;
+use Illuminate\Auth\Notifications\ResetPassword as DefaultResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -72,6 +72,15 @@ class User extends Authenticatable
     public function karyawan()
     {
         return $this->hasOne(Karyawan::class);
+        return $this->hasOne(Karyawan::class, 'user_id', 'id');
+    }
+    public function perusahaan()
+    {
+        // Opsi A: Jika users.perusahaan_id adalah FK ke perusahaans.id (paling umum untuk user perusahaan)
+        return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
+
+        // Opsi B: Jika perusahaans.user_id adalah FK ke users.id (user adalah representasi utama perusahaan)
+        // return $this->hasOne(Perusahaan::class, 'user_id', 'id');
     }
 
 }
