@@ -150,6 +150,13 @@ class PermissionService
                 'perhitungan.detail',
             ],
         ],
+        [
+            'group_name' => 'laporan',
+            'permissions' => [
+                'laporan.view',
+                'laporan.detail',
+            ],
+        ],
     ];
 
     return $permissions;

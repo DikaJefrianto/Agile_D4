@@ -15,7 +15,6 @@ class Perusahaan extends Model
         'nama',
         'email',
         'alamat',
-        'logo',
         'keterangan',
     ];
 
@@ -30,5 +29,19 @@ class Perusahaan extends Model
     {
         return $this->hasMany(Karyawan::class);
     }
-    
+    public function hasilPerhitungans()
+    {
+        // Asumsi ada kolom 'perusahaan_id' di tabel 'hasil_perhitungans'
+        // Jika tidak ada, Anda perlu menambahkan foreign key ini di migrasi hasil_perhitungans
+        return $this->hasMany(HasilPerhitungan::class, 'perusahaan_id');
+    }
+
+    // Relasi ke Biaya
+    public function biayas()
+    {
+        // Asumsi ada kolom 'perusahaan_id' di tabel 'biayas'
+        // Jika tidak ada, Anda perlu menambahkan foreign key ini di migrasi biayas
+        return $this->hasMany(Biaya::class, 'perusahaan_id');
+    }
+
 }

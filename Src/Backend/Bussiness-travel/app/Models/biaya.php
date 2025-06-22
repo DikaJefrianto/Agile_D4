@@ -19,4 +19,13 @@ class biaya extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function hasilPerhitungans()
+    {
+        return $this->hasMany(HasilPerhitungan::class);
+    }
+    
+    public function perusahaan()
+    {
+        return $this->belongsTo(Perusahaan::class);
+    }
 }

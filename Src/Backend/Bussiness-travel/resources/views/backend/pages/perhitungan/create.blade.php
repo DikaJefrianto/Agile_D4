@@ -56,6 +56,8 @@
                                     <p class="text-sm text-gray-500 dark:text-gray-400">
                                         @switch($label)
                                             @case('Darat')
+                                                {{-- Terjemahkan kategori Darat --}}
+                                                @switch($metode)
                                                 {{ __('Mobil, motor, kereta, dll.') }}
                                             @break
 

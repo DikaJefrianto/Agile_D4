@@ -9,45 +9,46 @@ class HasilPerhitungan extends Model
 {
     use HasFactory;
 
-    // Sesuaikan jika nama tabel bukan bentuk jamak dari nama model
-    protected $table = 'hasil_perhitungans';
+    protected $table = 'hasil_perhitungans'; // Pastikan nama tabelnya benar
 
     protected $fillable = [
         'user_id',
+        'metode',
         'transportasi_id',
         'bahan_bakar_id',
         'biaya_id',
         'nilai_input',
         'jumlah_orang',
         'hasil_emisi',
-        'tanggal',
-        'metode',
+        'tanggal', // Kolom tanggal perhitungan
         'kategori',
-        'titik_awal', 
-        'titik_tujuan'
+        'titik_awal',
+        'titik_tujuan',
     ];
 
-    // Relasi ke User
+    // --- TAMBAHKAN ATAU MODIFIKASI BAGIAN INI ---
+    protected $casts = [
+        'tanggal' => 'datetime', // Mengonversi 'tanggal' menjadi objek Carbon
+    ];
+    // --- AKHIR PERBAIKAN ---
+
     public function user()
     {
-        return $this->belongsTo(user::class);
+        return $this->belongsTo(User::class);
     }
 
-    // Relasi ke Transportasi
     public function transportasi()
     {
-        return $this->belongsTo(transportasi::class, 'transportasi_id');
+        return $this->belongsTo(Transportasi::class);
     }
 
-    // Relasi ke Bahan Bakar
     public function bahanBakar()
     {
         return $this->belongsTo(BahanBakar::class, 'bahan_bakar_id');
     }
 
-    // Relasi ke Biaya
     public function biaya()
     {
-        return $this->belongsTo(biaya::class, 'biaya_id');
+        return $this->belongsTo(Biaya::class);
     }
 }
