@@ -17,7 +17,7 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        // Anda bisa menambahkan paginasi, filter, atau pencarian di sini jika diperlukan
+
         $karyawans = Karyawan::with('user', 'perusahaan')->get(); // Load relasi user dan perusahaan
         return response()->json([
             'success' => true,
@@ -54,7 +54,7 @@ class KaryawanController extends Controller
                 'password' => Hash::make($validatedData['password']),
             ]);
 
-            // Anda bisa menambahkan logika untuk assign role di sini jika diperlukan
+
             // $user->assignRole('Karyawan'); // Misalnya, jika menggunakan Spatie Permission
 
             // Buat Karyawan baru dan kaitkan dengan user dan perusahaan

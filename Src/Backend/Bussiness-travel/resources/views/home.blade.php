@@ -78,6 +78,7 @@
         }
 
         /* FAQ Accordion Styles */
+
         .accordion-item {
             border-bottom: 1px solid #e2e8f0; /* gray-200 */
         }
@@ -119,82 +120,12 @@
             opacity: 1;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.-beta3/css/all.min.css">
 @endpush
 
 @section('content')
     <div class="flex flex-col min-h-screen">
-        <header class="bg-white shadow fixed top-0 left-0 right-0 z-50"> {{-- Fixed header --}}
-            <div class="mx-auto max-w-7xl flex items-center justify-between py-3 px-4 md:px-6">
-                <div class="flex items-center justify-between w-full md:w-auto">
-                    <img src="/images/ns-longl-color.png" alt="Naima Sustainability" class="logo" />
-                    <button id="menu-toggle" class="md:hidden ml-3 focus:outline-none">
-                        <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-                {{-- Navigasi Desktop --}}
-                <nav class="hidden md:flex ml-10 space-x-6">
-                    <a href="#beranda" class="nav-link scroll-link">Beranda</a>
-                    <a href="#tentang-kami" class="nav-link scroll-link">Tentang Kami</a>
-                    <a href="#fitur" class="nav-link scroll-link">Fitur</a> {{-- Added a features section --}}
-                    <a href="#panduan" class="nav-link scroll-link">Panduan</a>
-                    <a href="#faq" class="nav-link scroll-link">FAQ</a> {{-- NEW: Added FAQ to desktop nav --}}
-                    <a href="#hubungi-kami" class="nav-link scroll-link">Hubungi Kami</a>
-                </nav>
 
-                <div class="hidden md:flex items-center space-x-3">
-                    @auth
-                        <div class="dropdown">
-                            <a href="#" class="d-flex align-items-center dropdown-toggle gap-2"
-                                data-bs-toggle="dropdown">
-                                <span class="text-sm text-gray-800 font-bold">{{ Auth::user()->name }}</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                @if (Auth::user()->can('dashboard.view'))
-                                    <li><a href="{{ route('admin.dashboard') }}" class="dropdown-item">Dashboard</a></li>
-                                @endif
-                                <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item text-red-600">Logout</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    @else
-                        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
-                    @endauth
-                </div>
-            </div>
-
-            {{-- Mobile Menu --}}
-            <div id="mobile-menu" class="hidden md:hidden bg-white px-4 pb-4 border-t border-gray-200">
-                <nav class="flex flex-col space-y-3 py-2">
-                    <a href="#beranda" class="nav-link scroll-link text-base">Beranda</a>
-                    <a href="#tentang-kami" class="nav-link scroll-link text-base">Tentang Kami</a>
-                    <a href="#fitur" class="nav-link scroll-link text-base">Fitur</a>
-                    <a href="#panduan" class="nav-link scroll-link text-base">Panduan</a>
-                    <a href="#faq" class="nav-link scroll-link text-base">FAQ</a> {{-- NEW: Added FAQ to mobile nav --}}
-                    <a href="#hubungi-kami" class="nav-link scroll-link text-base">Hubungi Kami</a>
-                    @auth
-                        @if (Auth::user()->can('dashboard.view'))
-                            <a href="{{ route('admin.dashboard') }}" class="nav-link text-base">Dashboard</a>
-                        @endif
-                        <form action="{{ route('logout') }}" method="POST" class="w-full">
-                            @csrf
-                            <button type="submit" class="btn btn-secondary w-full text-base">Logout</button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="btn btn-primary w-full text-base">Login</a>
-                    @endauth
-                </nav>
-            </div>
-        </header>
 
         {{-- Added padding-top to main content to account for fixed header --}}
         <div class="pt-[76px]"> {{-- This value should be header height + some padding. Adjust if header height changes --}}
@@ -203,7 +134,7 @@
             {{-- BAGIAN BERANDA (HERO SECTION) --}}
             {{-- ============================================================================================================= --}}
             <section id="beranda" class="relative bg-cover bg-center"
-                style="background-image: url('/images/zero-emisi.jpg'); height: 680px;">
+                style="background-image: url('/images/home-page.png'); height: 680px;">
                 <div class="absolute inset-0 bg-black bg-opacity-50"></div>
                 <div
                     class="container mx-auto relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4"
@@ -211,7 +142,7 @@
                     <h1 class="text-3xl md:text-4xl font-bold" data-aos="fade-up" data-aos-delay="200">Ketahui Jejak Karbon dari Perjalanan Bisnis Anda</h1>
                     <p class="mt-4 text-sm md:text-base" data-aos="fade-up" data-aos-delay="400">Lacak Emisi, Laporkan dengan Mudah, dan Mulai Perubahan Sekarang!
                     </p>
-                    <a href="#" class="btn btn-primary mt-6" data-aos="zoom-in" data-aos-delay="600">Hitung Jejak karbon kamu</a>
+                    <a href="{{ route('admin.perhitungan.create') }}" class="btn btn-primary mt-6" data-aos="zoom-in" data-aos-delay="600">Hitung Jejak karbon kamu</a>
                 </div>
             </section>
 
@@ -220,8 +151,8 @@
             {{-- SECTIONS OVERVIEW / WHY NAIMA --}}
             {{-- ============================================================================================================= --}}
             <section class="py-20 bg-white">
-                <div class="container mx-auto px-4 max-w-7xl my-10">
-                    <div class="text-center mb-10" data-aos="fade-down">
+                <div class="container mx-auto px-4 max-w-7xl my-4">
+                    <div class="text-center my-10" data-aos="fade-down">
                         <h2 class="text-3xl md:text-3xl font-bold text-green-800 mb-4 mt-4">
                             Mengapa Naima Sustainability?
                         </h2>
@@ -231,7 +162,7 @@
                         </p>
                     </div>
 
-                    <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
                         <div class="order-2 md:order-1 text-left md:text-left" data-aos="fade-right">
                             <h3 class="text-2xl font-bold text-gray-800 mb-4">
                                 Jejak Karbon: Langkah Awal Menuju Keberlanjutan
@@ -378,6 +309,16 @@
                                     <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-behance text-lg"></i></a>
                                 </div>
                             </div>
+                            <div class="bg-white rounded-lg shadow-xl p-8 transform hover:scale-105 transition-transform duration-300 flex-shrink-0 w-72 sm:w-80 lg:w-96 snap-center" data-aos="zoom-in" data-aos-delay="500">
+                                <img src="images/dhea.jpg" alt="Nama Anggota" class="w-32 h-32 rounded-full mx-auto mb-5 object-cover border-4 border-green-300">
+                                <h3 class="text-xl font-semibold text-gray-900 mb-1">Dhea Umi Amalia</h3>
+                                <p class="text-green-700 font-medium text-base mb-3">Consultant for Communication and Marketing</p>
+                                <p class="text-gray-600 text-sm leading-relaxed">Mengkomunikasikan segala kebutuhan konsultan dan menjadi jembatan penghubung naima dengan perusahaan.</p>
+                                <div class="flex justify-center space-x-4 mt-4">
+                                    <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-linkedin-in text-lg"></i></a>
+                                    <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-behance text-lg"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -446,7 +387,7 @@
                         </div>
                     </div>
                     <div class="mt-12" data-aos="fade-up" data-aos-delay="700">
-                        <a href="{{ route('register') }}" class="btn btn-primary">
+                        <a href="{{ route('login') }}" class="btn btn-primary">
                             Coba Semua Fitur Naima Sekarang
                             <i class="fas fa-magic ml-2"></i>
                         </a>
@@ -469,26 +410,24 @@
                         <div class="bg-white rounded-lg shadow-xl overflow-hidden flex flex-col" data-aos="fade-up" data-aos-delay="200">
                             <div class="relative w-full" style="padding-top: 56.25%;"> {{-- 16:9 Aspect Ratio --}}
                                 <iframe class="absolute top-0 left-0 w-full h-full"
-                                    src="https://youtu.be/aj2npG432zc?si=0PIuAtBpipLh6LpJ"
-                                    title="Panduan Naima Bagian 1" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
+                                    src="https://www.youtube.com/embed/FHxAjB05lU8?si=1cL1rlqiLpb26uio"
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                                    allowfullscreen>
+                                </iframe>
                             </div>
                             <div class="p-6 flex-grow flex flex-col">
                                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Memulai: Registrasi & Dashboard</h3>
                                 <p class="text-gray-600 text-sm leading-relaxed mb-4">
                                     Pelajari cara membuat akun, melengkapi profil perusahaan, dan memahami dashboard utama Naima.
                                 </p>
-                                <a href="#" class="mt-auto text-green-600 hover:text-green-800 font-semibold text-sm self-start">
-                                    Tonton Video <i class="fas fa-play-circle ml-1"></i>
-                                </a>
                             </div>
                         </div>
 
                         <div class="bg-white rounded-lg shadow-xl overflow-hidden flex flex-col" data-aos="fade-up" data-aos-delay="300">
                             <div class="relative w-full" style="padding-top: 56.25%;">
                                 <iframe class="absolute top-0 left-0 w-full h-full"
-                                    src="https://youtu.be/aj2npG432zc?si=0PIuAtBpipLh6LpJ"
+                                    src="https://www.youtube.com/embed/aj2npG432zc?si=0PIuAtBpipLh6LpJ"
                                     title="Panduan Naima Bagian 2" frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen></iframe>
@@ -498,9 +437,6 @@
                                 <p class="text-gray-600 text-sm leading-relaxed mb-4">
                                     Ikuti tutorial ini untuk memasukkan data perjalanan bisnis dan mendapatkan laporan jejak karbon Anda.
                                 </p>
-                                <a href="#" class="mt-auto text-green-600 hover:text-green-800 font-semibold text-sm self-start">
-                                    Tonton Video <i class="fas fa-play-circle ml-1"></i>
-                                </a>
                             </div>
                         </div>
 
@@ -517,9 +453,6 @@
                                 <p class="text-gray-600 text-sm leading-relaxed mb-4">
                                     Interpretasikan hasil perhitungan Anda dan gunakan insight untuk merancang strategi keberlanjutan yang efektif.
                                 </p>
-                                <a href="#" class="mt-auto text-green-600 hover:text-green-800 font-semibold text-sm self-start">
-                                    Tonton Video <i class="fas fa-play-circle ml-1"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -652,94 +585,81 @@
                                 <div class="w-full h-64 bg-gray-200 rounded-lg overflow-hidden shadow-md">
                                     {{-- Placeholder for Google Map --}}
                                     <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4030.8996190459575!2d100.3611164!3d-0.8835331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4c75a82229117%3A0xcfb0992b4f426421!2sMustang%20No.14a%2C%20Dadok%20Tunggul%20Hitam%2C%20Kec.%20Koto%20Tangah%2C%20Kota%20Padang%2C%20Sumatera%20Barat%2025586!5e1!3m2!1sid!2sid!4v1750511310239!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4030.8996190459575!2d100.3611164!3d-0.8835331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4c75a82229117%3A0xcfb0992b4f426421!2sMustang%20No.14a%2C%20Dadok%20Tunggul%20Hitam%2C%20Kec.%20Koto%20Tangah%2C%20Kota%20Padang%2C%20Sumatera%20Barat%2025586!5e1!3m2!1sid!2sid!4v1750511310239!5m2!1sid!2sid"
+                                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                                     </iframe>
                                 </div>
                             </div>
                         </div>
 
-                        <div>
+                        <div id="hubungi-kita" class="max-w-4xl mx-auto px-4 py-8"> {{-- div pembungkus form  --}}
                             <h3 class="text-2xl font-bold text-gray-800 mb-4">Kirim Pesan kepada Kami</h3>
-                            <form action="#" method="POST" class="space-y-6">
+                            <form action="{{ route('feedback.store') }}" method="POST" class="space-y-6">
+                                @csrf
+                                @if (session('success'))
+                                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                                        <span class="block sm:inline">{{ session('success') }}</span>
+                                    </div>
+                                @endif
+
+                                {{-- Tampilkan Pesan Error (dari validasi atau try-catch di controller) --}}
+                                @if (session('error'))
+                                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                        <span class="block sm:inline">{{ session('error') }}</span>
+                                    </div>
+                                @endif
+
+                                {{-- Tampilkan Error Validasi Laravel --}}
+                                @if ($errors->any())
+                                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                        <strong class="font-bold">Ada beberapa masalah dengan input Anda:</strong>
+                                        <ul class="mt-3 list-disc list-inside text-sm text-red-600">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <div>
                                     <label for="name" class="block text-gray-700 text-sm font-semibold mb-2">Nama Lengkap</label>
-                                    <input type="text" id="name" name="name" required
+                                    <input type="text" id="name" name="name" required value="{{ old('name') }}"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500">
+                                    @error('name')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div>
                                     <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
-                                    <input type="email" id="email" name="email" required
+                                    <input type="email" id="email" name="email" required value="{{ old('email') }}"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500">
+                                    @error('email')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div>
                                     <label for="subject" class="block text-gray-700 text-sm font-semibold mb-2">Subjek</label>
-                                    <input type="text" id="subject" name="subject" required
+                                    <input type="text" id="subject" name="subject" required value="{{ old('subject') }}"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500">
+                                    @error('subject')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div>
                                     <label for="message" class="block text-gray-700 text-sm font-semibold mb-2">Pesan Anda</label>
                                     <textarea id="message" name="message" rows="5" required
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"></textarea>
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500">{{ old('message') }}</textarea>
+                                    @error('message')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <button type="submit" class="bg-green-600 text-white font-bold py-3 px-6 rounded-md hover:bg-green-700 transition-colors duration-300 w-full md:w-auto">Kirim Pesan</button>
                             </form>
                         </div>
                     </div>
                 </div>
-</section>
-
+            </section>
         </div> {{-- Penutup div pt-[76px] --}}
-
-        {{--Foooter--}}
-        <footer class="bg-green-800 text-white mt-auto py-10 px-4">
-            <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl">
-                <div>
-                    <img src="/images/logo/ns-white-color-dark.png" alt="Naima Sustainability" class="h-20"> {{-- Assuming a white logo variant --}}
-                    <p class="text-sm text-green-200 leading-relaxed text-justify">
-                        Naima Sustainability adalah platform terdepan untuk membantu bisnis Anda
-                        mengukur dan mengelola jejak karbon, mendukung masa depan yang lebih hijau.
-                    </p>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg mb-4 text-green-100">Navigasi</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#beranda" class="text-green-200 hover:text-white transition-colors duration-200 scroll-link">Beranda</a></li>
-                        <li><a href="#tentang-kami" class="text-green-200 hover:text-white transition-colors duration-200 scroll-link">Tentang Kami</a></li>
-                        <li><a href="#fitur" class="text-green-200 hover:text-white transition-colors duration-200 scroll-link">Fitur</a></li>
-                        <li><a href="#panduan" class="text-green-200 hover:text-white transition-colors duration-200 scroll-link">Panduan</a></li>
-                        <li><a href="#hubungi-kami" class="text-green-200 hover:text-white transition-colors duration-200 scroll-link">Hubungi Kami</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg mb-4 text-green-100">Kontak Kami</h3>
-                    <address class="not-italic text-green-200 text-sm space-y-2">
-                        <p class="flex items-center"><i class="fas fa-map-marker-alt mr-2"></i> Jl. Siteba, Padang, Sumatera Barat,Indonesia</p>
-                        <p class="flex items-center"><i class="fas fa-envelope mr-2"></i> <a href="mailto:contactnaima@gmail.com" class="hover:underline">contactnaima@gmail.com</a></p>
-                        <p class="flex items-center"><i class="fas fa-phone-alt mr-2"></i> <a href="tel:+6287083817392" class="hover:underline">+62 870-8381-7392</a></p>
-                    </address>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg mb-4 text-green-100">Ikuti Kami</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-green-200 hover:text-white transition-colors duration-200" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin text-2xl"></i>
-                        </a>
-                        <a href="#" class="text-green-200 hover:text-white transition-colors duration-200" aria-label="Instagram">
-                            <i class="fab fa-instagram text-2xl"></i>
-                        </a>
-                        <a href="#" class="text-green-200 hover:text-white transition-colors duration-200" aria-label="Facebook">
-                            <i class="fab fa-facebook text-2xl"></i>
-                        </a>
-                        <a href="#" class="text-green-200 hover:text-white transition-colors duration-200" aria-label="Twitter">
-                            <i class="fab fa-twitter text-2xl"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center text-sm text-green-300 border-t border-green-700 pt-6 mt-10">
-                © {{ date('Y') }} Naima Sustainability. All Rights Reserved.
-            </div>
-        </footer>
     </div>
 @endsection
 
@@ -810,5 +730,6 @@
                 });
             });
         });
+        <script src="https://www.youtube.com/iframe_api"></script>
     </script>
 @endpush

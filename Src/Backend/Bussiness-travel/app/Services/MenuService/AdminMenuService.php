@@ -68,6 +68,15 @@ class AdminMenuService
             'priority' => 0,
         ]);
         $this->addMenuItem([
+            'label' => __('Feedback'),
+            'icon' => 'feedback.svg', // Atau ikon lain yang sesuai
+            'route' => route('admin.feedbacks.index'),
+            'active' => Route::is('admin.feedbacks.*'),
+            'id'=> 'feedback',
+            'permissions' => ['role.create', 'role.view', 'role.edit', 'role.delete'],
+            'priority' => 40, // Sesuaikan prioritas
+        ]);
+        $this->addMenuItem([
             'label' => __('Dashboard'),
             'icon' => 'dashboard.svg',
             'route' => route('admin.dashboard'),
@@ -283,7 +292,7 @@ class AdminMenuService
             'icon'        => 'consultation.svg', // sesuaikan icon jika ada
             'id'          => 'konsultasi-submenu',
             'active'      => Route::is('admin.konsultasi.*'),
-            'priority'    => 40  ,
+            'priority'    => 35  ,
             'permissions' => ['konsultasi.view', 'konsultasi.create', 'konsultasi.edit', 'konsultasi.delete'],
             'children'    => [
                 [
@@ -326,17 +335,30 @@ class AdminMenuService
                 ],
             ],
         ]);
-
-
-        // $this->addMenuItem([
-        //     'label' => __('Modules'),
-        //     'icon' => 'three-dice.svg',
-        //     'route' => route('admin.modules.index'),
-        //     'active' => Route::is('admin.modules.index'),
-        //     'id' => 'modules',
-        //     'priority' => 30,
-        //     'permissions' => 'module.view'
-        // ]);
+        $this->addMenuItem([
+            'label' => __('Panduan'), // Label baru untuk admin
+            'icon' => 'panduan.svg', // Ikon yang lebih sesuai untuk manajemen
+            'id' => 'guides-management-submenu', // ID baru untuk menu manajemen
+            'active' => Route::is('admin.guides.*'), // Aktif jika di rute admin.guides.*
+            'priority' => 35, // Prioritas agar muncul di dekat menu admin lainnya
+            'permissions' => ['guide.create', 'guide.view', 'guide.edit', 'guide.delete'], // Asumsi permission yang relevan
+            'children' => [
+                [
+                    'label' => __('Daftar Panduan'),
+                    'route' => route('admin.guides.index'),
+                    'active' => Route::is('admin.guides.index') || Route::is('admin.guides.edit'),
+                    'priority' => 10,
+                    'permissions' => 'guide.view'
+                ],
+                [
+                    'label' => __('Tambah Panduan Baru'), // Admin akan menemukan ini untuk menambahkan panduan
+                    'route' => route('admin.guides.create'),
+                    'active' => Route::is('admin.guides.create'),
+                    'priority' => 20,
+                    'permissions' => 'guide.create'
+                ],
+            ]
+        ]);
 
         $this->addMenuItem([
             'label' => __('Monitoring'),

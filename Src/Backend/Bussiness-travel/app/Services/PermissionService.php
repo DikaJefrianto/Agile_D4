@@ -169,6 +169,16 @@ class PermissionService
                 'konsultasi.detail',
             ],
         ],
+        [
+            'group_name' => 'guide',
+            'permissions' => [
+                'guide.view',
+                'guide.create',
+                'guide.edit',
+                'guide.delete',
+                'guide.detail',
+            ],
+        ],
     ];
 
     return $permissions;

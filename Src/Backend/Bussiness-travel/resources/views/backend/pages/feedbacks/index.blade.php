@@ -6,7 +6,7 @@
 
 @section('admin-content')
 
-<div class="p-4 mx-auto max-w-screen-2xl md:p-6"> {{-- 'max-w-(--breakpoint-2xl)' diubah menjadi 'max-w-screen-2xl' karena itu adalah kelas Tailwind yang valid --}}
+<div class="p-4 mx-auto max-w-screen-2xl md:p-6">
     <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">
             {{ __('Daftar Feedback') }}
@@ -16,7 +16,7 @@
                 <li>
                     <a class="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400" href="{{ route('admin.dashboard') }}">
                         {{ __('Home') }}
-                        <i class="bi bi-chevron-right"></i> 
+                        <i class="bi bi-chevron-right"></i>
                     </a>
                 </li>
                 <li class="text-sm text-gray-800 dark:text-white/90">{{ __('Feedback') }}</li>
@@ -60,6 +60,7 @@
                                 <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Nama Pengirim') }}</th>
                                 <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Email') }}</th>
                                 <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Subjek') }}</th>
+                                <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Pesan') }}</th> {{-- Kolom Pesan Baru --}}
                                 <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Dikirim Pada') }}</th>
                                 <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Aksi') }}</th>
                             </tr>
@@ -67,10 +68,11 @@
                         <tbody>
                             @foreach ($feedbacks as $feedback)
                             <tr class="border-b border-gray-100 dark:border-gray-800">
-                                <td class="px-5 py-4 sm:px-6">{{ $loop->iteration }}</td> {{-- Menggunakan $loop->iteration untuk penomoran --}}
+                                <td class="px-5 py-4 sm:px-6">{{ $loop->iteration }}</td>
                                 <td class="px-5 py-4 sm:px-6">{{ $feedback->name }}</td>
                                 <td class="px-5 py-4 sm:px-6">{{ $feedback->email }}</td>
-                                <td class="px-5 py-4 sm:px-6">{{ Str::limit($feedback->subject, 50) }}</td>
+                                <td class="px-5 py-4 sm:px-6">{{ Str::limit($feedback->subject, 30) }}</td> {{-- Batasi subjek agar tidak terlalu panjang --}}
+                                <td class="px-5 py-4 sm:px-6">{{ Str::limit($feedback->message, 50) }}</td> {{-- Menampilkan pesan dengan batasan karakter --}}
                                 <td class="px-5 py-4 sm:px-6">{{ $feedback->created_at->format('d M Y, H:i') }}</td>
                                 <td class="flex px-5 py-4 sm:px-6 text-center gap-1">
                                     {{-- Tombol Detail --}}
@@ -79,7 +81,6 @@
                                     </a>
 
                                     {{-- Tombol Hapus --}}
-                                    {{-- Menggunakan modal yang serupa dengan template strategi --}}
                                     <a data-modal-target="delete-modal-{{ $feedback->id }}" data-modal-toggle="delete-modal-{{ $feedback->id }}" class="btn-danger !p-3 cursor-pointer">
                                         <i class="bi bi-trash text-sm"></i>
                                     </a>

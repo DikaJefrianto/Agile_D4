@@ -24,7 +24,7 @@
     </div>
 
     <div class="space-y-6">
-        @include('backend.layouts.partials.messages') {{-- Pastikan Anda memiliki partial ini untuk pesan sukses/error --}}
+        @include('backend.layouts.partials.messages')
 
         <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
             <div class="px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center">
