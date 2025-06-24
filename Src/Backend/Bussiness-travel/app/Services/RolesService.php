@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Services;
 
@@ -45,9 +45,9 @@ class RolesService
 
     /**
      * Get permissions by group
-     * 
+     *
      * @param string $groupName
-     * @return array|null
+     * @return  array|null
      */
     public function getPermissionsByGroup(string $groupName): ?array
     {
@@ -57,7 +57,7 @@ class RolesService
     public function roleHasPermissions(Role $role, $permissions): bool
     {
         foreach ($permissions as $permission) {
-            if (!$role->hasPermissionTo($permission->name)) {
+            if (! $role->hasPermissionTo($permission->name)) {
                 return false;
             }
         }
@@ -67,9 +67,9 @@ class RolesService
 
     public function createRole(string $name, array $permissions = []): Role
     {
-        $role = Role::firstOrCreate(['name' => $name, 'guard_name' => 'web']);
+        $role = Role::create(['name' => $name, 'guard_name' => 'web']);
 
-        if (!empty($permissions)) {
+        if (! empty($permissions)) {
             $role->syncPermissions($permissions);
         }
 
@@ -86,7 +86,7 @@ class RolesService
         $role->name = $name;
         $role->save();
 
-        if (!empty($permissions)) {
+        if (! empty($permissions)) {
             $role->syncPermissions($permissions);
         }
 
@@ -100,7 +100,7 @@ class RolesService
 
     /**
      * Count users in a specific role
-     * 
+     *
      * @param Role|string $role
      * @return int
      */
@@ -108,7 +108,7 @@ class RolesService
     {
         if (is_string($role)) {
             $role = Role::where('name', $role)->first();
-            if (!$role) {
+            if (! $role) {
                 return 0;
             }
         }
@@ -118,7 +118,7 @@ class RolesService
 
     /**
      * Get roles with user counts
-     * 
+     *
      * @param string|null $search
      * @param int $perPage
      * @return LengthAwarePaginator
@@ -143,14 +143,14 @@ class RolesService
 
     /**
      * Create predefined roles with their permissions
-     * 
+     *
      * @return array
      */
     public function createPredefinedRoles(): array
     {
         $roles = [];
 
-        // 1. Superadmin role - has all permissions
+        // 1. Superadmin role - has  all permissions
         $allPermissionNames = [];
         foreach ($this->permissionService->getAllPermissions() as $group) {
             foreach ($group['permissions'] as $permission) {
@@ -161,45 +161,63 @@ class RolesService
         $roles['superadmin'] = $this->createRole('Superadmin', $allPermissionNames);
 
         // 2. Admin role - has almost all permissions except some critical ones
-        $adminPermissions = $allPermissionNames;
+        $adminPermissions         = $allPermissionNames;
         $adminExcludedPermissions = [
             'user.delete', // Cannot delete users
         ];
 
         $adminPermissions = array_diff($adminPermissions, $adminExcludedPermissions);
-        $roles['admin'] = $this->createRole('Admin', $adminPermissions);
+        $roles['admin']   = $this->createRole('Admin', $adminPermissions);
 
         // 3. Editor role - can manage content but not users/settings
-        $editorPermissions = [
+        $perusahaanPermissions = [
             'dashboard.view',
             // Blog permissions
-        
+            'perhitungan.create',
+            'perhitungan.view',
+            'perhitungan.edit',
+            'feedback.create',
+            'feedback.view',
+            'feedback.edit',
+            'transportasi.view',
+            'karyawan.create',
+            'karyawan.view',
+            'karyawan.edit',
+            'karyawan.delete',
             // Profile permissions
             'profile.view',
             'profile.edit',
             'profile.update',
             // Translations
             'translations.view',
+
         ];
 
-        $roles['editor'] = $this->createRole('Editor', $editorPermissions);
+        $roles['perusahaan'] = $this->createRole('Perusahaan', $perusahaanPermissions);
 
         // 4. Subscriber role - basic user role
-        $subscriberPermissions = [
+        $karyawanPermissions = [
             'dashboard.view',
             'profile.view',
             'profile.edit',
             'profile.update',
+            'feedback.create',
+            'feedback.view',
+            'feedback.edit',
+            'perhitungan.create',
+            'perhitungan.view',
+            'perhitungan.edit',
         ];
 
-        $roles['subscriber'] = $this->createRole('Subscriber', $subscriberPermissions);
+        $roles['karyawan'] = $this->createRole('Karyawan', $karyawanPermissions);
+
 
         return $roles;
     }
 
     /**
      * Get a specific predefined role's permissions
-     * 
+     *
      * @param string $roleName
      * @return array
      */
@@ -234,11 +252,12 @@ class RolesService
             case 'perusahaan':
                 return [
                     'dashboard.view',
-
                     'profile.view',
                     'profile.edit',
                     'profile.update',
                     'translations.view',
+                    'perhitungan.create',
+                    'perhitungan.view',
                 ];
 
             case 'karyawan':

@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('perusahaans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('email');
-            $table->string('alamat');
-            $table->string('logo')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('nama', 255);
+            $table->string('email', 255)->unique();
+            $table->string('alamat')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }

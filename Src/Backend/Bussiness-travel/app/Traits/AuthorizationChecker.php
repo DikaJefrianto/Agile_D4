@@ -20,11 +20,11 @@ trait AuthorizationChecker
     public function checkAuthorization($user, $permissions, $ownPermissionCheck = false): void
     {
         if (is_null($user) || !$user->can($permissions)) {
-            abort(403, 'Sorry !! You are unauthorized to perform this action.');
+            abort(403, 'Maaf!!' . ' Anda tidak memiliki izin untuk melakukan tindakan ini.');
         }
 
         if ($ownPermissionCheck && $user->id !== auth()->user()->id) {
-            abort(403, 'Sorry !! You are unauthorized to perform this action.');
+            abort(403, 'Maaf!!' . ' Anda tidak memiliki izin untuk melakukan tindakan ini.');
         }
     }
 

@@ -1,13 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\BahanBakarApiController;
-use App\Http\Controllers\Api\BiayaApiController;
-use App\Http\Controllers\Api\TransportasiApiController;
-use App\Http\Controllers\Backend\BahanBakarController;
-use App\Http\Controllers\Backend\BiayaController;
-use App\Http\Controllers\Backend\TransportasiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\Api\KaryawanController;
+use App\Http\Controllers\Backend\Api\PerusahaanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,24 +31,16 @@ Route::get('/translations/{lang}', function (string $lang) {
     $translations = json_decode(file_get_contents($path), true);
     return response()->json($translations);
 });
-Route::prefix('bahan-bakar')->group(function () {
-    Route::get('/', [BahanBakarApiController::class, 'index']);        // GET semua data
-    Route::get('{id}', [BahanBakarApiController::class, 'show']);      // GET detail by ID
-    Route::post('/', [BahanBakarApiController::class, 'store']);       // POST tambah data
-    Route::put('{id}', [BahanBakarApiController::class, 'update']);    // PUT update data
-    Route::delete('{id}', [BahanBakarApiController::class, 'destroy']); // DELETE data
-});
-Route::prefix('transportasi')->group(function () {
-    Route::get('/', [TransportasiApiController::class, 'index']);        // GET semua data
-    Route::get('{id}', [TransportasiApiController::class, 'show']);      // GET detail by ID
-    Route::post('/', [TransportasiApiController::class, 'Store']);       // POST tambah data
-    Route::put('{id}', [TransportasiApiController::class, 'update']);    // PUT update data
-    Route::delete('{id}', [TransportasiApiController::class, 'destroy']); // DELETE data
-});
-Route::prefix('biaya')->group(function () {
-    Route::get('/', [BiayaApiController::class, 'index']);        // GET semua data
-    Route::get('{id}', [BiayaApiController::class, 'show']);      // GET detail by ID
-    Route::post('/', [BiayaApiController::class, 'store']);       // POST tambah data
-    Route::put('{id}', [BiayaApiController::class, 'update']);    // PUT update data
-    Route::delete('{id}', [BiayaApiController::class, 'destroy']); // DELETE data
-});
+// Route manual untuk API Perusahaan
+
+Route::get('/perusahaans', [PerusahaanController::class, 'index']);           // Menampilkan semua data
+Route::post('/perusahaans', [PerusahaanController::class, 'store']);          // Menambahkan data baru
+Route::get('/detailperusahaans/{id}', [PerusahaanController::class, 'show']);       // Menampilkan detail data berdasarkan ID
+Route::put('/editperusahaans/{id}', [PerusahaanController::class, 'update']);     // Memperbarui data berdasarkan ID
+Route::delete('/deleteperusahaans/{id}', [PerusahaanController::class, 'destroy']); // Menghapus data berdasarkan ID
+
+Route::get('/karyawans', [KaryawanController::class, 'index']);           // Menampilkan semua data
+Route::post('/karyawans', [KaryawanController::class, 'store']);          // Menambahkan data baru
+Route::get('/detailkaryawans/{id}', [KaryawanController::class, 'show']);       // Menampilkan detail data berdasarkan ID
+Route::put('/editkaryawans/{id}', [KaryawanController::class, 'update']);     // Memperbarui data berdasarkan ID
+Route::delete('/deletekaryawans/{id}', [KaryawanController::class, 'destroy']); // Menghapus data berdasarkan ID

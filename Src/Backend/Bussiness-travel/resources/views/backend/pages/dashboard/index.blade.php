@@ -55,6 +55,7 @@
                         'class' => 'bg-white',
                         'url' => route('admin.translations.index'),
                     ])
+
                     {{-- @include('backend.pages.dashboard.partials.card', [
                         'icon' => 'bi bi-cloud-check',
                         'label' => __('Total Emisi'),
@@ -63,10 +64,10 @@
                         'class' => 'bg-white',
                         'url' => route('admin.perhitungan.index'),
                     ]) --}}
+
                 </div>
             </div>
         </div>
-
         {{-- ✨ Tambahan: Menu CRUD --}}
         {{-- <div class="mt-6">
             <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-4">{{ __('Quick Access to CRUD Modules') }}</h3>
@@ -92,6 +93,7 @@
                 @endforeach
             </div>
         </div> --}}
+
 
         {{-- Grafik & History --}}
         <div class="mt-6">

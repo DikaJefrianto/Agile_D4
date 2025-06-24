@@ -79,7 +79,7 @@
 
                 {{-- @include('backend.partials.search-form', ['placeholder' => __('Cari berdasarkan nama atau kategori')]) --}}
 
-                
+
             </div>
 
             <div class="space-y-3 border-t border-gray-100 dark:border-gray-800 overflow-x-auto">
@@ -87,7 +87,7 @@
                 <table class="w-full dark:text-gray-400">
                     <thead class="bg-light text-capitalize">
                         <tr class="border-b border-gray-100 dark:border-gray-800">
-                            <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('No') }}</th>
+                            <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('No.') }}</th>
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Kategori') }}</th>
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Nama Biaya') }}</th>
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Emisi') }}</th>

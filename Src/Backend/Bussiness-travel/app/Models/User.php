@@ -69,4 +69,13 @@ class User extends Authenticatable
             $this->notify(new DefaultResetPassword($token));
         }
     }
+    public function karyawan()
+    {
+        return $this->hasOne(Karyawan::class);
+    }
+     public function perusahaan()
+    {
+        return $this->hasOne(Perusahaan::class);
+    }
+
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services\MenuService;
 
 use App\Services\MenuService\AdminMenuItem;
@@ -59,6 +58,15 @@ class AdminMenuService
 
     public function getMenu()
     {
+        // Home untuk Landing Page di sini ---
+        $this->addMenuItem([
+            'label' => __('Home'), // Label untuk menu item
+            'icon' => 'home.svg',
+            'route' => url('home/'),
+            'active' => request()->is('/'), // Aktifkan jika sedang di landing page
+            'id' => 'home-landing',
+            'priority' => 0,
+        ]);
         $this->addMenuItem([
             'label' => __('Dashboard'),
             'icon' => 'dashboard.svg',
@@ -124,6 +132,54 @@ class AdminMenuService
                     'permissions' => 'user.create'
                 ]
             ]
+        ]);
+        $this->addMenuItem([
+            'label'       => __('Perusahaan'),
+            'icon'        => 'perusahaan.svg', // sesuaikan icon jika ada
+            'id'          => 'perusahaans-submenu',
+            'active'      => Route::is('admin.perusahaans.*'),
+            'priority'    => 25,
+            'permissions' => ['perusahaan.view', 'perusahaan.create', 'perusahaan.edit', 'perusahaan.delete'],
+            'children'    => [
+                [
+                    'label'       => __('Daftar Perusahaan'),
+                    'route'       => route('admin.perusahaans.index'),
+                    'active'      => Route::is('admin.perusahaans.index') || Route::is('admin.perusahaans.edit'),
+                    'priority'    => 10,
+                    'permissions' => 'perusahaan.view',
+                ],
+                [
+                    'label'       => __('Tambah Perusahaan'),
+                    'route'       => route('admin.perusahaans.create'),
+                    'active'      => Route::is('admin.perusahaans.create'),
+                    'priority'    => 20,
+                    'permissions' => 'perusahaan.create',
+                ],
+            ],
+        ]);
+        $this->addMenuItem([
+            'label'       => __('Karyawan'),
+            'icon'        => 'employe.svg', // sesuaikan icon jika ada
+            'id'          => 'karyawans-submenu',
+            'active'      => Route::is('admin.karyawans.*'),
+            'priority'    => 25,
+            'permissions' => ['karyawan.view', 'karyawan.create', 'karyawan.edit', 'karyawan.delete'],
+            'children'    => [
+                [
+                    'label'       => __('Daftar Karyawan'),
+                    'route'       => route('admin.karyawans.index'),
+                    'active'      => Route::is('admin.karyawans.index') || Route::is('admin.karyawans.edit'),
+                    'priority'    => 10,
+                    'permissions' => 'karyawan.view',
+                ],
+                [
+                    'label'       => __('Tambah Karyawan'),
+                    'route'       => route('admin.karyawans.create'),
+                    'active'      => Route::is('admin.karyawans.create'),
+                    'priority'    => 20,
+                    'permissions' => 'karyawan.create',
+                ],
+            ],
         ]);
         $this->addMenuItem([
             'label' => __('Perhitungan'),
@@ -211,7 +267,7 @@ class AdminMenuService
                     'route' => route('admin.biaya.index'),
                     'active' => Route::is('admin.biaya.index') || Route::is('admin.biaya.edit'),
                     'priority' => 10,
-                    'permissions' => 'transportasi.view'
+                    'permissions' => 'biaya.view'
                 ],
                 [
                     'label' => __('Tambah Data Emisi Biaya'),
@@ -222,7 +278,55 @@ class AdminMenuService
                 ],
             ]
         ]);
-        
+        $this->addMenuItem([
+            'label'       => __('Konsultasi'),
+            'icon'        => 'consultation.svg', // sesuaikan icon jika ada
+            'id'          => 'konsultasi-submenu',
+            'active'      => Route::is('admin.konsultasi.*'),
+            'priority'    => 40  ,
+            'permissions' => ['konsultasi.view', 'konsultasi.create', 'konsultasi.edit', 'konsultasi.delete'],
+            'children'    => [
+                [
+                    'label'       => __('Riwayat Konsultasi'),
+                    'route'       => route('admin.konsultasis.index'),
+                    'active'      => Route::is('admin.konsultasis.index') || Route::is('admin.konsultasis.edit'),
+                    'priority'    => 10,
+                    'permissions' => 'konsultasi.view',
+                ],
+                [
+                    'label'       => __('Ajukan Konsultasi'),
+                    'route'       => route('admin.konsultasis.create'),
+                    'active'      => Route::is('admin.konsultasis.create'),
+                    'priority'    => 20,
+                    'permissions' => 'konsultasi.create',
+                ],
+            ],
+        ]);
+        $this->addMenuItem([
+            'label'       => __('Strategi'),
+            'icon'        => 'strategy.svg', // sesuaikan icon jika ada
+            'id'          => 'strategis-submenu',
+            'active'      => Route::is('admin.strategis.*'),
+            'priority'    => 31,
+            'permissions' => ['strategi.view', 'strategi.create', 'strategi.edit', 'strategi.delete'],
+            'children'    => [
+                [
+                    'label'       => __('Daftar Strategi'),
+                    'route'       => route('admin.strategis.index'),
+                    'active'      => Route::is('admin.strategis.index') || Route::is('admin.strategis.edit'),
+                    'priority'    => 10,
+                    'permissions' => 'strategi.view',
+                ],
+                [
+                    'label'       => __('Tambah Strategi'),
+                    'route'       => route('admin.strategis.create'),
+                    'active'      => Route::is('admin.strategis.create'),
+                    'priority'    => 20,
+                    'permissions' => 'strategi.create',
+                ],
+            ],
+        ]);
+
 
         // $this->addMenuItem([
         //     'label' => __('Modules'),
@@ -259,7 +363,7 @@ class AdminMenuService
                 ]
             ]
         ]);
-        
+
 
 
         $this->addMenuItem([

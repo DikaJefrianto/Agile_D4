@@ -77,7 +77,8 @@
                         {!! ld_apply_filters('after_username_field', '', null) !!}
                     </div>
                     <div class="mt-6 flex justify-start gap-4">
-                        <button type="submit" class="btn-succes">{{ __('Save') }}</button>
+                        <button type="submit" class="btn-primary">{{ __('Save') }}</button>
+                        {{-- <button type="submit" class="btn-succes">{{ __('Save') }}</button> --}}
                         <a href="{{ route('admin.users.index') }}" class="btn-default">{{ __('Cancel') }}</a>
                     </div>
                 </form>

@@ -5,25 +5,13 @@
 @endsection
 
 @section('admin-content')
-    <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
-        <div x-data="{ pageName: '{{ __('Bahan Bakar') }}' }">
+    <div class="p-4 mx-auto max-w-screen-2xl md:p-6"> {{-- Perbaiki '--breakpoint-2xl' menjadi 'screen-2xl' --}}
+        <div x-data="{ pageName: '{{ __('Bahan Bakar') }}' }"> {{-- Terjemahkan di sini --}}
             <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-                <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{{ __('Bahan Bakar') }}</h2>
-                {{-- <nav>
-                    <ol class="flex items-center gap-1.5">
-                        <li>
-                            <a href="{{ route('admin.dashboard') }}"
-                                class="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
-                                {{ __('Home') }}
-                                <i class="bi bi-chevron-right"></i>
-                            </a>
-                        </li>
-                        <li class="text-sm text-gray-800 dark:text-white/90">{{ __('Bahan Bakar') }}</li>
-                    </ol>
-                </nav> --}}
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{{ __('Bahan Bakar') }}</h2> {{-- Terjemahkan di sini --}}
                 <div class="flex items-center gap-2">
                     <a href="{{ route('admin.bahan-bakar.create') }}" class="btn-success">
-                        <i class="bi bi-plus-circle mr-2"></i> {{ __('Tambah Bahan Bakar') }}
+                        <i class="bi bi-plus-circle mr-2"></i> {{ __('Tambah Bahan Bakar') }} {{-- Terjemahkan di sini --}}
                     </a>
                 </div>
             </div>
@@ -33,14 +21,13 @@
         <div class="space-y-6">
             <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
                 <div class="px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center">
-                    <h3 class="text-base font-medium text-gray-800 dark:text-white/90">{{ __('Daftar Bahan Bakar') }}</h3>
+                    <h3 class="text-base font-medium text-gray-800 dark:text-white/90">{{ __('Daftar Bahan Bakar') }}</h3> {{-- Terjemahkan di sini --}}
                     <div class="flex items-center gap-3">
-                        <!-- Filter Dropdown -->
                         <div class="relative">
                             <button id="kategoriDropdownButton" data-dropdown-toggle="kategoriDropdown"
                                 class="btn-default flex items-center justify-center gap-2" type="button">
                                 <i class="bi bi-funnel-fill"></i>
-                                {{ __('Filter Kategori') }}
+                                {{ __('Filter Kategori') }} {{-- Terjemahkan di sini --}}
                                 <i class="bi bi-chevron-down"></i>
                             </button>
 
@@ -49,12 +36,12 @@
                                 <ul class="space-y-2">
                                     <li class="cursor-pointer text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 px-2 py-1 rounded"
                                         onclick="handleKategoriFilter('')">
-                                        {{ __('Semua Kategori') }}
+                                        {{ __('Semua Kategori') }} {{-- Terjemahkan di sini --}}
                                     </li>
                                     @foreach (['Darat', 'Laut', 'Udara'] as $kategori)
                                         <li class="cursor-pointer text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 px-2 py-1 rounded {{ request('kategori') === $kategori ? 'bg-gray-200 dark:bg-gray-600' : '' }}"
                                             onclick="handleKategoriFilter('{{ $kategori }}')">
-                                            {{ $kategori }}
+                                            {{ __($kategori) }} {{-- Terjemahkan kategori jika perlu --}}
                                         </li>
                                     @endforeach
                                 </ul>
@@ -73,7 +60,7 @@
                         </script>
 
                         @include('backend.partials.search-form', [
-                            'placeholder' => __('Cari berdasarkan kategori atau nama bahan bakar'),
+                            'placeholder' => __('Cari berdasarkan kategori atau nama bahan bakar'), 
                         ])
                     </div>
                 </div>
@@ -84,23 +71,23 @@
                         <thead class="bg-light">
                             <tr class="border-b border-gray-100 dark:border-gray-800">
                                 <th class="px-5 py-3 text-left bg-gray-50 dark:bg-gray-800 dark:text-white">
-                                    {{ __('No') }}</th>
+                                    {{ __('No.') }}</th> {{-- Terjemahkan di sini --}}
                                 <th class="px-5 py-3 text-left bg-gray-50 dark:bg-gray-800 dark:text-white">
-                                    {{ __('Kategori') }}</th>
+                                    {{ __('Kategori') }}</th> {{-- Terjemahkan di sini --}}
                                 <th class="px-5 py-3 text-left bg-gray-50 dark:bg-gray-800 dark:text-white">
-                                    {{ __('Nama Bahan Bakar') }}</th>
+                                    {{ __('Nama Bahan Bakar') }}</th> {{-- Terjemahkan di sini --}}
                                 <th class="px-5 py-3 text-left bg-gray-50 dark:bg-gray-800 dark:text-white">
-                                    {{ __('Faktor Emisi') }}</th>
+                                    {{ __('Faktor Emisi') }}</th> {{-- Terjemahkan di sini --}}
                                 <th class="px-5 py-3 text-left bg-gray-50 dark:bg-gray-800 dark:text-white">
-                                    {{ __('Action') }}</th>
+                                    {{ __('Action') }}</th> {{-- Terjemahkan di sini --}}
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($bahan_bakars as $item)
                                 <tr class="border-b border-gray-100 dark:border-gray-800">
                                     <td class="px-5 py-4">{{ $loop->iteration }}</td>
-                                    <td class="px-5 py-4">{{ $item->kategori }}</td>
-                                    <td class="px-5 py-4">{{ $item->Bahan_bakar }}</td>
+                                    <td class="px-5 py-4">{{ __($item->kategori) }}</td> {{-- Terjemahkan jika kategori perlu diterjemahkan --}}
+                                    <td class="px-5 py-4">{{ __($item->Bahan_bakar) }}</td> {{-- Terjemahkan jika nama bahan bakar perlu diterjemahkan --}}
                                     <td class="px-5 py-4">{{ number_format($item->factorEmisi, 4) }}</td>
                                     <td class="px-5 py-4 flex gap-2">
                                         <a href="{{ route('admin.bahan-bakar.edit', $item->id) }}"
@@ -111,22 +98,15 @@
                                             data-modal-toggle="delete-modal-{{ $item->id }}" class="btn-danger !p-2">
                                             <i class="bi bi-trash"></i>
                                         </button>
-                                        {{-- <form action="{{ route('admin.bahan-bakar.destroy', $item->id) }}" method="POST"
-                                            onsubmit="return confirm('{{ __('Apakah Anda yakin ingin menghapus?') }}')">
-                                            @csrf @method('DELETE')
-                                            <button type="submit" class="btn-danger !p-2"><i
-                                                    class="bi bi-trash"></i></button>
-                                        </form> --}}
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
                                     <td colspan="5" class="text-center py-4 text-gray-500 dark:text-gray-400">
-                                        {{ __('Tidak ada data bahan bakar') }}</td>
+                                        {{ __('Tidak ada data bahan bakar') }}</td> {{-- Terjemahkan di sini --}}
                                 </tr>
                             @endforelse
                             @foreach ($bahan_bakars as $item)
-                                <!-- Delete Modal -->
                                 <div id="delete-modal-{{ $item->id }}" tabindex="-1" aria-hidden="true"
                                     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
                                     <div class="relative w-full max-w-md h-full md:h-auto">
@@ -150,19 +130,19 @@
                                                         d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                 </svg>
                                                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                                                    {{ __('Yakin ingin menghapus data ini?') }}
+                                                    {{ __('Yakin ingin menghapus data ini?') }} {{-- Terjemahkan di sini --}}
                                                 </h3>
                                                 <form action="{{ route('admin.bahan-bakar.destroy', $item) }}"
                                                     method="POST">
                                                     @csrf @method('DELETE')
                                                     <button type="submit"
                                                         class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                        {{ __('Ya, Hapus') }}
+                                                        {{ __('Ya, Hapus') }} {{-- Terjemahkan di sini --}}
                                                     </button>
                                                     <button data-modal-hide="delete-modal-{{ $item->id }}"
                                                         type="button"
                                                         class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                                        {{ __('Batal') }}
+                                                        {{ __('Batal') }} {{-- Terjemahkan di sini --}}
                                                     </button>
                                                 </form>
                                             </div>

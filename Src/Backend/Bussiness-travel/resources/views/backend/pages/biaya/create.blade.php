@@ -26,7 +26,7 @@
                         {{ __('Kategori') }}
                     </label>
                     <select name="kategori" id="kategori" required
-                        class="h-11 w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800 
+                        class="h-11 w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800
                    shadow-sm focus:border-primary-500 focus:ring-primary-200 focus:ring-opacity-50
                    dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder-white/30">
                         <option value="" disabled selected>{{ __('Pilih Kategori') }}</option>
@@ -42,7 +42,7 @@
 
                 <div>
                     <label for="jenisKendaraan"
-                        class="block text-sm font-medium text-gray-700 dark:text-gray-400">{{ __('jenis Biaya') }}</label>
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-400">{{ __('Jenis Biaya') }}</label>
                     <input type="text" name="jenisKendaraan" id="jenisKendaraan" value="{{ old('jenisKendaraan') }}"
                         required maxlength="255" placeholder="{{ __('Masukkan jenis biaya yang di keluarkan') }}"
                         class="h-11 w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 shadow-sm focus:border-primary-500 focus:ring-primary-200 focus:ring-opacity-50
@@ -54,9 +54,9 @@
 
                 <div>
                     <label for="factorEmisi"
-                        class="block text-sm font-medium text-gray-700 dark:text-gray-400">{{ __('Factor Emisi') }}</label>
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-400">{{ __('Faktor Emisi') }}</label>
                     <input type="factorEmisi" step="0.0001" name="factorEmisi" id="factorEmisi"
-                        value="{{ old('factorEmisi') }}" required placeholder="{{ __('factor emisi') }}"
+                        value="{{ old('factorEmisi') }}" required placeholder="{{ __('Faktor Emisi') }}"
                         class="h-11 w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 shadow-sm focus:border-primary-500 focus:ring-primary-200 focus:ring-opacity-50
                  dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder-white/30" />
                     @error('factorEmisi')

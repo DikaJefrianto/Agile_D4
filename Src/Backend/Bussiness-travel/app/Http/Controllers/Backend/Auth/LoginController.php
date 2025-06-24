@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers\Backend\Auth;
+
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
@@ -34,7 +34,9 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::ADMIN_DASHBOARD;
+    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectAfterLogout = RouteServiceProvider::HOME;
+    protected $redirectToAfterLogin = RouteServiceProvider::ADMIN_DASHBOARD;
 
     /**
      * show login form for admin guard
@@ -87,6 +89,7 @@ class LoginController extends Controller
     {
         Auth::guard('web')->logout();
 
-        return redirect()->route('login');
+        return redirect()->route('login'); // redirect ke named route 'login'
     }
+
 }

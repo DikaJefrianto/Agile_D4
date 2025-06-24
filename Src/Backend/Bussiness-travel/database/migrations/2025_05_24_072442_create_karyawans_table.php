@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('karyawans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('nama_lengkap')->required();
+            $table->string('foto')->nullable(); // disamakan dengan 'logo' di perusahaa
+            $table->unsignedBigInteger('user_id')->unique(); // Satu user satu karyawan
             $table->unsignedBigInteger('perusahaan_id');
-            $table->foreign('perusahaan_id')->references('id')->on('perusahaans')->onDelete('cascade');
-            $table->string('jabatan');
-            $table->string('telepon');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('perusahaan_id')->references('id')->on('perusahaans')->onDelete('cascade');
         });
+
+
     }
 
     /**

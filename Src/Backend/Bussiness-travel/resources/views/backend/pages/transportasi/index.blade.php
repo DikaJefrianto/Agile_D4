@@ -62,14 +62,14 @@
                     ])
                 </div>
             </div>
-            
+
 
             <div class="overflow-x-auto">
                 @include('backend.layouts.partials.messages')
                 <table class="w-full text-sm text-gray-700 dark:text-white">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr>
-                            <th class="p-2 text-left">{{ __('No') }}</th>
+                            <th class="p-2 text-left">{{ __('No.') }}</th>
                             <th class="p-2 text-left">{{ __('Kategori') }}</th>
                             <th class="p-2 text-left">{{ __('Nama Transportasi') }}</th>
                             <th class="p-2 text-left">{{ __('Faktor Emisi') }}</th>
@@ -158,6 +158,6 @@
             </div>
         </div>
     </div>
-    
+
 @endsection
 

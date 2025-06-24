@@ -29,12 +29,6 @@ class RolePermissionSeeder extends Seeder
      */
     public function run()
     {
-        // $permissions = [
-        //     'blog.create',
-        //     'blog.edit',
-        //     'blog.delete',
-        //     'blog.view'
-        // ];
         // Create all permissions
         $this->command->info('Creating permissions...');
         $this->permissionService->createPermissions();
@@ -52,9 +46,9 @@ class RolePermissionSeeder extends Seeder
 
         // Assign random roles to other users
         $this->command->info('Assigning random roles to other users...');
-        $availableRoles = ['Admin', 'Editor', 'Subscriber']; // Exclude Superadmin from random assignment
+        $availableRoles = ['Admin', 'Perusahaan','Karyawan']; // Exclude Superadmin from random assignment
         $users = User::all();
-        
+
         foreach ($users as $user) {
             if (!$user->hasRole('Superadmin')) {
                 // Get a random role from the available roles

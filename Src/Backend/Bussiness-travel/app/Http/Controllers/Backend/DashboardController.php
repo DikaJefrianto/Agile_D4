@@ -11,7 +11,6 @@ use App\Services\LanguageService;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-
 class DashboardController extends Controller
 {
     public function __construct(

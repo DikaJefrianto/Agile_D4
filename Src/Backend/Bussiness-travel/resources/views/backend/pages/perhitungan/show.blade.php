@@ -50,11 +50,6 @@
 
             {{-- Kolom Kiri --}}
             <div class="flex gap-2">
-                <div class="w-44 font-medium">Nama Karyawan</div>
-                <div>:</div>
-                <div>{{ $perhitungan->user->name }}</div>
-            </div>
-            <div class="flex gap-2">
                 <div class="w-44 font-medium">Tujuan Perjalanan</div>
                 <div>:</div>
                 <div>{{ $perhitungan->titik_awal }} → {{ $perhitungan->titik_tujuan }}</div>
