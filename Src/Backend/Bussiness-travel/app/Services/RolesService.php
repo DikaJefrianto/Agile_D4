@@ -257,8 +257,6 @@ class RolesService
                     'translations.view',
                     'perhitungan.create',
                     'perhitungan.view',
-                    'perhitungan.edit',
-
                 ];
 
             case 'karyawan':
@@ -268,8 +266,6 @@ class RolesService
                     'profile.view',
                     'profile.edit',
                     'profile.update',
-                    'perhitungan.create',
-                    'perhitungan.view',
                 ];
         }
     }

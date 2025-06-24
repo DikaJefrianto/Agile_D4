@@ -141,6 +141,15 @@ class PermissionService
             ],
         ],
         [
+            'group_name' => 'strategi',
+            'permissions' => [
+                'strategi.view',
+                'strategi.create',
+                'strategi.edit',
+                'strategi.delete',
+            ],
+        ],
+        [
             'group_name' => 'perhitungan',
             'permissions' => [
                 'perhitungan.view',
@@ -151,10 +160,13 @@ class PermissionService
             ],
         ],
         [
-            'group_name' => 'laporan',
+            'group_name' => 'konsultasi',
             'permissions' => [
-                'laporan.view',
-                'laporan.detail',
+                'konsultasi.view',
+                'konsultasi.create',
+                'konsultasi.edit',
+                'konsultasi.delete',
+                'konsultasi.detail',
             ],
         ],
     ];

@@ -23,13 +23,4 @@ class BahanBakar extends Model
     {
         return $this->hasMany(Kendaraan::class);
     }
-    public function getNamaBakarAttribute()
-    {
-        return $this->{'Bahan bakar'};
-    }
-
-    public function hasilPerhitungans()
-    {
-        return $this->hasMany(HasilPerhitungan::class, 'bahan_bakar_id');
-    }
 }

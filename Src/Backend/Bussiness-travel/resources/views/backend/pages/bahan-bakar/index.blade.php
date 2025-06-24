@@ -60,7 +60,7 @@
                         </script>
 
                         @include('backend.partials.search-form', [
-                            'placeholder' => __('Cari berdasarkan kategori atau nama bahan bakar'), {{-- Terjemahkan di sini --}}
+                            'placeholder' => __('Cari berdasarkan kategori atau nama bahan bakar'),
                         ])
                     </div>
                 </div>

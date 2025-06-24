@@ -31,7 +31,6 @@ class Karyawan extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /**
@@ -40,7 +39,6 @@ class Karyawan extends Model
     public function perusahaan()
     {
         return $this->belongsTo(Perusahaan::class);
-        return $this->belongsTo(Perusahaan::class, 'perusahaan_id', 'id');
     }
 
     /**
