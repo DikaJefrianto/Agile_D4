@@ -326,7 +326,24 @@ class AdminMenuService
                 ],
             ],
         ]);
+        $this->addMenuItem([
+            'label' => __('Laporan'),
+            'icon' => 'report.svg', // ganti dengan ikon transportasi jika ada (misalnya: car.svg, truck.svg, dll)
+            'id' => 'laporan-submenu',
+            'active' => Route::is('admin.laporan.*'),
+            'priority' => 31, // sesuaikan agar muncul di urutan yang diinginkan
+            'permissions' => ['laporan.view', 'laporan.create', 'laporan.edit', 'laporan.delete'],
+            'children' => [
+                [
+                    'label' => __('Kelola Laporan'),
+                    'route' => route('admin.laporan.index'),
+                    'active' => Route::is('admin.laporan.index') || Route::is('admin.laporan.edit'),
+                    'priority' => 10,
+                    'permissions' => 'laporan.view'
+                ],
 
+            ]
+        ]);
 
         // $this->addMenuItem([
         //     'label' => __('Modules'),

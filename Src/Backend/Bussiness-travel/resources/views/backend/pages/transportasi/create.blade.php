@@ -26,13 +26,13 @@
                         {{ __('Kategori') }}
                     </label>
                     <select name="kategori" id="kategori" required
-                        class="h-11 w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800 
+                        class="h-11 w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800
                    shadow-sm focus:border-primary-500 focus:ring-primary-200 focus:ring-opacity-50
                    dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder-white/30">
                         <option value="" disabled selected>{{ __('Pilih Kategori') }}</option>
-                        <option value="Darat" {{ old('kategori') == 'Darat' ? 'selected' : '' }}>Darat</option>
-                        <option value="Laut" {{ old('kategori') == 'Laut' ? 'selected' : '' }}>Laut</option>
-                        <option value="Udara" {{ old('kategori') == 'Udara' ? 'selected' : '' }}>Udara</option>
+                        <option value="Darat" {{ old('kategori') == 'Darat' ? 'selected' : '' }}>{{ __('Darat') }}</option>
+                        <option value="Laut" {{ old('kategori') == 'Laut' ? 'selected' : '' }}>{{ __('Laut') }}</option>
+                        <option value="Udara" {{ old('kategori') == 'Udara' ? 'selected' : '' }}>{{ __('Udara') }}</option>
                     </select>
                     @error('kategori')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>

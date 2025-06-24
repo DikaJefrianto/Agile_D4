@@ -412,5 +412,7 @@
     "month_label": "Bulan",
     "year_label": "Tahun",
     "bahan_bakar": "Bahan Bakar",
-    "jarak_tempuh": "Jarak Tempuh"
+    "jarak_tempuh": "Jarak Tempuh",
+    "Edit Transportation Type" : "Edit Jenis Tranportasi"
+
 }

@@ -30,7 +30,7 @@
                 <h3 class="text-base font-medium text-gray-800 dark:text-white/90">{{ __('Daftar Strategi') }}</h3>
 
                 @include('backend.partials.search-form', [
-                    'placeholder' => __('Search strategi'),
+                    'placeholder' => __('Search Strategy'),
                 ])
 
                 {{-- Tombol "Tambah Strategi" hanya untuk Admin/Super Admin --}}
@@ -46,7 +46,7 @@
                 <table class="w-full dark:text-gray-400">
                     <thead>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
-                            <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('No') }}</th>
+                            <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('No.') }}</th>
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Nama Program') }}</th>
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Deskripsi') }}</th>
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Dokumen') }}</th>

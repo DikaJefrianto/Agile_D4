@@ -62,7 +62,9 @@ class TransportasiController extends Controller
     public function edit(Transportasi $transportasi)
     {
         $this->checkAuthorization(auth()->user(), ['transportasi.edit']);
-        return view('backend.pages.transportasi.edit', compact('transportasi'));
+        // $transportasi = Transportasi::findOrFail($transportasi);
+        $kategori = $transportasi -> kategori;
+        return view('backend.pages.transportasi.edit', compact('transportasi','kategori'));
     }
 
     /**

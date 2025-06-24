@@ -4,6 +4,37 @@
     {{ __('Perhitungan Emisi') }} | {{ config('app.name') }}
 @endsection
 
+{{-- Tambahkan CSS kustom di sini --}}
+@section('styles')
+    <style>
+        /* Menyembunyikan ikon kalender bawaan di beberapa browser */
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            opacity: 0; /* Membuatnya tidak terlihat */
+            position: absolute; /* Posisikan secara absolut untuk overlay */
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 1; /* Pastikan berada di atas ikon kustom */
+        }
+
+        /* Penyesuaian untuk Firefox */
+        input[type="datetime-local"]::-moz-calendar-picker-indicator {
+            opacity: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        /* Penyesuaian umum untuk tema gelap pada indikator picker (jika masih terlihat) */
+        /* Filter ini bisa opsional, tergantung seberapa baik opacity:0 bekerja */
+        .dark input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            /* filter: invert(1); */ /* Ini bisa menyebabkan masalah jika tidak sepenuhnya tersembunyi */
+        }
+    </style>
+@endsection
+
 @section('admin-content')
     <div class="p-4 mx-auto max-w-screen-xl md:p-6">
         <div class="space-y-6">
@@ -19,18 +50,14 @@
                     {{ __('Pilih Metode Perhitungan Emisi') }}
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {{-- Baris-baris ini dihapus karena tidak lagi diperlukan dan menyebabkan error --}}
-                    {{-- <div>{{ __('messages.fuel_method_text') }}</div> --}}
-                    {{-- <div>{{ __('messages.fuel_method_desc') }}</div> --}}
-
                     @foreach ($metodeOptions as $option)
                         <button type="submit" name="metode" value="{{ $option['value'] }}"
                             class="border-2 rounded-xl p-4 shadow-sm transition-all hover:shadow-md text-center bg-white dark:bg-gray-900 {{ request('metode') == $option['value'] ? 'border-primary' : 'border-gray-200 dark:border-gray-700' }}">
                             <div class="space-y-2">
                                 <h5 class="text-lg font-semibold {{ $option['color'] }} dark:text-white">
-                                    <i class="bi {{ $option['icon'] }}"></i> {{ __($option['text']) }} {{-- Terjemahkan string 'text' dari array --}}
+                                    <i class="bi {{ $option['icon'] }}"></i> {{ __($option['text']) }}
                                 </h5>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __($option['desc']) }}</p> {{-- Terjemahkan string 'desc' dari array --}}
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __($option['desc']) }}</p>
                             </div>
                         </button>
                     @endforeach
@@ -103,7 +130,7 @@
                             <select name="Bahan_bakar" id="Bahan_bakar" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-900 dark:text-white">
                                 @foreach ($bahanBakar as $bb)
-                                    <option value="{{ $bb->id }}">{{ $bb->Bahan_bakar }} ({{ $bb->kategori }})
+                                    <option value="{{ $bb->id }}">{{ $bb->Bahan_bakar }} ({{ __($bb->kategori) }}) {{-- Ditambahkan __() untuk terjemahan kategori --}}
                                     </option>
                                 @endforeach
                             </select>
@@ -120,7 +147,7 @@
                             <select name="jenis" id="jenis" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-900 dark:text-white">
                                 @foreach ($jenis as $trans)
-                                    <option value="{{ $trans->id }}">{{ $trans->jenis }} ({{ $trans->kategori }})
+                                    <option value="{{ $trans->id }}">{{ $trans->jenis }} ({{ __($trans->kategori) }}) {{-- Ditambahkan __() untuk terjemahan kategori --}}
                                     </option>
                                 @endforeach
                             </select>
@@ -138,7 +165,7 @@
                             <select name="jenisKendaraan" id="jenisKendaraan" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-900 dark:text-white">
                                 @foreach ($jenisKendaraan as $b)
-                                    <option value="{{ $b->id }}">{{ $b->jenisKendaraan }} ({{ $b->kategori }})
+                                    <option value="{{ $b->id }}">{{ $b->jenisKendaraan }} ({{ __($b->kategori) }}) {{-- Ditambahkan __() untuk terjemahan kategori --}}
                                     </option>
                                 @endforeach
                             </select>
@@ -190,4 +217,36 @@
 
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    {{-- Ini adalah contoh skrip untuk mengelola tema gelap/terang --}}
+    {{-- Jika Anda sudah memiliki mekanisme tema, Anda tidak perlu bagian ini atau sesuaikan --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const htmlElement = document.documentElement; // Elemen <html> biasanya digunakan untuk kelas 'dark'
+            // Contoh tombol toggle tema, jika ada di layout Anda
+            const themeToggleButton = document.getElementById('theme-toggle');
+
+            function applyTheme(isDark) {
+                if (isDark) {
+                    htmlElement.classList.add('dark');
+                } else {
+                    htmlElement.classList.remove('dark');
+                }
+            }
+
+            // Membaca preferensi tema dari local storage atau sistem
+            const currentTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            applyTheme(currentTheme === 'dark');
+
+            if (themeToggleButton) {
+                themeToggleButton.addEventListener('click', () => {
+                    const isDark = htmlElement.classList.contains('dark');
+                    applyTheme(!isDark);
+                    localStorage.setItem('theme', !isDark ? 'dark' : 'light');
+                });
+            }
+        });
+    </script>
 @endsection

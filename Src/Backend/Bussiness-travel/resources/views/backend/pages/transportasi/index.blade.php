@@ -6,15 +6,18 @@
 
 @section('admin-content')
     <div class="p-4 mx-auto max-w-screen-2xl md:p-6">
+
         <div x-data="{ pageName: '{{ __('Transportasi') }}' }">
             <div class="mb-6 flex items-center justify-between">
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-white">{{ __('Transportasi') }}</h2>
-                <a href="{{ route('admin.transportasi.create') }}" class="btn-success">
-                    <i class="bi bi-plus-circle mr-2"></i> {{ __('Tambah Transportasi') }}
-                </a>
+                {{-- Tombol 'Tambah Transportasi' hanya akan muncul jika pengguna memiliki peran 'admin', 'superadmin', atau 'karyawan' --}}
+                @if(Auth::check() && (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Superadmin') || Auth::user()->hasRole('Karyawan')))
+                    <a href="{{ route('admin.transportasi.create') }}" class="btn-success">
+                        <i class="bi bi-plus-circle mr-2"></i> {{ __('Tambah Transportasi') }}
+                    </a>
+                @endif
             </div>
         </div>
-
         <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
             <div class="px-5 py-4 flex flex-wrap justify-between items-center gap-2">
                 <h3 class="text-base font-medium text-gray-700 dark:text-white">{{ __('Daftar Transportasi') }}</h3>

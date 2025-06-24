@@ -87,9 +87,10 @@ class BahanBakarController extends Controller
         $this->checkAuthorization(auth()->user(), ['bahanbakar.edit']);
 
         // Menggunakan findOrFail secara eksplisit
-        $bahanBakar = BahanBakar::findOrFail($id);
 
-        return view('backend.pages.bahan-bakar.edit', compact('bahanBakar'));
+        $bahanBakar = BahanBakar::findOrFail($id);
+        $kategori = $bahanBakar->kategori;
+        return view('backend.pages.bahan-bakar.edit', compact('bahanBakar','kategori'));
     }
 
     /**
