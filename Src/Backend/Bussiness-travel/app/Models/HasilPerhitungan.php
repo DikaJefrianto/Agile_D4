@@ -52,3 +52,4 @@ class HasilPerhitungan extends Model
         return $this->belongsTo(Biaya::class);
     }
 }
+
