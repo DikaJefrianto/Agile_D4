@@ -1,0 +1,74 @@
+<?php
+
+<<<<<<<< HEAD:Src/Backend/Bussiness-travel/vendor/laravel/framework/src/Illuminate/Routing/Console/stubs/controller.api.stub
+namespace {{ namespace }};
+
+use {{ rootNamespace }}Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class {{ class }} extends Controller
+========
+namespace $CLASS_NAMESPACE$;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class $CLASS$ extends Controller
+>>>>>>>> featur/306-310/manajemen-emisi:Src/Backend/Bussiness-travel/stubs/nwidart-stubs/controller-api.stub
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+
+<<<<<<<< HEAD:Src/Backend/Bussiness-travel/vendor/laravel/framework/src/Illuminate/Routing/Console/stubs/controller.api.stub
+========
+        return response()->json([]);
+    }
+
+>>>>>>>> featur/306-310/manajemen-emisi:Src/Backend/Bussiness-travel/stubs/nwidart-stubs/controller-api.stub
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+
+        return response()->json([]);
+    }
+
+    /**
+     * Show the specified resource.
+     */
+    public function show($id)
+    {
+        //
+
+<<<<<<<< HEAD:Src/Backend/Bussiness-travel/vendor/laravel/framework/src/Illuminate/Routing/Console/stubs/controller.api.stub
+========
+        return response()->json([]);
+    }
+
+>>>>>>>> featur/306-310/manajemen-emisi:Src/Backend/Bussiness-travel/stubs/nwidart-stubs/controller-api.stub
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        //
+
+        return response()->json([]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+        //
+
+        return response()->json([]);
+    }
+}

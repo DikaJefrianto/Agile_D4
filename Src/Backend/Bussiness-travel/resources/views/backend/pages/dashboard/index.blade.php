@@ -55,12 +55,30 @@
                         'class' => 'bg-white',
                         'url' => route('admin.translations.index'),
                     ])
+<<<<<<< HEAD
                 </div>
             </div>
         </div>
 
         {{-- ✨ Tambahan: Menu CRUD --}}
         <div class="mt-6">
+=======
+
+                    {{-- @include('backend.pages.dashboard.partials.card', [
+                        'icon' => 'bi bi-cloud-check',
+                        'label' => __('Total Emisi'),
+                        'value' => number_format($totalEmisi, 2) . ' kg CO₂',
+                        'bg' => '#F97316',
+                        'class' => 'bg-white',
+                        'url' => route('admin.perhitungan.index'),
+                    ]) --}}
+
+                </div>
+            </div>
+        </div>
+        {{-- ✨ Tambahan: Menu CRUD --}}
+        {{-- <div class="mt-6">
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
             <h3 class="text-lg font-semibold text-gray-700 dark:text-white mb-4">{{ __('Quick Access to CRUD Modules') }}</h3>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                 @php
@@ -68,11 +86,19 @@
                         ['label' => 'Perusahaans', 'route' => 'admin.perusahaans.index', 'icon' => 'bi bi-buildings', 'color' => '#0EA5E9'],
                         ['label' => 'Karyawans', 'route' => 'admin.karyawans.index', 'icon' => 'bi bi-person-badge', 'color' => '#9333EA'],
                         ['label' => 'Strategis', 'route' => 'admin.strategis.index', 'icon' => 'bi bi-lightbulb', 'color' => '#F59E0B'],
+<<<<<<< HEAD
                         ['label' => 'Bahan Bakars', 'route' => 'admin.bahan-bakars.index', 'icon' => 'bi bi-fuel-pump', 'color' => '#EF4444'],
                         ['label' => 'Kendaraans', 'route' => 'admin.kendaraans.index', 'icon' => 'bi bi-truck-front', 'color' => '#10B981'],
                         ['label' => 'Feedbacks', 'route' => 'admin.feedbacks.index', 'icon' => 'bi bi-chat-left-text', 'color' => '#3B82F6'],
                         ['label' => 'Perjalanan Dinas', 'route' => 'admin.perjalanan-dinas.index', 'icon' => 'bi bi-geo-alt', 'color' => '#8B5CF6'],
                         ['label' => 'Perhitungans', 'route' => 'admin.perhitungans.index', 'icon' => 'bi bi-calculator', 'color' => '#F97316'],
+=======
+                        ['label' => 'bahan-bakar', 'route' => 'admin.bahan-bakar.index', 'icon' => 'bi bi-fuel-pump', 'color' => '#EF4444'],
+                        ['label' => 'transportasi', 'route' => 'admin.transportasi.index', 'icon' => 'bi bi-truck-front', 'color' => '#10B981'],
+                        ['label' => 'Feedbacks', 'route' => 'admin.feedbacks.index', 'icon' => 'bi bi-chat-left-text', 'color' => '#3B82F6'],
+                        ['label' => 'Perjalanan Dinas', 'route' => 'admin.perjalanan-dinas.index', 'icon' => 'bi bi-geo-alt', 'color' => '#8B5CF6'],
+                        ['label' => 'Perhitungan', 'route' => 'admin.perhitungan.index', 'icon' => 'bi bi-calculator', 'color' => '#F97316'],
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
                     ];
                 @endphp
 
@@ -83,7 +109,12 @@
                     </a>
                 @endforeach
             </div>
+<<<<<<< HEAD
         </div>
+=======
+        </div> --}}
+
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
 
         {{-- Grafik & History --}}
         <div class="mt-6">

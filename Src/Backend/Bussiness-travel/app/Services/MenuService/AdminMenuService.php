@@ -20,11 +20,19 @@ class AdminMenuService
      * @return void
      * @throws \InvalidArgumentException
      */
+<<<<<<< HEAD
     public function addMenuItem(AdminMenuItem | array $item, ?string $group = null)
     {
         $group    = $group ?: __('Main');
         $menuItem = $this->createAdminMenuItem($item);
         if (! isset($this->groups[$group])) {
+=======
+    public function addMenuItem(AdminMenuItem|array $item, ?string $group = null)
+    {
+        $group = $group ?: __('Main');
+        $menuItem = $this->createAdminMenuItem($item);
+        if (!isset($this->groups[$group])) {
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
             $this->groups[$group] = [];
         }
 
@@ -33,7 +41,11 @@ class AdminMenuService
         }
     }
 
+<<<<<<< HEAD
     protected function createAdminMenuItem(AdminMenuItem | array $data): AdminMenuItem
+=======
+    protected function createAdminMenuItem(AdminMenuItem|array $data): AdminMenuItem
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     {
         if ($data instanceof AdminMenuItem) {
             return $data;
@@ -44,8 +56,13 @@ class AdminMenuService
         if (isset($data['children']) && is_array($data['children'])) {
             $data['children'] = array_map(
                 fn($child) => auth()->user()->hasAnyPermission($child['permissions'] ?? [])
+<<<<<<< HEAD
                 ? $this->createAdminMenuItem($child)
                 : null,
+=======
+                    ? $this->createAdminMenuItem($child)
+                    : null,
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
                 $data['children']
             );
 
@@ -58,6 +75,7 @@ class AdminMenuService
 
     public function getMenu()
     {
+<<<<<<< HEAD
         $this->addMenuItem([
             'label'       => __('Dashboard'),
             'icon'        => 'dashboard.svg',
@@ -159,6 +177,82 @@ class AdminMenuService
                     'permissions' => 'pulse.view',
                 ],
             ],
+=======
+        // Home untuk Landing Page di sini ---
+        $this->addMenuItem([
+            'label' => __('Home'), // Label untuk menu item
+            'icon' => 'home.svg',
+            'route' => url('home/'),
+            'active' => request()->is('/'), // Aktifkan jika sedang di landing page
+            'id' => 'home-landing',
+            'priority' => 0,
+        ]);
+        $this->addMenuItem([
+            'label' => __('Dashboard'),
+            'icon' => 'dashboard.svg',
+            'route' => route('admin.dashboard'),
+            'active' => Route::is('admin.dashboard'),
+            'id' => 'dashboard',
+            'priority' => 1,
+            'permissions' => 'dashboard.view'
+        ]);
+
+        $this->addMenuItem([
+            'label' => __('Roles & Permissions'),
+            'icon' => 'key.svg',
+            'id' => 'roles-submenu',
+            'active' => Route::is('admin.roles.*'),
+            'priority' => 10,
+            'permissions' => ['role.create', 'role.view', 'role.edit', 'role.delete'],
+            'children' => [
+                [
+                    'label' => __('Roles'),
+                    'route' => route('admin.roles.index'),
+                    'active' => Route::is('admin.roles.index') || Route::is('admin.roles.edit'),
+                    'priority' => 10,
+                    'permissions' => 'role.view'
+                ],
+                [
+                    'label' => __('New Role'),
+                    'route' => route('admin.roles.create'),
+                    'active' => Route::is('admin.roles.create'),
+                    'priority' => 20,
+                    'permissions' => 'role.create'
+                ],
+                [
+                    'label' => __('Permissions'),
+                    'route' => route('admin.permissions.index'),
+                    'active' => Route::is('admin.permissions.index') || Route::is('admin.permissions.show'),
+                    'priority' => 30,
+                    'permissions' => 'role.view'
+                ]
+            ]
+        ]);
+
+        $this->addMenuItem([
+            'label' => __('User'),
+            'icon' => 'user.svg',
+            'id' => 'users-submenu',
+            'active' => Route::is('admin.users.*'),
+            'priority' => 20,
+            'permissions' => ['user.create', 'user.view', 'user.edit', 'user.delete'],
+            'children' => [
+                [
+                    'label' => __('Users'),
+                    'route' => route('admin.users.index'),
+                    'active' => Route::is('admin.users.index') || Route::is('admin.users.edit'),
+                    'priority' => 20,
+                    'permissions' => 'user.view'
+                ],
+                [
+                    'label' => __('New User'),
+                    'route' => route('admin.users.create'),
+                    'active' => Route::is('admin.users.create'),
+                    'priority' => 10,
+                    'permissions' => 'user.create'
+                ]
+            ]
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
         ]);
         $this->addMenuItem([
             'label'       => __('Perusahaan'),
@@ -209,6 +303,7 @@ class AdminMenuService
             ],
         ]);
         $this->addMenuItem([
+<<<<<<< HEAD
             'label'       => __('Perhitungan'),
             'icon'        => 'calculate.svg', // sesuaikan icon jika ada
             'id'          => 'perhitungans-submenu',
@@ -267,6 +362,242 @@ class AdminMenuService
             'id'       => 'logout',
             'priority' => 1,
             'html'     => '
+=======
+            'label' => __('Perhitungan'),
+            'icon' => 'calculator.svg', // ganti dengan ikon bahan bakar jika tersedia
+            'id' => 'HasilPerhitungan-submenu',
+            'active' => Route::is('admin.perhitungan.*'),
+            'priority' => 30, // bisa disesuaikan posisi menu
+            'permissions' => ['perhitungan.view', 'perhitungan.create', 'perhitungan.edit', 'perhitungan.delete'],
+            'children' => [
+                [
+                    'label' => __('Perhitungan Emisi'),
+                    'route' => route('admin.perhitungan.create'),
+                    'active' => Route::is('admin.perhitungan.create'),
+                    'priority' => 20,
+                    'permissions' => 'perhitungan.create'
+                ],
+                [
+                    'label' => __('Daftar Perhitungan Emisi'),
+                    'route' => route('admin.perhitungan.index'),
+                    'active' => Route::is('admin.perhitungan.index') || Route::is('admin.perhitungan.edit'),
+                    'priority' => 10,
+                    'permissions' => 'perhitungan.view'
+                ],
+            ]
+        ]);
+        $this->addMenuItem([
+            'label' => __('Bahan Bakar'),
+            'icon' => 'gas.svg', // ganti dengan ikon bahan bakar jika tersedia
+            'id' => 'bahan-bakars-submenu',
+            'active' => Route::is('admin.bahan-bakar.*'),
+            'priority' => 30, // bisa disesuaikan posisi menu
+            'permissions' => ['bahanbakar.view', 'bahanbakar.create', 'bahanbakar.edit', 'bahanbakar.delete'],
+            'children' => [
+                [
+                    'label' => __('Daftar Emisi Bahan Bakar'),
+                    'route' => route('admin.bahan-bakar.index'),
+                    'active' => Route::is('admin.bahan-bakar.index') || Route::is('admin.bahan-bakar.edit'),
+                    'priority' => 10,
+                    'permissions' => 'bahanbakar.view'
+                ],
+                [
+                    'label' => __('Tambah Data Bahan Bakar'),
+                    'route' => route('admin.bahan-bakar.create'),
+                    'active' => Route::is('admin.bahan-bakar.create'),
+                    'priority' => 20,
+                    'permissions' => 'bahanbakar.create'
+                ],
+            ]
+        ]);
+        $this->addMenuItem([
+            'label' => __('Transportasi'),
+            'icon' => 'bus.svg', // ganti dengan ikon transportasi jika ada (misalnya: car.svg, truck.svg, dll)
+            'id' => 'transportasi-submenu',
+            'active' => Route::is('admin.transportasi.*'),
+            'priority' => 31, // sesuaikan agar muncul di urutan yang diinginkan
+            'permissions' => ['transportasi.view', 'transportasi.create', 'transportasi.edit', 'transportasi.delete'],
+            'children' => [
+                [
+                    'label' => __('Daftar Emisi Transportasi'),
+                    'route' => route('admin.transportasi.index'),
+                    'active' => Route::is('admin.transportasi.index') || Route::is('admin.transportasi.edit'),
+                    'priority' => 10,
+                    'permissions' => 'transportasi.view'
+                ],
+                [
+                    'label' => __('Tambah Data Transportasi'),
+                    'route' => route('admin.transportasi.create'),
+                    'active' => Route::is('admin.transportasi.create'),
+                    'priority' => 20,
+                    'permissions' => 'transportasi.create'
+                ],
+            ]
+        ]);
+
+        $this->addMenuItem([
+            'label' => __('Biaya'),
+            'icon' => 'uang.svg', // ganti dengan ikon transportasi jika ada (misalnya: car.svg, truck.svg, dll)
+            'id' => 'biaya-submenu',
+            'active' => Route::is('admin.biaya.*'),
+            'priority' => 31, // sesuaikan agar muncul di urutan yang diinginkan
+            'permissions' => ['biaya.view', 'biaya.create', 'biaya.edit', 'biaya.delete'],
+            'children' => [
+                [
+                    'label' => __('Daftar Emisi Biaya'),
+                    'route' => route('admin.biaya.index'),
+                    'active' => Route::is('admin.biaya.index') || Route::is('admin.biaya.edit'),
+                    'priority' => 10,
+                    'permissions' => 'biaya.view'
+                ],
+                [
+                    'label' => __('Tambah Data Emisi Biaya'),
+                    'route' => route('admin.biaya.create'),
+                    'active' => Route::is('admin.biaya.create'),
+                    'priority' => 20,
+                    'permissions' => 'biaya.create'
+                ],
+            ]
+        ]);
+        $this->addMenuItem([
+            'label'       => __('Konsultasi'),
+            'icon'        => 'consultation.svg', // sesuaikan icon jika ada
+            'id'          => 'konsultasi-submenu',
+            'active'      => Route::is('admin.konsultasi.*'),
+            'priority'    => 40  ,
+            'permissions' => ['konsultasi.view', 'konsultasi.create', 'konsultasi.edit', 'konsultasi.delete'],
+            'children'    => [
+                [
+                    'label'       => __('Riwayat Konsultasi'),
+                    'route'       => route('admin.konsultasis.index'),
+                    'active'      => Route::is('admin.konsultasis.index') || Route::is('admin.konsultasis.edit'),
+                    'priority'    => 10,
+                    'permissions' => 'konsultasi.view',
+                ],
+                [
+                    'label'       => __('Ajukan Konsultasi'),
+                    'route'       => route('admin.konsultasis.create'),
+                    'active'      => Route::is('admin.konsultasis.create'),
+                    'priority'    => 20,
+                    'permissions' => 'konsultasi.create',
+                ],
+            ],
+        ]);
+        $this->addMenuItem([
+            'label'       => __('Strategi'),
+            'icon'        => 'strategy.svg', // sesuaikan icon jika ada
+            'id'          => 'strategis-submenu',
+            'active'      => Route::is('admin.strategis.*'),
+            'priority'    => 31,
+            'permissions' => ['strategi.view', 'strategi.create', 'strategi.edit', 'strategi.delete'],
+            'children'    => [
+                [
+                    'label'       => __('Daftar Strategi'),
+                    'route'       => route('admin.strategis.index'),
+                    'active'      => Route::is('admin.strategis.index') || Route::is('admin.strategis.edit'),
+                    'priority'    => 10,
+                    'permissions' => 'strategi.view',
+                ],
+                [
+                    'label'       => __('Tambah Strategi'),
+                    'route'       => route('admin.strategis.create'),
+                    'active'      => Route::is('admin.strategis.create'),
+                    'priority'    => 20,
+                    'permissions' => 'strategi.create',
+                ],
+            ],
+        ]);
+        $this->addMenuItem([
+            'label' => __('Laporan'),
+            'icon' => 'report.svg', // ganti dengan ikon transportasi jika ada (misalnya: car.svg, truck.svg, dll)
+            'id' => 'laporan-submenu',
+            'active' => Route::is('admin.laporan.*'),
+            'priority' => 31, // sesuaikan agar muncul di urutan yang diinginkan
+            'permissions' => ['laporan.view', 'laporan.create', 'laporan.edit', 'laporan.delete'],
+            'children' => [
+                [
+                    'label' => __('Kelola Laporan'),
+                    'route' => route('admin.laporan.index'),
+                    'active' => Route::is('admin.laporan.index') || Route::is('admin.laporan.edit'),
+                    'priority' => 10,
+                    'permissions' => 'laporan.view'
+                ],
+
+            ]
+        ]);
+
+        // $this->addMenuItem([
+        //     'label' => __('Modules'),
+        //     'icon' => 'three-dice.svg',
+        //     'route' => route('admin.modules.index'),
+        //     'active' => Route::is('admin.modules.index'),
+        //     'id' => 'modules',
+        //     'priority' => 30,
+        //     'permissions' => 'module.view'
+        // ]);
+
+        $this->addMenuItem([
+            'label' => __('Monitoring'),
+            'icon' => 'tv.svg',
+            'id' => 'monitoring-submenu',
+            'active' => Route::is('admin.actionlog.*'),
+            'priority' => 40,
+            'permissions' => ['pulse.view', 'actionlog.view'],
+            'children' => [
+                [
+                    'label' => __('Action Logs'),
+                    'route' => route('admin.actionlog.index'),
+                    'active' => Route::is('admin.actionlog.index'),
+                    'priority' => 20,
+                    'permissions' => 'actionlog.view'
+                ],
+                [
+                    'label' => __('Laravel Pulse'),
+                    'route' => route('pulse'),
+                    'active' => false,
+                    'target' => '_blank',
+                    'priority' => 10,
+                    'permissions' => 'pulse.view'
+                ]
+            ]
+        ]);
+
+
+
+        $this->addMenuItem([
+            'label' => __('Settings'),
+            'icon' => 'settings.svg',
+            'id' => 'settings-submenu',
+            'active' => Route::is('admin.settings.*') || Route::is('admin.translations.*'),
+            'priority' => 1,
+            'permissions' => ['settings.edit', 'translations.view'],
+            'children' => [
+                [
+                    'label' => __('General Settings'),
+                    'route' => route('admin.settings.index'),
+                    'active' => Route::is('admin.settings.index'),
+                    'priority' => 20,
+                    'permissions' => 'settings.edit'
+                ],
+                [
+                    'label' => __('Translations'),
+                    'route' => route('admin.translations.index'),
+                    'active' => Route::is('admin.translations.*'),
+                    'priority' => 10,
+                    'permissions' => ['translations.view', 'translations.edit']
+                ]
+            ]
+        ], __('More'));
+
+        $this->addMenuItem([
+            'label' => __('Logout'),
+            'icon' => 'logout.svg',
+            'route' => route('admin.dashboard'),
+            'active' => false,
+            'id' => 'logout',
+            'priority' => 1,
+            'html' => '
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
                 <li class="hover:menu-item-active">
                     <form method="POST" action="' . route('logout') . '">
                         ' . csrf_field() . '
@@ -276,7 +607,11 @@ class AdminMenuService
                         </button>
                     </form>
                 </li>
+<<<<<<< HEAD
             ',
+=======
+            '
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
         ], __('More'));
 
         $this->sortMenuItemsByPriority();
@@ -305,7 +640,11 @@ class AdminMenuService
             $filteredItems = ld_apply_filters('sidebar_menu_' . strtolower($group), $filteredItems);
 
             // Only add the group if it has items after filtering.
+<<<<<<< HEAD
             if (! empty($filteredItems)) {
+=======
+            if (!empty($filteredItems)) {
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
                 $result[$group] = $filteredItems;
             }
         }

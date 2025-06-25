@@ -11,9 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
+<<<<<<< HEAD
         Schema::create('$TABLE$', function (Blueprint $table) {
             $table->id();
             $FIELDS$
+=======
+<<<<<<<< HEAD:Src/Backend/Bussiness-travel/stubs/nwidart-stubs/migration/create.stub
+        Schema::create('$TABLE$', function (Blueprint $table) {
+            $table->id();
+            $FIELDS$
+========
+        Schema::create('feedbacks', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->text('isi');
+>>>>>>>> featur/306-310/manajemen-emisi:Src/Backend/Bussiness-travel/database/migrations/2025_05_24_072833_create_feedbacks_table.php
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
             $table->timestamps();
         });
     }
@@ -23,6 +36,14 @@ return new class extends Migration
      */
     public function down(): void
     {
+<<<<<<< HEAD
         Schema::dropIfExists('$TABLE$');
+=======
+<<<<<<<< HEAD:Src/Backend/Bussiness-travel/stubs/nwidart-stubs/migration/create.stub
+        Schema::dropIfExists('$TABLE$');
+========
+        Schema::dropIfExists('feedbacks');
+>>>>>>>> featur/306-310/manajemen-emisi:Src/Backend/Bussiness-travel/database/migrations/2025_05_24_072833_create_feedbacks_table.php
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     }
 };

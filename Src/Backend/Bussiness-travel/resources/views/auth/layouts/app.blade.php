@@ -6,14 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', config('app.name'))</title>
+<<<<<<< HEAD
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     
+=======
+    <link rel="icon" href="{{ config('settings.site_favicon') ?? asset('favicon.ico') }}" type="image/x-icon">
+
+
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     @include('backend.layouts.partials.theme-colors')
     @yield('before_vite_build')
 
     @viteReactRefresh
     @vite(['resources/js/app.js', 'resources/css/app.css'])
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     @if (!empty(config('settings.global_custom_css')))
     <style>
         {!! config('settings.global_custom_css') !!}
@@ -21,7 +31,11 @@
     @endif
 
     @include('backend.layouts.partials.integration-scripts')
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     @yield('styles')
 </head>
 
@@ -106,7 +120,11 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
     </div>
 
     @stack('scripts')
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     @if (!empty(config('settings.global_custom_js')))
     <script>
         {!! config('settings.global_custom_js') !!}

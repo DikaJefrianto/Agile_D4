@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\Controllers\Backend\Auth;
+<<<<<<< HEAD
 use App\Http\Controllers\Backend\Auth\LoginController;
+=======
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
 
 
 use App\Http\Controllers\Controller;

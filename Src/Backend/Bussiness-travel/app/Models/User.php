@@ -1,18 +1,17 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Notifications\AdminResetPasswordNotification;
+use Illuminate\Auth\Notifications\ResetPassword as DefaultResetPassword;
 use App\Traits\AuthorizationChecker;
 use App\Traits\HasGravatar;
-use Illuminate\Auth\Notifications\ResetPassword as DefaultResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class User extends Authenticatable
 {
@@ -73,6 +72,10 @@ class User extends Authenticatable
     public function karyawan()
     {
         return $this->hasOne(Karyawan::class);
+    }
+     public function perusahaan()
+    {
+        return $this->hasOne(Perusahaan::class);
     }
 
 }

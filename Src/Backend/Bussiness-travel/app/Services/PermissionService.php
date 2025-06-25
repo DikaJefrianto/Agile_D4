@@ -25,6 +25,7 @@ class PermissionService
             ],
         ],
         [
+<<<<<<< HEAD
             'group_name' => 'bahan-bakar',
             'permissions' => [
                 'bahan-bakar.create',
@@ -34,6 +35,8 @@ class PermissionService
             ],
         ],
         [
+=======
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
             'group_name' => 'karyawan',
             'permissions' => [
                 'karyawan.create',
@@ -43,6 +46,7 @@ class PermissionService
             ],
         ],
         [
+<<<<<<< HEAD
             'group_name' => 'transportasi',
             'permissions' => [
                 'transportasi.create',
@@ -61,6 +65,8 @@ class PermissionService
             ],
         ],
         [
+=======
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
             'group_name' => 'feedback',
             'permissions' => [
                 'feedback.create',
@@ -70,6 +76,7 @@ class PermissionService
             ],
         ],
         [
+<<<<<<< HEAD
             'group_name' => 'perhitungan',
             'permissions' => [
                 'perhitungan.create',
@@ -89,6 +96,8 @@ class PermissionService
         ],
 
         [
+=======
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
             'group_name' => 'user',
             'permissions' => [
                 'user.create',
@@ -156,6 +165,73 @@ class PermissionService
                 'perusahaan.create',
                 'perusahaan.edit',
                 'perusahaan.delete',
+<<<<<<< HEAD
+=======
+                'perusahaan.detail',
+            ],
+        ],
+        [
+            'group_name' => 'bahanbakar',
+            'permissions' => [
+                'bahanbakar.view',
+                'bahanbakar.create',
+                'bahanbakar.edit',
+                'bahanbakar.delete',
+            ],
+        ],
+        [
+            'group_name' => 'transportasi',
+            'permissions' => [
+                'transportasi.view',
+                'transportasi.create',
+                'transportasi.edit',
+                'transportasi.delete',
+            ],
+        ],
+        [
+            'group_name' => 'biaya',
+            'permissions' => [
+                'biaya.view',
+                'biaya.create',
+                'biaya.edit',
+                'biaya.delete',
+            ],
+        ],
+        [
+            'group_name' => 'strategi',
+            'permissions' => [
+                'strategi.view',
+                'strategi.create',
+                'strategi.edit',
+                'strategi.delete',
+            ],
+        ],
+        [
+            'group_name' => 'perhitungan',
+            'permissions' => [
+                'perhitungan.view',
+                'perhitungan.create',
+                'perhitungan.edit',
+                'perhitungan.delete',
+                'perhitungan.detail',
+            ],
+        ],
+        [
+            'group_name' => 'konsultasi',
+            'permissions' => [
+                'konsultasi.view',
+                'konsultasi.create',
+                'konsultasi.edit',
+                'konsultasi.delete',
+                'konsultasi.detail',
+            ],
+        ],
+        [
+            'group_name' => 'laporan',
+            'permissions' => [
+                'laporan.view',
+                'laporan.detail',
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
             ],
         ],
     ];

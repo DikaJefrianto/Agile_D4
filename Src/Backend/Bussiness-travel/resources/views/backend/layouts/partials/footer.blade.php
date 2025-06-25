@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
 <footer>
     <div class="footer-area">
         <p>
@@ -13,3 +17,7 @@
         </p>
     </div>
 </footer>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844

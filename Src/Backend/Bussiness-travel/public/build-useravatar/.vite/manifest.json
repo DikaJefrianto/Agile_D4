@@ -1,0 +1,14 @@
+{
+  "resources/assets/css/app.css": {
+    "file": "assets/app-DP2rzg_V.js",
+    "name": "app",
+    "src": "resources/assets/css/app.css",
+    "isEntry": true
+  },
+  "resources/assets/js/app.js": {
+    "file": "assets/app-l0sNRNKZ.js",
+    "name": "app",
+    "src": "resources/assets/js/app.js",
+    "isEntry": true
+  }
+}
