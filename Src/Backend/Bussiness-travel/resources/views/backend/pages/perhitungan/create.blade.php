@@ -128,7 +128,7 @@
                         <div>
                             <label for="nilai_input"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Jarak Tempuh (km)') }}</label>
-                            <input type="number" step="0.01" name="nilai_input" id="nilai_input" required
+                            <input type="number" step="0.0001" name="nilai_input" id="nilai_input" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-900 dark:text-white">
                         </div>
                     @elseif ($metode == 'biaya')
@@ -146,7 +146,7 @@
                         <div>
                             <label for="nilai_input"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Jumlah Biaya (Rp)') }}</label>
-                            <input type="number" step="0.01" name="nilai_input" id="nilai_input" required
+                            <input type="number" step="0.0001" name="nilai_input" id="nilai_input" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm dark:bg-gray-900 dark:text-white">
                         </div>
                     @endif

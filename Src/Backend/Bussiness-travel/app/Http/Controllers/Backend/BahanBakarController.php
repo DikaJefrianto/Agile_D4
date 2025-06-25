@@ -88,8 +88,9 @@ class BahanBakarController extends Controller
 
         // Menggunakan findOrFail secara eksplisit
         $bahanBakar = BahanBakar::findOrFail($id);
+        $kategori = $bahanBakar->kategori;
 
-        return view('backend.pages.bahan-bakar.edit', compact('bahanBakar'));
+        return view('backend.pages.bahan-bakar.edit', compact('bahanBakar','kategori'));
     }
 
     /**

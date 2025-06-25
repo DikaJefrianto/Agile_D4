@@ -165,12 +165,32 @@ class HasilPerhitunganController extends Controller
     public function show($id)
     {
         $this->checkAuthorization(auth()->user(), ['perhitungan.view']);
-        $perhitungan = HasilPerhitungan::with(['bahanBakar', 'transportasi', 'biaya'])
-            ->where('user_id', auth()->id())
+
+        $user = auth()->user();
+
+        $perhitungan = HasilPerhitungan::with(['bahanBakar', 'transportasi', 'biaya', 'user.karyawan.perusahaan'])
             ->findOrFail($id);
+
+        // Jika user karyawan, hanya boleh melihat milik sendiri
+        if ($user->hasRole('karyawan') && $perhitungan->user_id !== $user->id) {
+            return redirect()->route('admin.perhitungan.index')
+                ->withErrors('Anda tidak diizinkan melihat data ini.');
+        }
+
+        // Jika user perusahaan, hanya boleh melihat milik karyawan perusahaannya
+        if ($user->hasRole('perusahaan')) {
+            $karyawanIds = \App\Models\Karyawan::where('perusahaan_id', $user->perusahaan->id)->pluck('user_id');
+            if (! $karyawanIds->contains($perhitungan->user_id)) {
+                return redirect()->route('admin.perhitungan.index')
+                    ->withErrors('Anda tidak diizinkan melihat data ini.');
+            }
+        }
+
+        // Admin dan superadmin bisa melihat semua, tanpa pembatasan
 
         return view('backend.pages.perhitungan.show', compact('perhitungan'));
     }
+
 
 
     public function edit($id)

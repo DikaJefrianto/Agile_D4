@@ -96,8 +96,9 @@ class BiayaController extends Controller
 
         // Menggunakan findOrFail secara eksplisit
         $biaya = Biaya::findOrFail($id);
+        $kategori = $biaya->kategori;
 
-        return view('backend.pages.biaya.edit', compact('biaya'));
+        return view('backend.pages.biaya.edit', compact('biaya','kategori'));
     }
 
     ### `update`

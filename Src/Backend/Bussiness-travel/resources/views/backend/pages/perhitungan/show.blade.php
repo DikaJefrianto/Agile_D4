@@ -47,7 +47,19 @@
 
     <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow p-6 text-sm text-gray-800 dark:text-white text-base">
         <div class="grid md:grid-cols-1 gap-x-12 gap-y-5 text-base space-y-4">
+            
+            <div class="flex gap-2">
+                <div class="w-44 font-medium">Perusahaan</div>
+                <div>:</div>
+                <div>{{ $perhitungan->user->karyawan->perusahaan->nama ?? '-' }}</div>
+            </div>
 
+            <div class="flex gap-2">
+                <div class="w-44 font-medium">Karyawan</div>
+                <div>:</div>
+                <div>{{ $perhitungan->user->name ?? '-' }}</div>
+            </div>
+            
             {{-- Kolom Kiri --}}
             <div class="flex gap-2">
                 <div class="w-44 font-medium">Tujuan Perjalanan</div>
