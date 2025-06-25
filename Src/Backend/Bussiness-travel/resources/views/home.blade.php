@@ -270,7 +270,7 @@
                                 <img src="/images/imamjpg.jpg" alt="Nama Anggota" class="w-32 h-32 rounded-full mx-auto mb-5 object-cover border-4 border-green-300">
                                 <h3 class="text-xl font-semibold text-gray-900 mb-1">Imam Teguh Islamy</h3>
                                 <p class="text-green-700 font-medium text-base mb-3">CEO & Co-Founder</p>
-                                <p class="text-gray-600 text-sm leading-relaxed">Berpengalaman lebih dari 10 tahun di bidang teknologi lingkungan, Budi memimpin visi produk Naima.</p>
+                                <p class="text-gray-600 text-sm leading-relaxed">Sebagai CEO & Co-Founder Naima, Imam memimpin arah strategis perusahaan dengan visi berkelanjutan dan teknologi ramah lingkungan.</p>
                                 <div class="flex justify-center space-x-4 mt-4">
                                     <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-linkedin-in text-lg"></i></a>
                                     <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-twitter text-lg"></i></a>
@@ -281,7 +281,7 @@
                                 <img src="/images/alya.jpg" alt="Nama Anggota" class="w-32 h-32 rounded-full mx-auto mb-5 object-cover border-4 border-green-300">
                                 <h3 class="text-xl font-semibold text-gray-900 mb-1">Alya Lihan Eltofani</h3>
                                 <p class="text-green-700 font-medium text-base mb-3">Head of every Proposal</p>
-                                <p class="text-gray-600 text-sm leading-relaxed">Arsitek di balik platform Naima, alya memastikan akurasi dan skalabilitas sistem.</p>
+                                <p class="text-gray-600 text-sm leading-relaxed">Sebagai kepala proposal, Alya bertanggung jawab memastikan setiap dokumen, perencanaan, dan pengajuan proyek tersusun rapi dan akurat.</p>
                                 <div class="flex justify-center space-x-4 mt-4">
                                     <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-linkedin-in text-lg"></i></a>
                                     <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-github text-lg"></i></a>
@@ -292,7 +292,7 @@
                                 <img src="images/faisal.jpg" alt="Nama Anggota" class="w-32 h-32 rounded-full mx-auto mb-5 object-cover border-4 border-green-300">
                                 <h3 class="text-xl font-semibold text-gray-900 mb-1">Faisal Wimar</h3>
                                 <p class="text-green-700 font-medium text-base mb-3">Head of Taking Analisyst</p>
-                                <p class="text-gray-600 text-sm leading-relaxed">Pakar dalam metodologi perhitungan jejak karbon, Risa memastikan kepatuhan standar global.</p>
+                                <p class="text-gray-600 text-sm leading-relaxed">Sebagai kepala analis data perjalanan, Faisal memimpin proses analisis dan pengolahan data untuk perhitungan jejak karbon yang akurat.</p>
                                 <div class="flex justify-center space-x-4 mt-4">
                                     <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-linkedin-in text-lg"></i></a>
                                     <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-researchgate text-lg"></i></a>
@@ -303,17 +303,7 @@
                                 <img src="images/dhea.jpg" alt="Nama Anggota" class="w-32 h-32 rounded-full mx-auto mb-5 object-cover border-4 border-green-300">
                                 <h3 class="text-xl font-semibold text-gray-900 mb-1">Dhea Umi Amalia</h3>
                                 <p class="text-green-700 font-medium text-base mb-3">Consultant for Communication and Marketing</p>
-                                <p class="text-gray-600 text-sm leading-relaxed">Mengkomunikasikan segala kebutuhan konsultan dan menjadi jembatan penghubung naima dengan perusahaan.</p>
-                                <div class="flex justify-center space-x-4 mt-4">
-                                    <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-linkedin-in text-lg"></i></a>
-                                    <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-behance text-lg"></i></a>
-                                </div>
-                            </div>
-                            <div class="bg-white rounded-lg shadow-xl p-8 transform hover:scale-105 transition-transform duration-300 flex-shrink-0 w-72 sm:w-80 lg:w-96 snap-center" data-aos="zoom-in" data-aos-delay="500">
-                                <img src="images/dhea.jpg" alt="Nama Anggota" class="w-32 h-32 rounded-full mx-auto mb-5 object-cover border-4 border-green-300">
-                                <h3 class="text-xl font-semibold text-gray-900 mb-1">Dhea Umi Amalia</h3>
-                                <p class="text-green-700 font-medium text-base mb-3">Consultant for Communication and Marketing</p>
-                                <p class="text-gray-600 text-sm leading-relaxed">Mengkomunikasikan segala kebutuhan konsultan dan menjadi jembatan penghubung naima dengan perusahaan.</p>
+                                <p class="text-gray-600 text-sm leading-relaxed">Dhea bertugas sebagai penghubung komunikasi antara Naima dan perusahaan klien, serta menyusun strategi komunikasi dan pemasaran yang efektif.</p>
                                 <div class="flex justify-center space-x-4 mt-4">
                                     <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-linkedin-in text-lg"></i></a>
                                     <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-behance text-lg"></i></a>
