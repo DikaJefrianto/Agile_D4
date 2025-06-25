@@ -1,7 +1,8 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Backend\{
@@ -32,6 +33,30 @@ use App\Http\Controllers\Backend\GuideController as BackendGuideController;
 use App\Http\Controllers\FeedbacksController;
 use App\Http\Controllers\Backend\FeedbackController as BackendFeedbackController; // Alias untuk controller backend
 
+=======
+use App\Http\Controllers\Backend\ActionLogController;
+
+use App\Http\Controllers\Backend\BahanBakarController;
+
+use App\Http\Controllers\Backend\BiayaController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\HasilPerhitunganController;
+use App\Http\Controllers\Backend\KaryawanController;
+use App\Http\Controllers\Backend\KonsultasiController;
+use App\Http\Controllers\Backend\LaporanController;;
+use App\Http\Controllers\Backend\LocaleController;
+use App\Http\Controllers\Backend\ModulesController;
+use App\Http\Controllers\Backend\PermissionsController;
+use App\Http\Controllers\Backend\PerusahaanController;
+use App\Http\Controllers\Backend\ProfilesController;
+use App\Http\Controllers\Backend\RolesController;
+use App\Http\Controllers\Backend\SettingsController;
+use App\Http\Controllers\Backend\StrategiController;
+use App\Http\Controllers\Backend\TranslationController;
+use App\Http\Controllers\Backend\TransportasiController;
+use App\Http\Controllers\Backend\UserLoginAsController;
+use App\Http\Controllers\Backend\UsersController;use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\Route;
+>>>>>>> iterasi4
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
@@ -48,23 +73,30 @@ Route::middleware(['auth', 'verified'])
     ->prefix('dashboard')->as('admin.')
     ->group(function () {
 
-
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         /**
-         * Admin / Superadmin routes only
-         */
+     * Admin / Superadmin routes only
+     */
         Route::middleware(['role:admin|superadmin'])->group(function () {
+            Route::get('/laporan/export-pdf', [LaporanController::class, 'exportPdf'])->name('laporan.exportPdf');
+            Route::get('/laporan/export-csv', [LaporanController::class, 'exportCsv'])->name('laporan.exportCsv');
+            Route::get('/laporan/export-excel', [LaporanController::class, 'exportExcel'])->name('laporan.exportExcel');
+            Route::get('/laporan/{perusahaan}/detail', [LaporanController::class, 'showDetail'])->name('laporan.detail');
+            Route::get('/laporan/{perusahaan}/detail/export-pdf', [LaporanController::class, 'exportDetailPdf'])->name('laporan.detail.exportPdf');
+            Route::get('/laporan/{perusahaan}/detail/export-csv', [LaporanController::class, 'exportDetailCsv'])->name('laporan.detail.exportCsv');
+            Route::get('/laporan/{perusahaan}/detail/export-excel', [LaporanController::class, 'exportDetailExcel'])->name('laporan.detail.exportExcel');
             Route::resources([
-                'bahan-bakar' => BahanBakarController::class,
+                'bahan-bakar'  => BahanBakarController::class,
                 'transportasi' => TransportasiController::class,
-                'perhitungan' => HasilPerhitunganController::class,
+                'perhitungan'  => HasilPerhitunganController::class,
                 'biaya'        => BiayaController::class,
                 'strategis'    => StrategiController::class,
                 'perusahaans'  => PerusahaanController::class,
                 'karyawans'    => KaryawanController::class,
                 'roles'        => RolesController::class,
                 'users'        => UsersController::class,
+                'laporan'      => LaporanController::class,
             ]);
 
             Route::resource('konsultasis', KonsultasiController::class);
@@ -99,24 +131,29 @@ Route::middleware(['auth', 'verified'])
         });
 
         /**
-         * Perusahaan only
-         */
+     * Perusahaan only
+     */
         Route::middleware(['role:perusahaan'])->group(function () {
-            Route::get('/perusahaan', fn () => view('dashboard.perusahaan'))->name('dashboard.perusahaan');
+            Route::get('/perusahaan', fn() => view('dashboard.perusahaan'))->name('dashboard.perusahaan');
             // Tambahkan route lain untuk perusahaan di sini jika perlu
+            Route::get('/pehitungan', [HasilPerhitunganController::class, 'index'])->name('perhitungan.index');
+            Route::post('/perhitungan', [HasilPerhitunganController::class, 'store'])->name('perhitungan.store');
+            Route::get('/perhitungan/{id}', [HasilPerhitunganController::class, 'show'])->name('perhitungan.show');
+            Route::put('/perhitungan/{id}', [HasilPerhitunganController::class, 'update'])->name('perhitungan.update');
         });
 
         /**
-         * Karyawan only
-         */
+     * Karyawan only
+     */
         Route::middleware(['role:karyawan'])->group(function () {
-            Route::get('/karyawan', fn () => view('dashboard.karyawan'))->name('dashboard.karyawan');
+            Route::get('/karyawan', fn() => view('dashboard.karyawan'))->name('dashboard.karyawan');
             // Tambahkan route lain untuk karyawan di sini jika perlu
+            Route::resources(['perhitungan'  => HasilPerhitunganController::class,]);
         });
 
         /**
-         * Shared by all authenticated roles (admin, perusahaan, karyawan)
-         */
+     * Shared by all authenticated roles (admin, perusahaan, karyawan)
+     */
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
         Route::post('/settings', [SettingsController::class, 'store'])->name('settings.store');
 
@@ -125,31 +162,29 @@ Route::middleware(['auth', 'verified'])
         Route::post('/translations/create', [TranslationController::class, 'create'])->name('translations.create');
     });
 
+//Route untuk strategi
+Route::middleware(['role:admin|superadmin'])
+    ->resource('strategis', StrategiController::class)
+    ->except(['index', 'show']);
 
-    //Route untuk strategi
-    Route::middleware(['role:admin|superadmin'])
-            ->resource('strategis', StrategiController::class)
-            ->except(['index', 'show']);
-
-        // Strategi - Perusahaan & Karyawan hanya bisa lihat
-        Route::middleware(['role:perusahaan|karyawan'])
-            ->prefix('strategis')
-            ->name('strategis.')
-            ->group(function () {
-                Route::get('/', [StrategiController::class, 'index'])->name('index');
-                Route::get('/{strategi}', [StrategiController::class, 'show'])->name('show');
-            });
-    //Route konsultasi
-    Route::middleware(['role:perusahaan'])->group(function () {
-            // Perusahaan/Karyawan bisa melihat daftar konsultasi mereka
-            Route::get('/konsultasis', [KonsultasiController::class, 'index'])->name('konsultasis.index');
-            // Perusahaan/Karyawan bisa melihat detail konsultasi mereka
-            Route::get('/konsultasis/{konsultasi}', [KonsultasiController::class, 'show'])->name('konsultasis.show');
-            // Perusahaan/Karyawan bisa mengajukan konsultasi baru (form dan store)
-            Route::get('/konsultasis/create', [KonsultasiController::class, 'create'])->name('konsultasis.create');
-            Route::post('/konsultasis', [KonsultasiController::class, 'store'])->name('konsultasis.store');
-        });
-
+// Strategi - Perusahaan & Karyawan hanya bisa lihat
+Route::middleware(['role:perusahaan|karyawan'])
+    ->prefix('strategis')
+    ->name('strategis.')
+    ->group(function () {
+        Route::get('/', [StrategiController::class, 'index'])->name('index');
+        Route::get('/{strategi}', [StrategiController::class, 'show'])->name('show');
+    });
+//Route konsultasi
+Route::middleware(['role:perusahaan'])->group(function () {
+    // Perusahaan/Karyawan bisa melihat daftar konsultasi mereka
+    Route::get('/konsultasis', [KonsultasiController::class, 'index'])->name('konsultasis.index');
+    // Perusahaan/Karyawan bisa melihat detail konsultasi mereka
+    Route::get('/konsultasis/{konsultasi}', [KonsultasiController::class, 'show'])->name('konsultasis.show');
+    // Perusahaan/Karyawan bisa mengajukan konsultasi baru (form dan store)
+    Route::get('/konsultasis/create', [KonsultasiController::class, 'create'])->name('konsultasis.create');
+    Route::post('/konsultasis', [KonsultasiController::class, 'store'])->name('konsultasis.store');
+});
 
 /**
  * Profile routes (untuk semua user login)

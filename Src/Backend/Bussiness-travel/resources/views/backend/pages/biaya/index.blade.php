@@ -98,7 +98,7 @@
                         @forelse($biayas as $item)
                             <tr class="border-b border-gray-100 dark:border-gray-800">
                                 <td class="px-5 py-4 sm:px-6">{{ $loop->iteration }}</td>
-                                <td class="px-5 py-4 sm:px-6">{{ $item->kategori }}</td>
+                                <td class="px-5 py-4 sm:px-6">{{ __($item->kategori) }}</td>
                                 <td class="px-5 py-4 sm:px-6">{{ $item->jenisKendaraan }}</td>
                                 <td class="px-5 py-4 sm:px-6">{{ number_format($item->factorEmisi, 4) }}</td>
                                 <td class="px-5 py-4 sm:px-6 flex gap-2">

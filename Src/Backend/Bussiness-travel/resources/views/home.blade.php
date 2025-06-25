@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ __('Landing Page') }} | {{ config('app.name') }}
+    {{ __('Home') }} | {{ config('app.name') }}
 @endsection
 
 @push('styles')

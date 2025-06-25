@@ -23,25 +23,32 @@
       @method('PUT')
 
       <div>
-        <label for="kategori" class="block text-sm font-medium text-gray-700 dark:text-gray-400">{{ __('Kategori') }}</label>
-        <input
-          type="text"
-          name="kategori"
-          id="kategori"
-          value="{{ old('kategori', $biaya->kategori) }}"
-          required
-          maxlength="255"
-          placeholder="{{ __('Masukkan kategori') }}"
-          class="h-11 w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 shadow-sm focus:border-primary-500 focus:ring-primary-200 focus:ring-opacity-50
-                 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder-white/30"
-        />
+        <label for="kategori" class="block text-sm font-medium text-gray-700 dark:text-gray-400">
+            {{ __('Kategori') }}
+        </label>
+        <select
+            name="kategori"
+            id="kategori"
+            required
+            class="h-11 w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800
+                   shadow-sm focus:border-primary-500 focus:ring-primary-200 focus:ring-opacity-50
+                   dark:border-gray-700 dark:bg-gray-900 dark:text-white/90"
+        >
+        <option value="" disabled>{{ __('Pilih Kategori') }}</option> {{-- Menghapus 'selected' di sini agar default bisa di-override oleh old/model --}}
+        @foreach (['Darat', 'Laut', 'Udara'] as $option)
+            <option value="{{ $option }}"
+                {{ old('kategori', $biaya->kategori) == $option ? 'selected' : '' }}> {{-- Menggunakan $transportasi->kategori untuk nilai lama --}}
+                {{ __($option) }} {{-- PERBAIKAN DI SINI: Menambahkan fungsi terjemahan __() --}}
+            </option>
+        @endforeach
+        </select>
         @error('kategori')
-          <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
         @enderror
-      </div>
+    </div>
 
       <div>
-        <label for="jenisKendaraan" class="block text-sm font-medium text-gray-700 dark:text-gray-400">{{ __('jenis Biaya') }}</label>
+        <label for="jenisKendaraan" class="block text-sm font-medium text-gray-700 dark:text-gray-400">{{ __('Jenis Biaya') }}</label>
         <input
           type="text"
           name="jenisKendaraan"

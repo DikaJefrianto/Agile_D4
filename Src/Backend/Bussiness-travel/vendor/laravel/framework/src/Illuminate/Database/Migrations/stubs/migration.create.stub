@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+<<<<<<<< HEAD:Src/Backend/Bussiness-travel/vendor/laravel/framework/src/Illuminate/Database/Migrations/stubs/migration.create.stub
+        Schema::create('{{ table }}', function (Blueprint $table) {
+========
+        Schema::create('$TABLE$', function (Blueprint $table) {
+>>>>>>>> featur/306-310/manajemen-emisi:Src/Backend/Bussiness-travel/stubs/nwidart-stubs/migration/create.stub
+            $table->id();
+            $FIELDS$
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+<<<<<<<< HEAD:Src/Backend/Bussiness-travel/vendor/laravel/framework/src/Illuminate/Database/Migrations/stubs/migration.create.stub
+        Schema::dropIfExists('{{ table }}');
+========
+        Schema::dropIfExists('$TABLE$');
+>>>>>>>> featur/306-310/manajemen-emisi:Src/Backend/Bussiness-travel/stubs/nwidart-stubs/migration/create.stub
+    }
+};

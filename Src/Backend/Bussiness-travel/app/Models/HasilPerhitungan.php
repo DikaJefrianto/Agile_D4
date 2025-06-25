@@ -23,7 +23,7 @@ class HasilPerhitungan extends Model
         'tanggal',
         'metode',
         'kategori',
-        'titik_awal', 
+        'titik_awal',
         'titik_tujuan'
     ];
 

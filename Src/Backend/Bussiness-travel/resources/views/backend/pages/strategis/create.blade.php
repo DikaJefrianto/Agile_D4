@@ -55,7 +55,7 @@
                                     </label>
                                     <select name="perusahaan_id" id="perusahaan_id" required
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
-                                        <option value="">-- Pilih Perusahaan --</option>
+                                        <option value="">{{__('Pilih Perusahaan')}}</option>
                                         {{-- $perusahaans will only be available if the user is an admin or superadmin --}}
                                         @if (isset($perusahaans))
                                             @foreach($perusahaans as $perusahaan)
@@ -107,11 +107,11 @@
                                 <select name="status" id="status" required
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
                                     <option value="aktif"
-                                        {{ old('status') == 'aktif' ? 'selected' : '' }}>Aktif
+                                        {{ old('status') == 'aktif' ? 'selected' : '' }}>{{__('Aktif')}}
                                     </option>
                                     <option value="nonaktif"
                                         {{ old('status') == 'nonaktif' ? 'selected' : '' }}>
-                                        Nonaktif</option>
+                                        {{__('Nonaktif')}}</option>
                                 </select>
                                 @error('status')
                                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
