@@ -35,11 +35,8 @@
     "CRM": "CRM",
     "CRM Dashboard": "Dasboard CRM",
     "Dashboard": "Dasboard",
-<<<<<<< HEAD
-=======
     "CRM Dashboard": "Dasbor CRM",
     "Dashboard": "Dasbor",
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     "Dark Mode": "Mode Gelap",
     "Dark Mode Colors": "Warna Mode Gelap",
     "Date": "Tanggal",
@@ -207,10 +204,7 @@
     "You are logged in!": "Anda telah masuk!",
     "Invalid email or password": "Email atau kata sandi tidak valid",
     "Free and Open-Source Laravel Admin Dashboard Template": "Template Dasboard Admin Laravel Gratis dan Sumber Terbuka",
-<<<<<<< HEAD
-=======
     "Free and Open-Source Laravel Admin Dashboard Template": "Template Dasbor Admin Laravel Gratis dan Sumber Terbuka",
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     "Language changed successfully!": "Bahasa berhasil diubah!",
     "Module uploaded and registered successfully.": "Modul berhasil diunggah dan didaftarkan.",
     "Failed to find the module in the system.": "Gagal menemukan modul dalam sistem.",
@@ -275,10 +269,6 @@
     "Company Address": "Alamat Perusahaan",
     "Address": "Alamat",
     "Information": "keterangan",
-<<<<<<< HEAD
-
-=======
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     "Picture": "Foto",
     "Phone": "Telepon",
     "Position": "Jabatan",
@@ -307,10 +297,6 @@
     "Company Logo Full (Dark Version)": "Logo Perusahaan Penuh (Versi Gelap)",
     "Company Logo Full": "Logo Perusahaan Penuh",
     "Employee Logo Full (Dark Version)": "Logo Karyawan Penuh (Versi Gelap)",
-<<<<<<< HEAD
-
-=======
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     "Calculate": "Hitung",
     "Calculation": "Perhitungan",
     "Calculate Total": "Hitung Total",
@@ -327,9 +313,6 @@
     "Calculation Create": "Buat Perhitungan",
     "Calculation Edit": "Edit Perhitungan",
     "Calculation Type:": "Tipe Perhitungan:",
-<<<<<<< HEAD
-    "Calculation Value:": "Nilai Perhitungan:"
-=======
     "Calculation Value:": "Nilai Perhitungan:",
     "Verify Your Email Address": "Verifikasi Alamat Email Kamu",
     "Before proceeding, please check your email for a verification link.": "Sebelum melanjutkan, harap periksa email Anda untuk mendapatkan tautan verifikasi.",
@@ -432,5 +415,4 @@
     "jarak_tempuh": "Jarak Tempuh",
     "Edit Transportation Type" : "Edit Jenis Tranportasi"
 
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
 }

@@ -1,24 +1,17 @@
 <?php
 
-<<<<<<<< HEAD:Src/Backend/Bussiness-travel/vendor/laravel/framework/src/Illuminate/Database/Console/Seeds/stubs/seeder.stub
 namespace {{ namespace }};
-========
-namespace $NAMESPACE$;
->>>>>>>> featur/306-310/manajemen-emisi:Src/Backend/Bussiness-travel/stubs/nwidart-stubs/seeder.stub
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-<<<<<<<< HEAD:Src/Backend/Bussiness-travel/vendor/laravel/framework/src/Illuminate/Database/Console/Seeds/stubs/seeder.stub
 class {{ class }} extends Seeder
-========
-class $NAME$ extends Seeder
->>>>>>>> featur/306-310/manajemen-emisi:Src/Backend/Bussiness-travel/stubs/nwidart-stubs/seeder.stub
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        // $this->call([]);
+        //
     }
 }

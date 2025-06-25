@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-<<<<<<<< HEAD:Src/Backend/Bussiness-travel/vendor/laravel/framework/src/Illuminate/Database/Migrations/stubs/migration.create.stub
         Schema::create('{{ table }}', function (Blueprint $table) {
-========
-        Schema::create('$TABLE$', function (Blueprint $table) {
->>>>>>>> featur/306-310/manajemen-emisi:Src/Backend/Bussiness-travel/stubs/nwidart-stubs/migration/create.stub
             $table->id();
-            $FIELDS$
             $table->timestamps();
         });
     }
@@ -27,10 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-<<<<<<<< HEAD:Src/Backend/Bussiness-travel/vendor/laravel/framework/src/Illuminate/Database/Migrations/stubs/migration.create.stub
         Schema::dropIfExists('{{ table }}');
-========
-        Schema::dropIfExists('$TABLE$');
->>>>>>>> featur/306-310/manajemen-emisi:Src/Backend/Bussiness-travel/stubs/nwidart-stubs/migration/create.stub
     }
 };

@@ -59,8 +59,4 @@ class RolePermissionSeeder extends Seeder
 
         $this->command->info('Roles and Permissions created successfully!');
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844

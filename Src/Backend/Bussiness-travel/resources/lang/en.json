@@ -93,10 +93,6 @@
     "More": "More",
     "Monitoring": "Monitoring",
     "Action Logs": "Action Logs",
-<<<<<<< HEAD
-    "Home": "Home",
-=======
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     "Laravel Pulse": "Laravel Pulse",
     "Last 12 months": "Last 12 months",
     "This year": "This year",
@@ -201,11 +197,7 @@
     "User Email": "User Email",
     "Username": "Username",
     "Enter Full Name": "Enter Full Name",
-<<<<<<< HEAD
-    "Enter Email": "Enter Email",
-=======
     "Masukan Email": "Enter Email",
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     "Enter Password": "Enter Password",
     "Search by title or type": "Search by title or type",
     "Title": "Title",
@@ -281,18 +273,10 @@
     "Alamat Perusahaan": "Company Address",
     "Alamat": "Address",
     "keterangan": "Information",
-<<<<<<< HEAD
-    "Aksi": "Actions",
-=======
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     "Foto": "Picture",
     "Telepon": "Phone",
     "Jabatan": "Position",
     "Status": "Status",
-<<<<<<< HEAD
-
-=======
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     "Aktif": "Active",
     "Tidak Aktif": "Inactive",
     "Tambah": "Add",
@@ -308,10 +292,6 @@
     "Karyawan tidak ditemukan.": "Employee not found.",
     "Apakah Anda yakin ingin menghapus perusahaan ini?": "Are you sure you want to delete this company?",
     "Apakah Anda yakin ingin menghapus karyawan ini?": "Are you sure you want to delete this employee?",
-<<<<<<< HEAD
-    "Ya, Hapus": "Yes, Delete",
-=======
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     "Tidak, Batalkan": "No, Cancel",
     "Tidak ada data tersedia": "No data available",
     "Tidak ada perusahaan ditemukan": "No companies found",
@@ -333,11 +313,6 @@
     "Perhitungan berhasil dihapus.": "Calculation has been deleted successfully.",
     "Perhitungan tidak ditemukan.": "Calculation not found.",
     "Apakah Anda yakin ingin menghapus perhitungan ini?": "Are you sure you want to delete this calculation?",
-<<<<<<< HEAD
-    "Daftar Perhitungan": "List of Calculations"
-
-
-=======
     "Daftar Perhitungan": "List of Calculations",
     "Nama Lengkap": "Full Name",
     "Verifikasi Alamat Email Kamu": "Verify Your Email Address",
@@ -577,5 +552,4 @@
     "Buat Strategi Baru" : "Create New Strategy",
     "Pilih Perusahaan" : "Select Company",
     "Status Program" : "Program Status"
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
 }

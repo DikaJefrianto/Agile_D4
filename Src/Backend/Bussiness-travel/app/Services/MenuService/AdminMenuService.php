@@ -4,6 +4,7 @@ namespace App\Services\MenuService;
 use App\Services\MenuService\AdminMenuItem;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class AdminMenuService
 {
@@ -20,19 +21,11 @@ class AdminMenuService
      * @return void
      * @throws \InvalidArgumentException
      */
-<<<<<<< HEAD
-    public function addMenuItem(AdminMenuItem | array $item, ?string $group = null)
-    {
-        $group    = $group ?: __('Main');
-        $menuItem = $this->createAdminMenuItem($item);
-        if (! isset($this->groups[$group])) {
-=======
     public function addMenuItem(AdminMenuItem|array $item, ?string $group = null)
     {
         $group = $group ?: __('Main');
         $menuItem = $this->createAdminMenuItem($item);
         if (!isset($this->groups[$group])) {
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
             $this->groups[$group] = [];
         }
 
@@ -41,11 +34,7 @@ class AdminMenuService
         }
     }
 
-<<<<<<< HEAD
-    protected function createAdminMenuItem(AdminMenuItem | array $data): AdminMenuItem
-=======
     protected function createAdminMenuItem(AdminMenuItem|array $data): AdminMenuItem
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
     {
         if ($data instanceof AdminMenuItem) {
             return $data;
@@ -56,13 +45,8 @@ class AdminMenuService
         if (isset($data['children']) && is_array($data['children'])) {
             $data['children'] = array_map(
                 fn($child) => auth()->user()->hasAnyPermission($child['permissions'] ?? [])
-<<<<<<< HEAD
-                ? $this->createAdminMenuItem($child)
-                : null,
-=======
                     ? $this->createAdminMenuItem($child)
                     : null,
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
                 $data['children']
             );
 
@@ -75,109 +59,6 @@ class AdminMenuService
 
     public function getMenu()
     {
-<<<<<<< HEAD
-        $this->addMenuItem([
-            'label'       => __('Dashboard'),
-            'icon'        => 'dashboard.svg',
-            'route'       => route('admin.dashboard'),
-            'active'      => Route::is('admin.dashboard'),
-            'id'          => 'dashboard',
-            'priority'    => 1,
-            'permissions' => 'dashboard.view',
-        ]);
-
-        $this->addMenuItem([
-            'label'       => __('Roles & Permissions'),
-            'icon'        => 'key.svg',
-            'id'          => 'roles-submenu',
-            'active'      => Route::is('admin.roles.*'),
-            'priority'    => 10,
-            'permissions' => ['role.create', 'role.view', 'role.edit', 'role.delete'],
-            'children'    => [
-                [
-                    'label'       => __('Roles'),
-                    'route'       => route('admin.roles.index'),
-                    'active'      => Route::is('admin.roles.index') || Route::is('admin.roles.edit'),
-                    'priority'    => 10,
-                    'permissions' => 'role.view',
-                ],
-                [
-                    'label'       => __('New Role'),
-                    'route'       => route('admin.roles.create'),
-                    'active'      => Route::is('admin.roles.create'),
-                    'priority'    => 20,
-                    'permissions' => 'role.create',
-                ],
-                [
-                    'label'       => __('Permissions'),
-                    'route'       => route('admin.permissions.index'),
-                    'active'      => Route::is('admin.permissions.index') || Route::is('admin.permissions.show'),
-                    'priority'    => 30,
-                    'permissions' => 'role.view',
-                ],
-            ],
-        ]);
-
-        $this->addMenuItem([
-            'label'       => __('User'),
-            'icon'        => 'user.svg',
-            'id'          => 'users-submenu',
-            'active'      => Route::is('admin.users.*'),
-            'priority'    => 20,
-            'permissions' => ['user.create', 'user.view', 'user.edit', 'user.delete'],
-            'children'    => [
-                [
-                    'label'       => __('Users'),
-                    'route'       => route('admin.users.index'),
-                    'active'      => Route::is('admin.users.index') || Route::is('admin.users.edit'),
-                    'priority'    => 20,
-                    'permissions' => 'user.view',
-                ],
-                [
-                    'label'       => __('New User'),
-                    'route'       => route('admin.users.create'),
-                    'active'      => Route::is('admin.users.create'),
-                    'priority'    => 10,
-                    'permissions' => 'user.create',
-                ],
-            ],
-        ]);
-
-        // $this->addMenuItem([
-        //     'label'       => __('Modules'),
-        //     'icon'        => 'three-dice.svg',
-        //     'route'       => route('admin.modules.index'),
-        //     'active'      => Route::is('admin.modules.index'),
-        //     'id'          => 'modules',
-        //     'priority'    => 30,
-        //     'permissions' => 'module.view',
-        // ]);
-
-        $this->addMenuItem([
-            'label'       => __('Monitoring'),
-            'icon'        => 'tv.svg',
-            'id'          => 'monitoring-submenu',
-            'active'      => Route::is('admin.actionlog.*'),
-            'priority'    => 40,
-            'permissions' => ['pulse.view', 'actionlog.view'],
-            'children'    => [
-                [
-                    'label'       => __('Action Logs'),
-                    'route'       => route('admin.actionlog.index'),
-                    'active'      => Route::is('admin.actionlog.index'),
-                    'priority'    => 20,
-                    'permissions' => 'actionlog.view',
-                ],
-                [
-                    'label'       => __('Laravel Pulse'),
-                    'route'       => route('pulse'),
-                    'active'      => false,
-                    'target'      => '_blank',
-                    'priority'    => 10,
-                    'permissions' => 'pulse.view',
-                ],
-            ],
-=======
         // Home untuk Landing Page di sini ---
         $this->addMenuItem([
             'label' => __('Home'), // Label untuk menu item
@@ -252,7 +133,6 @@ class AdminMenuService
                     'permissions' => 'user.create'
                 ]
             ]
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
         ]);
         $this->addMenuItem([
             'label'       => __('Perusahaan'),
@@ -303,66 +183,6 @@ class AdminMenuService
             ],
         ]);
         $this->addMenuItem([
-<<<<<<< HEAD
-            'label'       => __('Perhitungan'),
-            'icon'        => 'calculate.svg', // sesuaikan icon jika ada
-            'id'          => 'perhitungans-submenu',
-            'active'      => Route::is('admin.perhitungans.*'),
-            'priority'    => 25,
-            'permissions' => ['perhitungan.view', 'perhitungann.create', 'perhitungan.edit', 'perhitungan.delete'],
-            'children'    => [
-                [
-                    'label'       => __('Daftar Perhitungan'),
-                    'route'       => route('admin.perhitungans.index'),
-                    'active'      => Route::is('admin.perthitungans.index') || Route::is('admin.perhitungans.edit'),
-                    'priority'    => 10,
-                    'permissions' => 'perhitungan.view',
-                ],
-                [
-                    'label'       => __('Tambah Perhitungan'),
-                    'route'       => route('admin.perhitungans.create'),
-                    'active'      => Route::is('admin.perhitungans.create'),
-                    'priority'    => 20,
-                    'permissions' => 'perhitungan.create',
-                ],
-            ],
-        ]);
-
-
-        $this->addMenuItem([
-            'label'       => __('Settings'),
-            'icon'        => 'settings.svg',
-            'id'          => 'settings-submenu',
-            'active'      => Route::is('admin.settings.*') || Route::is('admin.translations.*'),
-            'priority'    => 1,
-            'permissions' => ['settings.edit', 'translations.view'],
-            'children'    => [
-                [
-                    'label'       => __('General Settings'),
-                    'route'       => route('admin.settings.index'),
-                    'active'      => Route::is('admin.settings.index'),
-                    'priority'    => 20,
-                    'permissions' => 'settings.edit',
-                ],
-                [
-                    'label'       => __('Translations'),
-                    'route'       => route('admin.translations.index'),
-                    'active'      => Route::is('admin.translations.*'),
-                    'priority'    => 10,
-                    'permissions' => ['translations.view', 'translations.edit'],
-                ],
-            ],
-        ], __('More'));
-
-        $this->addMenuItem([
-            'label'    => __('Logout'),
-            'icon'     => 'logout.svg',
-            'route'    => route('admin.dashboard'),
-            'active'   => false,
-            'id'       => 'logout',
-            'priority' => 1,
-            'html'     => '
-=======
             'label' => __('Perhitungan'),
             'icon' => 'calculator.svg', // ganti dengan ikon bahan bakar jika tersedia
             'id' => 'HasilPerhitungan-submenu',
@@ -597,7 +417,6 @@ class AdminMenuService
             'id' => 'logout',
             'priority' => 1,
             'html' => '
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
                 <li class="hover:menu-item-active">
                     <form method="POST" action="' . route('logout') . '">
                         ' . csrf_field() . '
@@ -607,11 +426,7 @@ class AdminMenuService
                         </button>
                     </form>
                 </li>
-<<<<<<< HEAD
-            ',
-=======
             '
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
         ], __('More'));
 
         $this->sortMenuItemsByPriority();
@@ -640,11 +455,7 @@ class AdminMenuService
             $filteredItems = ld_apply_filters('sidebar_menu_' . strtolower($group), $filteredItems);
 
             // Only add the group if it has items after filtering.
-<<<<<<< HEAD
-            if (! empty($filteredItems)) {
-=======
             if (!empty($filteredItems)) {
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
                 $result[$group] = $filteredItems;
             }
         }
