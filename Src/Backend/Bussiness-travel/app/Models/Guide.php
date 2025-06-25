@@ -22,9 +22,16 @@ class Guide extends Model
     ];
 
     // Accessor untuk mendapatkan URL publik dari file panduan
-    public function getFileUrlAttribute(): ?string
+    public function getFileUrlAttribute()
     {
-        return $this->file_path ? Storage::url($this->file_path) : null;
+        // Pastikan $this->file_path berisi path relatif dari storage/app/public
+        // Contoh: 'guides/files/contoh.pdf'
+        if ($this->file_path) {
+            // Storage::url() akan menghasilkan URL lengkap yang mengarah ke file
+            return Storage::url($this->file_path);
+            // Alternatif: return asset('storage/' . $this->file_path);
+        }
+        return null;
     }
 
     // Accessor untuk mendapatkan URL publik dari thumbnail gambar (digunakan di backend jika ada)
