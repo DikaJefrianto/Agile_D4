@@ -90,13 +90,13 @@
             </div>
 
             <div class="mt-6 flex justify-end gap-2">
-                <a href="{{ route('admin.konsultasis.index') }}" class="btn-primary">
+                <a href="{{ route('admin.konsultasis.index') }}" class="btn-success">
                     <i class="bi bi-arrow-left-circle mr-2"></i>
                     {{ __('Kembali ke Daftar') }}
                 </a>
                 {{-- Hanya Admin/Super Admin yang bisa mengedit status/detail --}}
                 @if (auth()->user()->hasRole(['admin', 'super-admin']))
-                    <a href="{{ route('admin.konsultasis.edit', $konsultasi->id) }}" class="btn-primary">
+                    <a href="{{ route('admin.konsultasis.edit', $konsultasi->id) }}" class="btn-success">
                         <i class="bi bi-pencil mr-2"></i>
                         {{ __('Kelola Konsultasi') }}
                     </a>

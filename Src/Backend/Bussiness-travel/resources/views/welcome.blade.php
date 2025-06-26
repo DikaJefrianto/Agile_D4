@@ -144,12 +144,12 @@
                     </div>
                 @else
                     <!-- Jika pengguna belum login -->
-                    <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+                    <a href="{{ route('login') }}" class="btn btn-success">Login</a>
                     <a href="{{ route('register') }}" class="btn btn-secondary">Register</a>
                 @endauth
             </nav>
         </div>
-    </header> --}}
+    </header>
 
     <!-- Hero Section -->
     {{-- <section class="relative bg-cover bg-center"

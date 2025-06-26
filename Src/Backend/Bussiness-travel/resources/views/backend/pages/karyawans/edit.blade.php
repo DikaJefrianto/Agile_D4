@@ -128,7 +128,7 @@
 
                     </div>
                     <div class="mt-6 flex justify-start gap-4">
-                        <button type="submit" class="btn-primary">{{ __('Save') }}</button>
+                        <button type="submit" class="btn-success">{{ __('Save') }}</button>
                         <a href="{{ route('admin.karyawans.index') }}" class="btn-default">{{ __('Cancel') }}</a>
                     </div>
                 </form>

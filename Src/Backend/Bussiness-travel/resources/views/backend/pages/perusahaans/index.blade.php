@@ -32,7 +32,7 @@
                     'placeholder' => __('Search by name or email'),
                 ])
                 @if (auth()->user()->can('perusahaan.create'))
-                    <a href="{{ route('admin.perusahaans.create') }}" class="btn-primary">
+                    <a href="{{ route('admin.perusahaans.create') }}" class="btn-success">
                         <i class="bi bi-plus-circle mr-2"></i>
                         {{ __('Tambah Perusahaan') }}
                     </a>

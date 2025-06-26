@@ -9,7 +9,7 @@
     <div x-data="{ pageName: '{{ __('Tambah Perusahaan') }}' }">
         <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
             <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{{ __('Tambah Perusahaan') }}</h2>
-            <a href="{{ route('admin.perusahaans.index') }}" class="btn-primary inline-flex items-center gap-2">
+            <a href="{{ route('admin.perusahaans.index') }}" class="btn-success inline-flex items-center gap-2">
                 <i class="bi bi-arrow-left"></i> {{ __('Kembali') }}
             </a>
         </div>
@@ -79,7 +79,7 @@
             </div>
 
             <div class="mt-6 flex justify-start gap-4">
-                <button type="submit" class="btn-primary">{{ __('Simpan') }}</button>
+                <button type="submit" class="btn-success">{{ __('Simpan') }}</button>
                 <a href="{{ route('admin.perusahaans.index') }}" class="btn-default">{{ __('Batal') }}</a>
             </div>
         </form>

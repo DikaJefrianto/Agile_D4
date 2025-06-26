@@ -37,7 +37,7 @@
                     ])
 
                     <div class="flex items-center justify-center">
-                        <button id="dropdownDefault" data-dropdown-toggle="dropdown" class="btn-primary flex items-center justify-center gap-2" type="button ">
+                        <button id="dropdownDefault" data-dropdown-toggle="dropdown" class="btn-success flex items-center justify-center gap-2" type="button ">
                             <i class="bi bi-sliders"></i>
                             {{ __('Filter') }}
                             <i class="bi bi-chevron-down"></i>

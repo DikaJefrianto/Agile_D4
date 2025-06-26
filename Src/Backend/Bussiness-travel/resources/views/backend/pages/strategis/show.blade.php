@@ -87,7 +87,7 @@
                 </a>
                 {{-- Tombol Edit hanya untuk Admin/Super Admin  --}}
                 @if (auth()->user()->hasRole(['Admin', 'Superadmin']))
-                    <a href="{{ route('admin.strategis.edit', $strategi->id) }}" class="btn-primary">
+                    <a href="{{ route('admin.strategis.edit', $strategi->id) }}" class="btn-success">
                         <i class="bi bi-pencil mr-2"></i>
                         {{ __('Edit Strategi') }}
                     </a>

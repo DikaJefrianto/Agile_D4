@@ -14,7 +14,7 @@
 
             <div class="relative">
                 <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-                    class="btn-primary flex items-center justify-center gap-2" type="button">
+                    class="btn-success flex items-center justify-center gap-2" type="button">
                     <i class="bi bi-sliders"></i>
                     {{ __('Filter') }}
                     <i class="bi bi-chevron-down"></i>
@@ -230,7 +230,7 @@
                         const value = series[seriesIndex][dataPointIndex];
                         return `<div class="relative px-3 py-1 bg-indigo-50 text-indigo-600 font-medium">
                             ${value}
-     
+
                         </div>`;
                     },
                     intersect: false,

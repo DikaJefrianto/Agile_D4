@@ -153,7 +153,7 @@
                         </div>
 
                         <div class="mt-6 flex justify-start gap-4">
-                            <button type="submit" class="btn-primary">{{ __('Perbarui') }}</button>
+                            <button type="submit" class="btn-success">{{ __('Perbarui') }}</button>
                             <a href="{{ route('admin.strategis.index') }}" class="btn-default">{{ __('Batal') }}</a>
                         </div>
                     </form>

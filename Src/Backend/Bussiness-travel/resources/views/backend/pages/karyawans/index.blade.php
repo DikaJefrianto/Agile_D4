@@ -36,7 +36,7 @@
                     'placeholder' => __('Search by name or email'),
                 ])
                 @can('karyawan.create')
-                    <a href="{{ route('admin.karyawans.create') }}" class="btn-primary">
+                    <a href="{{ route('admin.karyawans.create') }}" class="btn-success">
                         <i class="bi bi-plus-circle mr-2"></i> {{ __('New Karyawan') }}
                     </a>
                 @endcan

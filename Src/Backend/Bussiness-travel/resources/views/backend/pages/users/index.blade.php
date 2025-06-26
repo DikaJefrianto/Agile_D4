@@ -67,7 +67,7 @@
                         </div>
 
                         @if (auth()->user()->can('user.edit'))
-                            <a href="{{ route('admin.users.create') }}" class="btn-primary">
+                            <a href="{{ route('admin.users.create') }}" class="btn-success">
                                 <i class="bi bi-plus-circle mr-2"></i>
                                 {{ __('New User') }}
                             </a>

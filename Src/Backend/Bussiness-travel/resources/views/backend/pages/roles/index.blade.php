@@ -34,7 +34,7 @@
                 ])
 
                 @if (auth()->user()->can('role.create'))
-                    <a href="{{ route('admin.roles.create') }}" class="btn-primary">
+                    <a href="{{ route('admin.roles.create') }}" class="btn-success">
                         <i class="bi bi-plus-circle mr-2"></i>
                         {{ __('New Role') }}
                     </a>

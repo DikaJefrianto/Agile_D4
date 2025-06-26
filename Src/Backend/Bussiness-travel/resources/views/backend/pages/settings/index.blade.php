@@ -58,7 +58,7 @@
 
                         <!-- Submit Button -->
                         <div class="flex justify-start">
-                            <button type="submit" class="btn-primary">
+                            <button type="submit" class="btn-success">
                                 {{ __('Save') }}
                             </button>
                         </div>

@@ -40,7 +40,7 @@
                         {{ __('Role Details') }}
                     </h3>
                     <div class="flex gap-4">
-                        <button type="submit" class="btn-primary">
+                        <button type="submit" class="btn-success">
                             {{ __('Save') }}
                         </button>
                         <a href="{{ route('admin.roles.index') }}" class="btn-default">
@@ -105,7 +105,7 @@
 
             <!-- Action Buttons -->
             <div class="flex justify-start gap-4">
-                <button type="submit" class="btn-primary">
+                <button type="submit" class="btn-success">
                     {{ __('Save') }}
                 </button>
                 <a href="{{ route('admin.roles.index') }}" class="btn-default">

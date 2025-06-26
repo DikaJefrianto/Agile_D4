@@ -31,7 +31,7 @@
                 <div class="px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center">
                     <h3 class="text-base font-medium text-gray-800 dark:text-white/90">{{ __('Daftar Perhitungan Emisi') }}
                     </h3>
-                    <a href="{{ route('admin.perhitungan.create') }}" class="btn-primary">
+                    <a href="{{ route('admin.perhitungan.create') }}" class="btn-success">
                         <i class="bi bi-plus-circle mr-2"></i> {{ __('Tambah Data') }}
                     </a>
                 </div>

@@ -106,7 +106,7 @@
                 </div>
 
                 <div class="flex justify-start gap-3">
-                    <button type="submit" class="btn-primary">
+                    <button type="submit" class="btn-success">
                         <i class="bi bi-save2"></i> {{ __('Perbarui') }}
                     </button>
                     <a href="{{ route('admin.perhitungan.index') }}" class="btn-default">

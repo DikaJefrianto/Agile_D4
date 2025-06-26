@@ -167,7 +167,7 @@
                             </ul>
                         </div>
                     @else
-                        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+                        <a href="{{ route('login') }}" class="btn btn-success">Login</a>
                     @endauth
                 </div>
             </div>
@@ -190,7 +190,7 @@
                             <button type="submit" class="btn btn-secondary w-full text-base">Logout</button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="btn btn-primary w-full text-base">Login</a>
+                        <a href="{{ route('login') }}" class="btn btn-success w-full text-base">Login</a>
                     @endauth
                 </nav>
             </div>
@@ -211,7 +211,7 @@
                     <h1 class="text-3xl md:text-4xl font-bold" data-aos="fade-up" data-aos-delay="200">Ketahui Jejak Karbon dari Perjalanan Bisnis Anda</h1>
                     <p class="mt-4 text-sm md:text-base" data-aos="fade-up" data-aos-delay="400">Lacak Emisi, Laporkan dengan Mudah, dan Mulai Perubahan Sekarang!
                     </p>
-                    <a href="#" class="btn btn-primary mt-6" data-aos="zoom-in" data-aos-delay="600">Hitung Jejak karbon kamu</a>
+                    <a href="#" class="btn btn-success mt-6" data-aos="zoom-in" data-aos-delay="600">Hitung Jejak karbon kamu</a>
                 </div>
             </section>
 
@@ -446,7 +446,7 @@
                         </div>
                     </div>
                     <div class="mt-12" data-aos="fade-up" data-aos-delay="700">
-                        <a href="{{ route('register') }}" class="btn btn-primary">
+                        <a href="{{ route('register') }}" class="btn btn-success">
                             Coba Semua Fitur Naima Sekarang
                             <i class="fas fa-magic ml-2"></i>
                         </a>

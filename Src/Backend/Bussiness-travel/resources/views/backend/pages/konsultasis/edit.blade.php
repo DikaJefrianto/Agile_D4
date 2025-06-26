@@ -101,7 +101,7 @@
                         <i class="bi bi-x-circle mr-2"></i>
                         {{ __('Batal') }}
                     </a>
-                    <button type="submit" class="btn-primary">
+                    <button type="submit" class="btn-success">
                         <i class="bi bi-save mr-2"></i>
                         {{ __('Simpan Perubahan') }}
                     </button>
