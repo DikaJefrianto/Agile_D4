@@ -77,6 +77,14 @@ class AdminMenuService
             'priority' => 40, // Sesuaikan prioritas
         ]);
         $this->addMenuItem([
+            'label' => __('Laporan'),
+            'icon' => 'report.svg', // Atau ikon lain yang sesuai
+            'route' => route('admin.laporan.index'),
+            'active' => Route::is('admin.laporan.*'),
+            'id'=> 'laporan',
+            'priority' => 41, // Sesuaikan prioritas
+        ]);
+        $this->addMenuItem([
             'label' => __('Dashboard'),
             'icon' => 'dashboard.svg',
             'route' => route('admin.dashboard'),

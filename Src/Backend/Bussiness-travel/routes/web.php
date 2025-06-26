@@ -2,7 +2,6 @@
 
 declare (strict_types = 1);
 
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Backend\{
@@ -32,31 +31,9 @@ use App\Http\Controllers\Frontend\GuideController as FrontendGuideController; //
 use App\Http\Controllers\Backend\GuideController as BackendGuideController;
 use App\Http\Controllers\FeedbacksController;
 use App\Http\Controllers\Backend\FeedbackController as BackendFeedbackController; // Alias untuk controller backend
+use App\Http\Controllers\Backend\LaporanController;
 
-=======
-use App\Http\Controllers\Backend\ActionLogController;
 
-use App\Http\Controllers\Backend\BahanBakarController;
-
-use App\Http\Controllers\Backend\BiayaController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\HasilPerhitunganController;
-use App\Http\Controllers\Backend\KaryawanController;
-use App\Http\Controllers\Backend\KonsultasiController;
-use App\Http\Controllers\Backend\LaporanController;;
-use App\Http\Controllers\Backend\LocaleController;
-use App\Http\Controllers\Backend\ModulesController;
-use App\Http\Controllers\Backend\PermissionsController;
-use App\Http\Controllers\Backend\PerusahaanController;
-use App\Http\Controllers\Backend\ProfilesController;
-use App\Http\Controllers\Backend\RolesController;
-use App\Http\Controllers\Backend\SettingsController;
-use App\Http\Controllers\Backend\StrategiController;
-use App\Http\Controllers\Backend\TranslationController;
-use App\Http\Controllers\Backend\TransportasiController;
-use App\Http\Controllers\Backend\UserLoginAsController;
-use App\Http\Controllers\Backend\UsersController;use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\Route;
->>>>>>> iterasi4
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
