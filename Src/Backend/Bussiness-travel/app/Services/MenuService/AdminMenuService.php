@@ -373,7 +373,7 @@ class AdminMenuService
             'icon' => 'tv.svg',
             'id' => 'monitoring-submenu',
             'active' => Route::is('admin.actionlog.*'),
-            'priority' => 40,
+            'priority' => 42,
             'permissions' => ['pulse.view', 'actionlog.view'],
             'children' => [
                 [
