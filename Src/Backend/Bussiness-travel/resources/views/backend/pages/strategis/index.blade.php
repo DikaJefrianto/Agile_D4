@@ -71,7 +71,7 @@
                                     -
                                 @endif
                             </td>
-                            <td class="px-5 py-4 sm:px-6">{{ $strategi->status }}</td>
+                            <td class="px-5 py-4 sm:px-6">{{ __($strategi->status) }}</td>
                             {{-- Tampilkan nama perusahaan jika user adalah Admin/Super Admin --}}
                             @if (auth()->user()->hasRole(['admin', 'super-admin']))
                                 <td class="px-5 py-4 sm:px-6">{{ $strategi->perusahaan->nama ?? 'N/A' }}</td>

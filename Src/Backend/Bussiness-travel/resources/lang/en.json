@@ -551,5 +551,6 @@
     "Dokumen" : "Document",
     "Buat Strategi Baru" : "Create New Strategy",
     "Pilih Perusahaan" : "Select Company",
-    "Status Program" : "Program Status"
+    "Status Program" : "Program Status",
+    "aktif" : "active"
 }
