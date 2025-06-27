@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
@@ -19,12 +20,19 @@ class KaryawanController extends Controller
      */
     public function index(Request $request): Renderable
     {
-        $this->checkAuthorization(auth()->user(), ['karyawan.view']);
+        $user = auth()->user();
+        $this->checkAuthorization($user, ['karyawan.view']);
 
         $search = $request->query('search');
 
         $query = Karyawan::with('perusahaan', 'user');
 
+        // Jika role-nya perusahaan, batasi hanya pada karyawan miliknya
+        if ($user->hasRole('Perusahaan') && $user->perusahaan) {
+            $query->where('perusahaan_id', $user->perusahaan->id);
+        }
+
+        // Jika ada keyword pencarian, filter berdasarkan nama atau email user
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('nama_lengkap', 'like', '%' . $search . '%')
@@ -34,10 +42,11 @@ class KaryawanController extends Controller
             });
         }
 
-        $karyawans = $query->paginate(10)->withQueryString();
+        $karyawans = $query->latest()->paginate(10)->withQueryString();
 
         return view('backend.pages.karyawans.index', compact('karyawans'));
     }
+
 
     /**
      * Menampilkan form untuk membuat karyawan baru.
