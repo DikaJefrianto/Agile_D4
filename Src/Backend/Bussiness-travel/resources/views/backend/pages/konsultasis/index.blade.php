@@ -24,7 +24,7 @@
     </div>
 
     <div class="space-y-6">
-        @include('backend.layouts.partials.messages') {{-- Pastikan Anda memiliki partial ini untuk pesan sukses/error --}}
+        @include('backend.layouts.partials.messages')
 
         <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
             <div class="px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center">
@@ -43,7 +43,7 @@
                 <table class="w-full dark:text-gray-400">
                     <thead>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
-                            <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('No') }}</th>
+                            <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('No.') }}</th>
                             @if (auth()->user()->hasRole(['Admin', 'Superadmin']))
                                 <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Perusahaan') }}</th>
                             @endif

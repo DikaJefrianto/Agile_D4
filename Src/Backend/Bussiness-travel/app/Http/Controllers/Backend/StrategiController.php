@@ -72,7 +72,7 @@ class StrategiController extends Controller
                                 ->paginate(10);
         }
         // Jika bukan admin/super-admin dan tidak terhubung ke perusahaan, $strategis akan tetap kosong.
-        // Anda bisa menampilkan pesan "Tidak ada strategi untuk Anda" di view dalam kasus ini.
+
 
         return view('backend.pages.strategis.index', compact('strategis'));
     }
@@ -299,14 +299,14 @@ class StrategiController extends Controller
         } elseif (is_null($perusahaanId) || $strategi->perusahaan_id !== $perusahaanId) {
             // User perusahaan hanya boleh mengunduh dokumen milik perusahaan mereka
             return redirect()->back()->with('error', 'Anda tidak diizinkan mengakses dokumen ini.');
-            // Atau jika Anda ingin error 403:
+           
             // abort(403, 'Unauthorized action.');
         }
 
         // 2. Pastikan dokumen ada
         if (!$strategi->dokumen || !Storage::disk('public')->exists($strategi->dokumen)) {
             return redirect()->back()->with('error', 'Dokumen tidak ditemukan.');
-            // Atau jika Anda ingin error 404:
+
             // abort(404, 'Dokumen tidak ditemukan.');
         }
 

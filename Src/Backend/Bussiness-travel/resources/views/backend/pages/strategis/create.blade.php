@@ -48,55 +48,64 @@
 
                             {{-- Pilih Perusahaan (Hanya untuk Admin/Superadmin) --}}
                             {{-- @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('superadmin')) --}}
-                                <div class="sm:col-span-2">
-                                    <label for="perusahaan_id"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                        {{ __('Perusahaan') }} <span class="text-red-500">*</span>
-                                    </label>
-                                    <select name="perusahaan_id" id="perusahaan_id" required
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
-                                        <option value="">{{__('Pilih Perusahaan')}}</option>
-                                        {{-- $perusahaans will only be available if the user is an admin or superadmin --}}
-                                        @if (isset($perusahaans))
-                                            @foreach($perusahaans as $perusahaan)
-                                            <option value="{{ $perusahaan->id }}" {{ old('user_id') == $perusahaan->id ? 'selected' : '' }}>
+                            <div class="sm:col-span-2">
+                                <label for="perusahaan_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    {{ __('Perusahaan') }} <span class="text-red-500">*</span>
+                                </label>
+                                <select name="perusahaan_id" id="perusahaan_id" required
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                    <option value="">{{ __('Pilih Perusahaan') }}</option>
+                                    {{-- $perusahaans will only be available if the user is an admin or superadmin --}}
+                                    @if (isset($perusahaans))
+                                        @foreach ($perusahaans as $perusahaan)
+                                            <option value="{{ $perusahaan->id }}"
+                                                {{ old('user_id') == $perusahaan->id ? 'selected' : '' }}>
                                                 {{ $perusahaan->nama }}
                                             </option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    @error('perusahaan_id')
-                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                                    @enderror
-                                </div>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                @error('perusahaan_id')
+                                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
                             {{-- @endif --}}
 
+                            {{-- Nama Program --}}
                             {{-- Nama Program --}}
                             <div class="sm:col-span-2">
                                 <label for="nama_program"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    {{ __('Nama Program') }} <span class="text-red-500">*</span>
-                                </label>
+                                    {{ __('Nama Program') }} <span
+                                        class="text-red-500">*</span>
+                                    </label>
                                 <input type="text" name="nama_program" id="nama_program"
                                     value="{{ old('nama_program') }}" required
-                                    placeholder="Contoh: Pengurangan Emisi Kendaraan Operasional"
+
+                                    placeholder="{{ __('Contoh: Pengurangan Emisi Kendaraan Operasional') }}"
+
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
                                 @error('nama_program')
                                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                 @enderror
+
                             </div>
 
                             {{-- Deskripsi --}}
                             <div class="sm:col-span-2">
-                                <label for="deskripsi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                <label for="deskripsi"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     {{ __('Deskripsi') }}
-                                </label>
+                                    </label>
+
                                 <textarea name="deskripsi" id="deskripsi" rows="4"
-                                    placeholder="Jelaskan tujuan, dampak, atau mekanisme strategi..."
+                                    placeholder="{{ __('Jelaskan tujuan, dampak, atau mekanisme strategi...') }}" 
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:text-white">{{ old('deskripsi') }}</textarea>
                                 @error('deskripsi')
                                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                 @enderror
+
                             </div>
 
                             {{-- Status --}}
@@ -106,12 +115,11 @@
                                 </label>
                                 <select name="status" id="status" required
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
-                                    <option value="aktif"
-                                        {{ old('status') == 'aktif' ? 'selected' : '' }}>{{__('Aktif')}}
+                                    <option value="aktif" {{ old('status') == 'aktif' ? 'selected' : '' }}>
+                                        {{ __('Aktif') }}
                                     </option>
-                                    <option value="nonaktif"
-                                        {{ old('status') == 'nonaktif' ? 'selected' : '' }}>
-                                        {{__('Nonaktif')}}</option>
+                                    <option value="nonaktif" {{ old('status') == 'nonaktif' ? 'selected' : '' }}>
+                                        {{ __('Nonaktif') }}</option>
                                 </select>
                                 @error('status')
                                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>

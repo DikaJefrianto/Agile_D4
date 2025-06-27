@@ -17,7 +17,7 @@ class PerusahaanController extends Controller
      */
     public function index()
     {
-        // Anda bisa menambahkan paginasi, filter, atau pencarian di sini jika diperlukan
+
         $perusahaans = Perusahaan::with('user')->get(); // Load relasi user jika ada
         return response()->json([
             'success' => true,
@@ -52,7 +52,7 @@ class PerusahaanController extends Controller
                 'password' => Hash::make($validatedData['password']),
             ]);
 
-            // Anda bisa menambahkan logika untuk assign role di sini jika diperlukan
+
             // $user->assignRole('Perusahaan'); // Misalnya, jika menggunakan Spatie Permission
 
             // Buat Perusahaan baru dan kaitkan dengan user

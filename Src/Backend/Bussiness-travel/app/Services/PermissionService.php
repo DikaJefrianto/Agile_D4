@@ -170,10 +170,13 @@ class PermissionService
             ],
         ],
         [
-            'group_name' => 'laporan',
+            'group_name' => 'guide',
             'permissions' => [
-                'laporan.view',
-                'laporan.detail',
+                'guide.view',
+                'guide.create',
+                'guide.edit',
+                'guide.delete',
+                'guide.detail',
             ],
         ],
     ];

@@ -2,35 +2,46 @@
 
 declare (strict_types = 1);
 
-use App\Http\Controllers\Backend\ActionLogController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Backend\{
+    ActionLogController,
+    BahanBakarController,
+    BiayaController,
+    DashboardController,
+    FeedbackController,
+    HasilPerhitunganController,
+    KaryawanController,
+    TransportasiController,
+    LocaleController,
+    ModulesController,
+    PerjalananDinasController,
+    PermissionsController,
+    PerusahaanController,
+    ProfilesController,
+    RolesController,
+    SettingsController,
+    StrategiController,
+    TranslationController,
+    UserLoginAsController,
+    UsersController,
+    KonsultasiController
+};
+use App\Http\Controllers\Frontend\GuideController as FrontendGuideController; // Alias untuk controller frontend
+use App\Http\Controllers\Backend\GuideController as BackendGuideController;
+use App\Http\Controllers\FeedbacksController;
+use App\Http\Controllers\Backend\FeedbackController as BackendFeedbackController; // Alias untuk controller backend
+use App\Http\Controllers\Backend\LaporanController;
 
-use App\Http\Controllers\Backend\BahanBakarController;
 
-use App\Http\Controllers\Backend\BiayaController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\HasilPerhitunganController;
-use App\Http\Controllers\Backend\KaryawanController;
-use App\Http\Controllers\Backend\KonsultasiController;
-use App\Http\Controllers\Backend\LaporanController;;
-use App\Http\Controllers\Backend\LocaleController;
-use App\Http\Controllers\Backend\ModulesController;
-use App\Http\Controllers\Backend\PermissionsController;
-use App\Http\Controllers\Backend\PerusahaanController;
-use App\Http\Controllers\Backend\ProfilesController;
-use App\Http\Controllers\Backend\RolesController;
-use App\Http\Controllers\Backend\SettingsController;
-use App\Http\Controllers\Backend\StrategiController;
-use App\Http\Controllers\Backend\TranslationController;
-use App\Http\Controllers\Backend\TransportasiController;
-use App\Http\Controllers\Backend\UserLoginAsController;
-use App\Http\Controllers\Backend\UsersController;use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/about_us', function () {
-    return view('about_us');
-})->name('about_us');
+//panduan
+Route::get('/panduan', [FrontendGuideController::class, 'index'])->name('guides.index');
+// Feedback
 
+Route::post('/feedback', [FeedbacksController::class, 'store'])->name('feedback.store');
 // Auth routes
 Auth::routes(['verify' => true]);
 
@@ -66,6 +77,21 @@ Route::middleware(['auth', 'verified'])
             ]);
 
             Route::resource('konsultasis', KonsultasiController::class);
+
+            // Rute Manajemen Panduan (Admin/Superadmin)
+            // URL: /dashboard/guides
+            // Nama: admin.guides.*
+            Route::prefix('guides')->name('guides.')->group(function () {
+                Route::get('/', [BackendGuideController::class, 'index'])->name('index');
+                Route::get('/create', [BackendGuideController::class, 'create'])->name('create');
+                Route::post('/', [BackendGuideController::class, 'store'])->name('store');
+                Route::get('/{guide}/edit', [BackendGuideController::class, 'edit'])->name('edit');
+                Route::put('/{guide}', [BackendGuideController::class, 'update'])->name('update');
+                Route::delete('/{guide}', [BackendGuideController::class, 'destroy'])->name('destroy');
+            });
+
+            //feedback
+            Route::resource('feedbacks', BackendFeedbackController::class)->only(['index', 'show', 'destroy']);
 
             Route::get('/permissions', [PermissionsController::class, 'index'])->name('permissions.index');
             Route::get('/permissions/{id}', [PermissionsController::class, 'show'])->name('permissions.show');
