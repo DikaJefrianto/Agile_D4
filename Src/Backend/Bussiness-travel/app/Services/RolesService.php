@@ -179,16 +179,7 @@ class RolesService
             'feedback.create',
             'feedback.view',
             'feedback.edit',
-<<<<<<< HEAD
-            'perjalanan.create',
-            'perjalanan.view',
-            'perjalanan.edit',
-            'transportasi.create',
             'transportasi.view',
-            'transportasi.edit',
-=======
-            'transportasi.view',
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
             'karyawan.create',
             'karyawan.view',
             'karyawan.edit',
@@ -199,10 +190,7 @@ class RolesService
             'profile.update',
             // Translations
             'translations.view',
-<<<<<<< HEAD
-=======
             
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
         ];
 
         $roles['perusahaan'] = $this->createRole('Perusahaan', $perusahaanPermissions);
@@ -213,23 +201,15 @@ class RolesService
             'profile.view',
             'profile.edit',
             'profile.update',
-<<<<<<< HEAD
-=======
             'feedback.create',
             'feedback.view',
             'feedback.edit',
             'perhitungan.create',
             'perhitungan.view',
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
         ];
 
         $roles['karyawan'] = $this->createRole('Karyawan', $karyawanPermissions);
 
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
         return $roles;
     }
 
@@ -270,21 +250,12 @@ class RolesService
             case 'perusahaan':
                 return [
                     'dashboard.view',
-<<<<<<< HEAD
-                    'blog.create',
-                    'blog.view',
-                    'blog.edit',
-=======
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
                     'profile.view',
                     'profile.edit',
                     'profile.update',
                     'translations.view',
-<<<<<<< HEAD
-=======
                     'perhitungan.create',
                     'perhitungan.view',
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
                 ];
 
             case 'karyawan':

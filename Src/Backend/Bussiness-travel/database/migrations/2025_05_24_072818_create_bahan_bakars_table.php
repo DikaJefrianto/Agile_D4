@@ -13,14 +13,9 @@ return new class extends Migration
     {
         Schema::create('bahan_bakars', function (Blueprint $table) {
             $table->id();
-<<<<<<< HEAD
-            $table->string('nama');
-            $table->float('emisi_per_liter');
-=======
             $table->string('kategori');
             $table->string('Bahan_bakar');
             $table->decimal('factorEmisi', 10, 4);
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
             $table->timestamps();
         });
     }
@@ -32,8 +27,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('bahan_bakars');
     }
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844

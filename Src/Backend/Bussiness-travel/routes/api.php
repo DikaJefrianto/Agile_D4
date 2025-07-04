@@ -2,11 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\Backend\Api\KaryawanController;
 use App\Http\Controllers\Backend\Api\PerusahaanController;
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
 
 /*
 |--------------------------------------------------------------------------
@@ -26,16 +23,6 @@ use App\Http\Controllers\Backend\Api\PerusahaanController;
 // API endpoint to get translations for a specific language
 Route::get('/translations/{lang}', function (string $lang) {
     $path = resource_path("lang/{$lang}.json");
-<<<<<<< HEAD
-    
-    if (!file_exists($path)) {
-        return response()->json(['error' => 'Language not found'], 404);
-    }
-    
-    $translations = json_decode(file_get_contents($path), true);
-    return response()->json($translations);
-});
-=======
 
     if (!file_exists($path)) {
         return response()->json(['error' => 'Language not found'], 404);
@@ -57,4 +44,3 @@ Route::post('/karyawans', [KaryawanController::class, 'store']);          // Men
 Route::get('/detailkaryawans/{id}', [KaryawanController::class, 'show']);       // Menampilkan detail data berdasarkan ID
 Route::put('/editkaryawans/{id}', [KaryawanController::class, 'update']);     // Memperbarui data berdasarkan ID
 Route::delete('/deletekaryawans/{id}', [KaryawanController::class, 'destroy']); // Menghapus data berdasarkan ID
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844

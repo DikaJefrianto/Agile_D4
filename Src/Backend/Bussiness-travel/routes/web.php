@@ -2,100 +2,46 @@
 
 declare (strict_types = 1);
 
-use App\Http\Controllers\Backend\ActionLogController;
-<<<<<<< HEAD
-use App\Http\Controllers\Backend\BahanBakarController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\FeedbackController;
-use App\Http\Controllers\Backend\KaryawanController;
-use App\Http\Controllers\Backend\KendaraanController;
-use App\Http\Controllers\Backend\LocaleController;
-use App\Http\Controllers\Backend\ModulesController;
-use App\Http\Controllers\Backend\PerhitunganController;
-use App\Http\Controllers\Backend\PerjalananDinasController;
-=======
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Backend\{
+    ActionLogController,
+    BahanBakarController,
+    BiayaController,
+    DashboardController,
+    FeedbackController,
+    HasilPerhitunganController,
+    KaryawanController,
+    TransportasiController,
+    LocaleController,
+    ModulesController,
+    PerjalananDinasController,
+    PermissionsController,
+    PerusahaanController,
+    ProfilesController,
+    RolesController,
+    SettingsController,
+    StrategiController,
+    TranslationController,
+    UserLoginAsController,
+    UsersController,
+    KonsultasiController
+};
+use App\Http\Controllers\Frontend\GuideController as FrontendGuideController; // Alias untuk controller frontend
+use App\Http\Controllers\Backend\GuideController as BackendGuideController;
+use App\Http\Controllers\FeedbacksController;
+use App\Http\Controllers\Backend\FeedbackController as BackendFeedbackController; // Alias untuk controller backend
+use App\Http\Controllers\Backend\LaporanController;
 
-use App\Http\Controllers\Backend\BahanBakarController;
 
-use App\Http\Controllers\Backend\BiayaController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\HasilPerhitunganController;
-use App\Http\Controllers\Backend\KaryawanController;
-use App\Http\Controllers\Backend\KonsultasiController;
-use App\Http\Controllers\Backend\LaporanController;;
-use App\Http\Controllers\Backend\LocaleController;
-use App\Http\Controllers\Backend\ModulesController;
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
-use App\Http\Controllers\Backend\PermissionsController;
-use App\Http\Controllers\Backend\PerusahaanController;
-use App\Http\Controllers\Backend\ProfilesController;
-use App\Http\Controllers\Backend\RolesController;
-use App\Http\Controllers\Backend\SettingsController;
-use App\Http\Controllers\Backend\StrategiController;
-use App\Http\Controllers\Backend\TranslationController;
-<<<<<<< HEAD
-use App\Http\Controllers\Backend\UserLoginAsController;
-use App\Http\Controllers\Backend\UsersController;use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
+//panduan
+Route::get('/panduan', [FrontendGuideController::class, 'index'])->name('guides.index');
+// Feedback
 
-/**
- * Dashboard routes based on roles
- */
-Route::middleware(['auth', 'role:superadmin|admin'])
-    ->prefix('dashboard')->as('admin.')
-    ->group(function () {
-        // …
-        Route::get('/', [DashboardController::class, 'index'])
-            ->name('dashboard');
-        // …
-        // Route::middleware(['auth'])->prefix('dashboard')->group(function ()
-
-        // Admin / Super Admin
-
-        Route::middleware(['role:admin|superadmin'])->group(function () {
-        });
-        // Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard.admin');
-
-        Route::resource('roles', RolesController::class);
-        Route::resource('perusahaans', PerusahaanController::class);
-
-        // Permissions
-        Route::get('/permissions', [PermissionsController::class, 'index'])->name('permissions.index');
-        Route::get('/permissions/{id}', [PermissionsController::class, 'show'])->name('permissions.show');
-
-        // Modules
-        Route::get('/modules', [ModulesController::class, 'index'])->name('modules.index');
-        Route::post('/modules/toggle-status/{module}', [ModulesController::class, 'toggleStatus'])->name('modules.toggle-status');
-        Route::post('/modules/upload', [ModulesController::class, 'upload'])->name('modules.upload');
-        Route::delete('/modules/{module}', [ModulesController::class, 'destroy'])->name('modules.delete');
-
-        // Perusahaan
-        Route::middleware(['role:perusahaan'])->group(function () {
-            Route::get('/perusahaan', fn() => view('dashboard.perusahaan'))->name('dashboard.perusahaan');
-            Route::resource('karyawans', KaryawanController::class);
-            // Tambahkan route khusus perusahaan jika diperlukan di sini
-        });
-
-        // Karyawan
-        Route::middleware(['role:karyawan'])->group(function () {
-            Route::get('/karyawan', fn() => view('dashboard.karyawan'))->name('dashboard.karyawan');
-            // Tambahkan route khusus karyawan jika diperlukan di sini
-        });
-
-        // Umum untuk semua role (auth)
-=======
-use App\Http\Controllers\Backend\TransportasiController;
-use App\Http\Controllers\Backend\UserLoginAsController;
-use App\Http\Controllers\Backend\UsersController;use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\Route;
-
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/about_us', function () {
-    return view('about_us');
-})->name('about_us');
-
+Route::post('/feedback', [FeedbacksController::class, 'store'])->name('feedback.store');
 // Auth routes
 Auth::routes(['verify' => true]);
 
@@ -131,6 +77,21 @@ Route::middleware(['auth', 'verified'])
             ]);
 
             Route::resource('konsultasis', KonsultasiController::class);
+
+            // Rute Manajemen Panduan (Admin/Superadmin)
+            // URL: /dashboard/guides
+            // Nama: admin.guides.*
+            Route::prefix('guides')->name('guides.')->group(function () {
+                Route::get('/', [BackendGuideController::class, 'index'])->name('index');
+                Route::get('/create', [BackendGuideController::class, 'create'])->name('create');
+                Route::post('/', [BackendGuideController::class, 'store'])->name('store');
+                Route::get('/{guide}/edit', [BackendGuideController::class, 'edit'])->name('edit');
+                Route::put('/{guide}', [BackendGuideController::class, 'update'])->name('update');
+                Route::delete('/{guide}', [BackendGuideController::class, 'destroy'])->name('destroy');
+            });
+
+            //feedback
+            Route::resource('feedbacks', BackendFeedbackController::class)->only(['index', 'show', 'destroy']);
 
             Route::get('/permissions', [PermissionsController::class, 'index'])->name('permissions.index');
             Route::get('/permissions/{id}', [PermissionsController::class, 'show'])->name('permissions.show');
@@ -170,39 +131,12 @@ Route::middleware(['auth', 'verified'])
         /**
      * Shared by all authenticated roles (admin, perusahaan, karyawan)
      */
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
         Route::post('/settings', [SettingsController::class, 'store'])->name('settings.store');
 
         Route::get('/translations', [TranslationController::class, 'index'])->name('translations.index');
         Route::post('/translations', [TranslationController::class, 'update'])->name('translations.update');
         Route::post('/translations/create', [TranslationController::class, 'create'])->name('translations.create');
-<<<<<<< HEAD
-
-        Route::resource('users', UsersController::class);
-        Route::get('users/{id}/login-as', [UserLoginAsController::class, 'loginAs'])->name('users.login-as');
-        Route::post('users/switch-back', [UserLoginAsController::class, 'switchBack'])->name('users.switch-back');
-
-        Route::get('/action-log', [ActionLogController::class, 'index'])->name('actionlog.index');
-
-        Route::resource('strategis', StrategiController::class);
-        Route::resource('bahan-bakars', BahanBakarController::class);
-        Route::resource('kendaraans', KendaraanController::class);
-        Route::resource('feedbacks', FeedbackController::class);
-        Route::resource('perjalanan-dinas', PerjalananDinasController::class);
-        Route::resource('perhitungans', PerhitunganController::class);
-
-    });
-
-/**
- * Profile routes.
- */
-Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth']], function () {
-    Route::get('/edit', [ProfilesController::class, 'edit'])->name('edit');
-    Route::put('/update', [ProfilesController::class, 'update'])->name('update');
-});
-
-=======
     });
 
 //Route untuk strategi
@@ -242,5 +176,4 @@ Route::middleware('auth')
 /**
  * Locale switcher
  */
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
 Route::get('/locale/{lang}', [LocaleController::class, 'switch'])->name('locale.switch');

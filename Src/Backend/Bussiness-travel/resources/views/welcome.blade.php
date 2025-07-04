@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
 {{-- filepath: f:\Project\Agile_D4\Src\Backend\Naima\resources\views\welcome.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
@@ -234,8 +230,6 @@
     </script> --}}
 </body>
 
-<<<<<<< HEAD
-=======
 =======
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -336,6 +330,5 @@
             </div>
         </div>
     </body>
->>>>>>> featur/306-310/manajemen-emisi
 >>>>>>> 50d7a814b63839650b92a2e7431ae57ce34fd844
 </html>
