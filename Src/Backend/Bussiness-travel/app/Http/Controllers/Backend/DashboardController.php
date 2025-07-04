@@ -110,7 +110,7 @@ class DashboardController extends Controller
 
             if (!$perusahaan) {
                 // Tangani kasus di mana pengguna perusahaan tidak memiliki data perusahaan terkait
-                return view('backend.pages.dashboard.default_dashboard', [
+                return view('backend.pages.dashboard.perusahaan_dashboard', [
                     'message' => 'Data perusahaan tidak ditemukan untuk pengguna ini.',
                     'emission_chart_data' => ['labels' => [], 'data' => []] // Pastikan variabel didefinisikan
                 ]);

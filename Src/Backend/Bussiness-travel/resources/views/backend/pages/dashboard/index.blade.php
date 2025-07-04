@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('title')
-    {{ __('Dashboard') }} | {{ config('app.name') }}
+    {{ __('Admin Dashboard') }} | {{ config('app.name') }}
 @endsection
 
 @section('before_vite_build')
@@ -68,7 +68,7 @@
                         'icon' => 'bi bi-building',
                         'label' => __('Total Perusahaan'),
                         'value' => $total_perusahaan,
-                        'bg' => '#F97316', 
+                        'bg' => '#F97316',
                         'class' => 'bg-white',
                         'url' => route('admin.perusahaans.index')
                     ])
