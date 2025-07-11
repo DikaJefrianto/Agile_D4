@@ -8,11 +8,14 @@
     <div class="p-4 mx-auto max-w-screen-2xl md:p-6"> {{-- Perbaiki '--breakpoint-2xl' menjadi 'screen-2xl' --}}
         <div x-data="{ pageName: '{{ __('Bahan Bakar') }}' }"> {{-- Terjemahkan di sini --}}
             <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-                <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{{ __('Bahan Bakar') }}</h2> {{-- Terjemahkan di sini --}}
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{{ __('Bahan Bakar') }}</h2>
+                {{-- Terjemahkan di sini --}}
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('admin.bahan-bakar.create') }}" class="btn-success">
-                        <i class="bi bi-plus-circle mr-2"></i> {{ __('Tambah Bahan Bakar') }} {{-- Terjemahkan di sini --}}
-                    </a>
+                    @if (Auth::check() && (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Superadmin')))
+                        <a href="{{ route('admin.bahan-bakar.create') }}" class="btn-success">
+                            <i class="bi bi-plus-circle mr-2"></i> {{ __('Tambah Bahan Bakar') }} {{-- Terjemahkan di sini --}}
+                        </a>
+                    @endif
                 </div>
             </div>
 
@@ -21,7 +24,8 @@
         <div class="space-y-6">
             <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
                 <div class="px-5 py-4 sm:px-6 sm:py-5 flex justify-between items-center">
-                    <h3 class="text-base font-medium text-gray-800 dark:text-white/90">{{ __('Daftar Bahan Bakar') }}</h3> {{-- Terjemahkan di sini --}}
+                    <h3 class="text-base font-medium text-gray-800 dark:text-white/90">{{ __('Daftar Bahan Bakar') }}</h3>
+                    {{-- Terjemahkan di sini --}}
                     <div class="flex items-center gap-3">
                         <div class="relative">
                             <button id="kategoriDropdownButton" data-dropdown-toggle="kategoriDropdown"
@@ -89,15 +93,25 @@
                                     <td class="px-5 py-4">{{ __($item->kategori) }}</td> {{-- Terjemahkan jika kategori perlu diterjemahkan --}}
                                     <td class="px-5 py-4">{{ __($item->Bahan_bakar) }}</td> {{-- Terjemahkan jika nama bahan bakar perlu diterjemahkan --}}
                                     <td class="px-5 py-4">{{ number_format($item->factorEmisi, 4) }}</td>
-                                    <td class="px-5 py-4 flex gap-2">
-                                        <a href="{{ route('admin.bahan-bakar.edit', $item->id) }}"
-                                            class="btn-default !p-2">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <button data-modal-target="delete-modal-{{ $item->id }}"
-                                            data-modal-toggle="delete-modal-{{ $item->id }}" class="btn-danger !p-2">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
+                                    <td class="px-5 py-4 sm:px-6 flex gap-2">
+                                        {{-- Tombol Edit hanya muncul jika user adalah 'karyawan' --}}
+                                        @if (Auth::check() && (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Superadmin')))
+                                            {{-- Otorisasi Edit berdasarkan Policy --}}
+                                            <a href="{{ route('admin.bahan-bakar.edit', $item) }}"
+                                                class="btn-default !p-2">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                        @endif
+
+                                        {{-- Tombol Hapus hanya muncul jika user adalah 'karyawan' --}}
+                                        @if ((Auth::check() && Auth::user()->hasRole('Admin')) || Auth::user()->hasRole('Superadmin'))
+                                            {{-- Otorisasi Hapus berdasarkan Policy --}}
+                                            <button data-modal-target="delete-modal-{{ $item->id }}"
+                                                data-modal-toggle="delete-modal-{{ $item->id }}"
+                                                class="btn-danger !p-2">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

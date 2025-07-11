@@ -25,6 +25,7 @@ class GuideController extends Controller
      */
     public function create()
     {
+        $this->checkAuthorization(auth()->user(), ['guide.create']);
         return view('backend.pages.guides.create');
     }
 
@@ -33,6 +34,7 @@ class GuideController extends Controller
      */
     public function store(Request $request)
     {
+        $this->checkAuthorization(auth()->user(), ['guide.create']);
         // Validasi input dari form
         $request->validate([
             'title' => 'required|string|max:255',
@@ -76,6 +78,7 @@ class GuideController extends Controller
      */
     public function edit(Guide $guide)
     {
+        $this->checkAuthorization(auth()->user(), ['guide.edit']);
         return view('backend.pages.guides.edit', compact('guide'));
     }
 
@@ -84,6 +87,7 @@ class GuideController extends Controller
      */
     public function update(Request $request, Guide $guide)
     {
+        $this->checkAuthorization(auth()->user(), ['guide.edit']);
         $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'nullable|string|max:255',
@@ -129,6 +133,7 @@ class GuideController extends Controller
      */
     public function destroy(Guide $guide)
     {
+        $this->checkAuthorization(auth()->user(), ['guide.delete']);
         // Hapus file panduan dari storage jika ada
         if ($guide->file_path) {
             Storage::disk('public')->delete($guide->file_path);

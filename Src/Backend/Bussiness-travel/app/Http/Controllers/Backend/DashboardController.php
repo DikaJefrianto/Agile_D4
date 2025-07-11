@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Models\Perusahaan; // Pastikan model ini ada
 use App\Models\Karyawan;   // Pastikan model ini ada
 use App\Models\HasilPerhitungan; // Pastikan model ini ada
+use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
 {

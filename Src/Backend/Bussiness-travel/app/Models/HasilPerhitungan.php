@@ -26,7 +26,9 @@ class HasilPerhitungan extends Model
         'titik_awal',
         'titik_tujuan'
     ];
-
+    protected $casts = [
+        'tanggal' => 'datetime', // Ini akan mengonversi 'tanggal' menjadi objek Carbon
+    ];
     // Relasi ke User
     public function user()
     {

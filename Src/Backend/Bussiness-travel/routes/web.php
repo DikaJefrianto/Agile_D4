@@ -75,6 +75,7 @@ Route::middleware(['auth', 'verified'])
                 'users'        => UsersController::class,
                 'laporan'      => LaporanController::class,
             ]);
+            Route::post('konsultasis/{konsultasi}/approve', [KonsultasiController::class, 'approve'])->name('konsultasis.approve');
 
             Route::resource('konsultasis', KonsultasiController::class);
 

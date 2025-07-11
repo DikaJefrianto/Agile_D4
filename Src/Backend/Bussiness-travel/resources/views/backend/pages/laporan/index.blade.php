@@ -49,7 +49,7 @@
             {{-- Export Buttons --}}
             <div class="space-x-2">
                 {{-- CSV (Hijau Tua) --}}
-                <a href="{{ route('admin.laporan.exportCsv', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
+                <a href="{{ route('admin.laporan.exportCsv', ['bulan' => $bulan, 'tahun' => $tahun,'lang' => App::getLocale()]) }}"
                     class="px-4 py-2 rounded-md text-sm font-medium
                            bg-green-700 text-white hover:bg-green-800
                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600
@@ -57,7 +57,7 @@
                     {{ __('export_csv') }}
                 </a>
                 {{-- Excel (Hijau Muda) --}}
-                <a href="{{ route('admin.laporan.exportExcel', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
+                <a href="{{ route('admin.laporan.exportExcel', ['bulan' => $bulan, 'tahun' => $tahun,'lang' => App::getLocale()]) }}"
                     class="px-4 py-2 rounded-md text-sm font-medium
                            bg-green-500 text-white hover:bg-green-600
                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400
@@ -65,7 +65,7 @@
                     {{ __('export_excel') }}
                 </a>
                 {{-- PDF (Merah) --}}
-                <a href="{{ route('admin.laporan.exportPdf', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
+                <a href="{{ route('admin.laporan.exportPdf', ['bulan' => $bulan, 'tahun' => $tahun,'lang' => App::getLocale()]) }}"
                     class="px-4 py-2 rounded-md text-sm font-medium
                            bg-red-600 text-white hover:bg-red-700
                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500

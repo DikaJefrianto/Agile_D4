@@ -1,55 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('Detail Laporan Emisi') }} - {{ $perusahaan->nama }}</title>
+    {{-- KRUSIAL: Tambahkan ini untuk memastikan UTF-8 dikenali oleh DomPDF --}}
+    <meta charset="UTF-8">
+    <title>{{ __('Laporan Detail Emisi Perusahaan') }}</title>
     <style>
-        body { font-family: Arial, sans-serif; font-size: 10pt; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        h1, h2, h3 { text-align: center; margin-bottom: 10px; }
-        .text-center { text-align: center; }
+        /* CSS sederhana untuk PDF */
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            margin: 20mm; /* Menambahkan margin untuk tampilan yang lebih baik */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1, h2, h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .summary-box {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+        .summary-box p {
+            margin: 5px 0;
+        }
+        .footer {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 9pt;
+        }
     </style>
 </head>
 <body>
-    <h1>{{ __('Detail Laporan Emisi') }}</h1>
-    <h2>{{ __('Perusahaan') }}: {{ $perusahaan->nama }}</h2>
-    <h3>{{ __('Periode') }}: {{ \Carbon\Carbon::createFromDate((int)$tahun, (int)$bulan)->translatedFormat('F Y') }}</h3>
+    <h1>{{ __('Laporan Detail Emisi Perusahaan') }}</h1>
+    <h2>{{ $perusahaan->nama }}</h2> {{-- Nama perusahaan adalah data, bukan string terjemahan --}}
+    <p class="text-center">{{ __('Periode') }}: {{ \Carbon\Carbon::createFromDate($tahun, $bulan, 1)->translatedFormat('F Y') }}</p>
 
-    <h4>{{ __('summary_period') }}</h4>
+    <div class="summary-box">
+        <h3>{{ __('Ringkasan Periode Ini:') }}</h3>
+        <p>{{ __('Total Emisi:') }} {{ number_format($totalEmisi, 2, ',', '.') }} kg CO₂</p>
+        <p>{{ __('Rata-rata Harian:') }} {{ number_format($rataRataHarian, 2, ',', '.') }} kg CO₂</p>
+        <p>{{ __('Total Perjalanan:') }} {{ $totalPerjalanan }}</p>
+        <p>{{ __('Total Biaya Terkait:') }} Rp {{ number_format($totalBiaya, 0, ',', '.') }}</p>
+    </div>
+
+    <h3>{{ __('Detail Perhitungan Emisi:') }}</h3>
     <table>
         <thead>
             <tr>
-                <th>{{ __('total_emission_kg') }}</th>
-                <th>{{ __('daily_average_kg') }}</th>
-                <th>{{ __('number_of_trips') }}</th>
-                <th>{{ __('total_related_cost') }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ number_format($totalEmisi, 2, ',', '.') }} kg</td>
-                <td>{{ number_format($rataRataHarian, 2, ',', '.') }} kg</td>
-                <td>{{ $totalPerjalanan }}</td>
-                <td>{{ number_format($totalBiaya, 0, ',', '.') }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h4>{{ __('list_detailed_emission_calculations') }}</h4>
-    <table>
-        <thead>
-            <tr>
-                <th>{{ __('no') }}</th>
-                <th>{{ __('date') }}</th>
-                <th>{{ __('employee') }}</th>
-                <th>{{ __('method') }}</th>
-                <th>{{ __('type_bb_transport_cost') }}</th>
-                <th>{{ __('input_value') }}</th>
-                <th>{{ __('number_of_people') }}</th>
-                <th>{{ __('emission_kg') }}</th>
-                <th>{{ __('related_cost_rp') }}</th>
-                <th>{{ __('route') }}</th>
+                <th>{{ __('No') }}</th>
+                <th>{{ __('Tanggal') }}</th>
+                <th>{{ __('Karyawan') }}</th>
+                <th>{{ __('Metode') }}</th>
+                <th>{{ __('Jenis') }}</th>
+                <th>{{ __('Input') }}</th>
+                <th>{{ __('Jml Orang') }}</th>
+                <th>{{ __('Emisi (kg CO₂)') }}</th>
+                <th>{{ __('Biaya (Rp)') }}</th>
+                <th>{{ __('Rute') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -58,36 +82,43 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $perhitungan->tanggal->translatedFormat('d M Y, H:i') }}</td>
                     <td>{{ $perhitungan->user->name ?? 'N/A' }}</td>
-                    <td>{{ __($perhitungan->metode) }}</td>
+                    <td>{{ __(ucwords(str_replace('_', ' ', $perhitungan->metode))) }}</td> {{-- Terjemahkan metode --}}
                     <td>
                         @if ($perhitungan->metode == 'bahan_bakar' && $perhitungan->bahanBakar)
-                            {{ $perhitungan->bahanBakar->Bahan_bakar }} ({{ __($perhitungan->bahanBakar->kategori) }})
+                            {{ $perhitungan->bahanBakar->Bahan_bakar }} ({{ $perhitungan->bahanBakar->kategori }})
                         @elseif ($perhitungan->metode == 'jarak_tempuh' && $perhitungan->transportasi)
-                            {{ $perhitungan->transportasi->jenis }} ({{ __($perhitungan->transportasi->kategori) }})
+                            {{ $perhitungan->transportasi->jenis }} ({{ $perhitungan->transportasi->kategori }})
                         @elseif ($perhitungan->metode == 'biaya' && $perhitungan->biaya)
-                            {{ $perhitungan->biaya->jenisKendaraan }} ({{ __($perhitungan->biaya->kategori) }})
+                            {{ $perhitungan->biaya->jenisKendaraan }} ({{ $perhitungan->biaya->kategori }})
                         @else
-                            N/A
+                            -
                         @endif
                     </td>
                     <td>
                         {{ number_format($perhitungan->nilai_input, 2, ',', '.') }}
-                        @if ($perhitungan->metode == 'bahan_bakar') {{ __('Liter') }}
-                        @elseif ($perhitungan->metode == 'jarak_tempuh') {{ __('km') }}
-                        @elseif ($perhitungan->metode == 'biaya') {{ __('Rp') }}
+                        @if ($perhitungan->metode == 'bahan_bakar')
+                            {{ __('Liter') }}
+                        @elseif ($perhitungan->metode == 'jarak_tempuh')
+                            {{ __('km') }}
+                        @elseif ($perhitungan->metode == 'biaya')
+                            {{ __('Rp') }}
                         @endif
                     </td>
                     <td>{{ $perhitungan->jumlah_orang }}</td>
-                    <td>{{ number_format($perhitungan->hasil_emisi, 2, ',', '.') }} {{ __('kg') }}</td>
-                    <td>Rp {{ number_format($perhitungan->biaya->factorEmisi ?? 0, 0, ',', '.') }}</td>
+                    <td>{{ number_format($perhitungan->hasil_emisi, 2, ',', '.') }}</td>
+                    <td>{{ number_format($perhitungan->biaya->factorEmisi ?? 0, 0, ',', '.') }}</td>
                     <td>{{ $perhitungan->titik_awal }} - {{ $perhitungan->titik_tujuan }}</td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="10" class="text-center">{{ __('no_detailed_emission_data') }}</td>
+                    <td colspan="10" class="text-center">{{ __('Tidak ada data perhitungan untuk periode ini.') }}</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
+
+    <p class="footer">
+        {{ __('Dicetak pada') }}: {{ \Carbon\Carbon::now()->translatedFormat('d F Y H:i') }}
+    </p>
 </body>
 </html>

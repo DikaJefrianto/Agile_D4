@@ -31,7 +31,7 @@
                 <h3 class="text-base font-medium text-gray-800 dark:text-white/90">{{ __('Riwayat Permintaan Konsultasi') }}</h3>
 
                 {{-- Tombol "Ajukan Konsultasi" hanya untuk Perusahaan/Karyawan --}}
-                @if (!auth()->user()->hasRole(['admin', 'super-admin']))
+                @if (!auth()->user()->hasRole(['Admin', 'Super Admin']))
                     <a href="{{ route('admin.konsultasis.create') }}" class="btn-success">
                         <i class="bi bi-plus-circle mr-2"></i>
                         {{ __('Ajukan Konsultasi Baru') }}
@@ -88,9 +88,7 @@
 
                                 {{-- Edit & Hapus hanya untuk Admin/Super Admin --}}
                                 @if (auth()->user()->hasRole(['Admin', 'Superadmin']))
-                                    <a class="btn-default !p-3" href="{{ route('admin.konsultasis.edit', $konsultasi->id) }}">
-                                        <i class="bi bi-pencil text-sm"></i>
-                                    </a>
+
                                     <a data-modal-target="delete-modal-{{ $konsultasi->id }}" data-modal-toggle="delete-modal-{{ $konsultasi->id }}" class="btn-danger !p-3 cursor-pointer">
                                         <i class="bi bi-trash text-sm"></i>
                                     </a>
@@ -125,7 +123,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="{{ auth()->user()->hasRole(['admin', 'super-admin']) ? 7 : 6 }}" class="px-5 py-4 sm:px-6 text-center text-gray-500 dark:text-gray-400">{{ __('Belum ada permintaan konsultasi.') }}</td>
+                            <td colspan="{{ auth()->user()->hasRole(['Admin', 'Superadmin']) ? 7 : 6 }}" class="px-5 py-4 sm:px-6 text-center text-gray-500 dark:text-gray-400">{{ __('Belum ada permintaan konsultasi.') }}</td>
                         </tr>
                         @endforelse
                     </tbody>

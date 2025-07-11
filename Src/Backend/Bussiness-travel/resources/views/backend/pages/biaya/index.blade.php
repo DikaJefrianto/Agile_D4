@@ -23,9 +23,11 @@
                 </ol>
             </nav> --}}
             <div class="flex items-center gap-2">
+                @if (Auth::check() && (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Superadmin')))
                 <a href="{{ route('admin.biaya.create') }}" class="btn-success">
                     <i class="bi bi-plus-circle mr-2"></i> {{ __('Tambah Biaya') }}
                 </a>
+                @endif
             </div>
         </div>
     </div>
@@ -54,7 +56,7 @@
                                 @foreach (['Darat', 'Laut', 'Udara'] as $kategori)
                                     <li class="cursor-pointer text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 px-2 py-1 rounded {{ request('kategori') === $kategori ? 'bg-gray-200 dark:bg-gray-600' : '' }}"
                                         onclick="handleKategoriFilter('{{ $kategori }}')">
-                                        {{ $kategori }}
+                                        {{ __($kategori) }}
                                     </li>
                                 @endforeach
                             </ul>
@@ -102,19 +104,24 @@
                                 <td class="px-5 py-4 sm:px-6">{{ $item->jenisKendaraan }}</td>
                                 <td class="px-5 py-4 sm:px-6">{{ number_format($item->factorEmisi, 4) }}</td>
                                 <td class="px-5 py-4 sm:px-6 flex gap-2">
-                                    <a href="{{ route('admin.biaya.edit', $item) }}" class="btn-default !p-2">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <button data-modal-target="delete-modal-{{ $item->id }}"
-                                        data-modal-toggle="delete-modal-{{ $item->id }}" class="btn-danger !p-2">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                    {{-- <form action="{{ route('admin.biaya.destroy', $item) }}" method="POST" onsubmit="return confirm('{{ __('Apakah Anda yakin ingin menghapus?') }}')">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn-danger !p-2">
+                                    {{-- Tombol Edit hanya muncul jika user adalah 'karyawan' --}}
+                                    @if (Auth::check() && Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Superadmin'))
+                                        {{-- Otorisasi Edit berdasarkan Policy --}}
+                                        <a href="{{ route('admin.biaya.edit', $item) }}"
+                                            class="btn-default !p-2">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    @endif
+
+                                    {{-- Tombol Hapus hanya muncul jika user adalah 'karyawan' --}}
+                                    @if (Auth::check() && Auth::user()->hasRole('Admin')|| Auth::user()->hasRole('Superadmin'))
+                                        {{-- Otorisasi Hapus berdasarkan Policy --}}
+                                        <button data-modal-target="delete-modal-{{ $item->id }}"
+                                            data-modal-toggle="delete-modal-{{ $item->id }}"
+                                            class="btn-danger !p-2">
                                             <i class="bi bi-trash"></i>
                                         </button>
-                                    </form> --}}
+                                    @endif
                                 </td>
                             </tr>
                         @empty

@@ -59,6 +59,27 @@ class KonsultasiController extends Controller
 
         return view('backend.pages.konsultasis.index', compact('konsultasis'));
     }
+    public function approve(Request $request, Konsultasi $konsultasi)
+    {
+        // Otorisasi: Hanya Admin atau Super Admin yang dapat menyetujui
+        if (!Auth::user()->hasRole(['Admin', 'Superadmin'])) {
+            abort(403, 'Anda tidak memiliki izin untuk menyetujui konsultasi ini.');
+        }
+
+        // Pastikan status saat ini adalah 'pending' sebelum disetujui
+        if ($konsultasi->status !== 'pending') {
+            return redirect()->back()->with('error', 'Konsultasi ini tidak dapat disetujui karena statusnya bukan pending.');
+        }
+
+        $konsultasi->status = 'diterima';
+        $konsultasi->waktu_disetujui = now(); // Set waktu persetujuan
+        // Jika ada kolom `lokasi_disetujui` dan Anda ingin mengaturnya secara otomatis
+        // atau melalui input tersembunyi, Anda bisa menambahkannya di sini.
+        // Contoh: $konsultasi->lokasi_disetujui = 'Online via Google Meet';
+        $konsultasi->save();
+
+        return redirect()->route('admin.konsultasis.show', $konsultasi->id)->with('success', 'Konsultasi berhasil disetujui!');
+    }
 
     /**
      * Show the form for creating a new konsultasi request.

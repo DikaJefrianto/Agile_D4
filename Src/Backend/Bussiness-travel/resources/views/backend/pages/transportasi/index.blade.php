@@ -11,7 +11,7 @@
             <div class="mb-6 flex items-center justify-between">
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-white">{{ __('Transportasi') }}</h2>
                 {{-- Tombol 'Tambah Transportasi' hanya akan muncul jika pengguna memiliki peran 'admin', 'superadmin', atau 'karyawan' --}}
-                @if(Auth::check() && (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Superadmin') || Auth::user()->hasRole('Karyawan')))
+                @if(Auth::check() && (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Superadmin')))
                     <a href="{{ route('admin.transportasi.create') }}" class="btn-success">
                         <i class="bi bi-plus-circle mr-2"></i> {{ __('Tambah Transportasi') }}
                     </a>
@@ -42,7 +42,7 @@
                                 @foreach (['Darat', 'Laut', 'Udara'] as $kategori)
                                     <li class="cursor-pointer text-sm text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 px-2 py-1 rounded {{ request('kategori') === $kategori ? 'bg-gray-200 dark:bg-gray-600' : '' }}"
                                         onclick="handleKategoriFilter('{{ $kategori }}')">
-                                        {{ $kategori }}
+                                        {{ __($kategori) }}
                                     </li>
                                 @endforeach
                             </ul>
@@ -83,23 +83,28 @@
                         @forelse($transportasis as $item)
                             <tr class="border-b border-gray-200 dark:border-gray-700">
                                 <td class="p-2">{{ $loop->iteration }}</td>
-                                <td class="p-2">{{ $item->kategori }}</td>
-                                <td class="p-2">{{ $item->jenis }}</td>
-                                <td class="p-2">{{ $item->factor_emisi }}</td>
-                                <td class="p-2 flex gap-2">
-                                    <a href="{{ route('admin.transportasi.edit', $item) }}" class="btn-default !p-2">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <!-- Tombol Trigger Modal -->
-                                    <button data-modal-target="delete-modal-{{ $item->id }}"
-                                        data-modal-toggle="delete-modal-{{ $item->id }}" class="btn-danger !p-2">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                    {{-- <form action="{{ route('admin.transportasi.destroy', $item) }}" method="POST"
-                                        onsubmit="return confirm('{{ __('Are you sure?') }}')">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn-danger !p-2"><i class="bi bi-trash"></i></button>
-                                    </form> --}}
+                                <td class="p-2">{{ __($item->kategori) }}</td>
+                                <td class="p-2">{{ __($item->jenis) }}</td>
+                                <td class="p-2">{{ __($item->factor_emisi) }}</td>
+                                <td class="px-5 py-4 sm:px-6 flex gap-2">
+                                    {{-- Tombol Edit hanya muncul jika user adalah 'karyawan' --}}
+                                    @if (Auth::check() && Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Superadmin'))
+                                        {{-- Otorisasi Edit berdasarkan Policy --}}
+                                        <a href="{{ route('admin.transportasi.edit', $item) }}"
+                                            class="btn-default !p-2">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    @endif
+
+                                    {{-- Tombol Hapus hanya muncul jika user adalah 'karyawan' --}}
+                                    @if (Auth::check() && Auth::user()->hasRole('Admin')|| Auth::user()->hasRole('Superadmin'))
+                                        {{-- Otorisasi Hapus berdasarkan Policy --}}
+                                        <button data-modal-target="delete-modal-{{ $item->id }}"
+                                            data-modal-toggle="delete-modal-{{ $item->id }}"
+                                            class="btn-danger !p-2">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                         @empty

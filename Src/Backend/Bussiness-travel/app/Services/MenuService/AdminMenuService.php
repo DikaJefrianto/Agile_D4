@@ -82,6 +82,7 @@ class AdminMenuService
             'route' => route('admin.laporan.index'),
             'active' => Route::is('admin.laporan.*'),
             'id'=> 'laporan',
+            'permissions' => ['report.view', 'report.detail','report.export','report.export_detail'],
             'priority' => 41, // Sesuaikan prioritas
         ]);
         $this->addMenuItem([

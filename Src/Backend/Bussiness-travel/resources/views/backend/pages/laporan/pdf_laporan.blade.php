@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laporan Emisi Perusahaan</title>
+    {{-- KRUSIAL: Tambahkan ini untuk memastikan UTF-8 dikenali oleh DomPDF --}}
+    <meta charset="UTF-8">
+    <title>{{ __('Laporan Emisi Perusahaan') }}</title>
     <style>
         /* CSS sederhana untuk PDF */
         body {
             font-family: Arial, sans-serif;
             font-size: 10pt;
+            margin: 20mm; /* Menambahkan margin untuk tampilan yang lebih baik */
         }
         table {
             width: 100%;
@@ -28,22 +31,28 @@
         .text-center {
             text-align: center;
         }
+        .footer {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 9pt;
+        }
     </style>
 </head>
 <body>
-    <h1>Laporan Emisi Perusahaan</h1>
-    <h2>Periode: {{ \Carbon\Carbon::createFromDate($tahun, $bulan)->translatedFormat('F Y') }}</h2>
+    <h1>{{ __('Laporan Emisi Perusahaan') }}</h1>
+    <h2>{{ __('Ringkasan Bulanan') }}</h2>
+    <p class="text-center">{{ __('Periode') }}: {{ \Carbon\Carbon::createFromDate($tahun, $bulan, 1)->translatedFormat('F Y') }}</p>
 
-    <h3>Laporan Perusahaan</h3>
+    <h3>{{ __('Laporan Perusahaan') }}</h3>
     <table>
         <thead>
             <tr>
-                <th>No</th>
-                <th>Nama Perusahaan</th>
-                <th>Total Emisi (kg CO₂)</th>
-                <th>Rata-rata Harian (kg CO₂)</th>
-                <th>Banyak Perjalanan</th>
-                <th>Periode</th>
+                <th>{{ __('No') }}</th>
+                <th>{{ __('Nama Perusahaan') }}</th>
+                <th>{{ __('Total Emisi (kg CO₂)') }}</th>
+                <th>{{ __('Rata-rata Harian (kg CO₂)') }}</th>
+                <th>{{ __('Banyak Perjalanan') }}</th>
+                <th>{{ __('Periode') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -53,36 +62,19 @@
                     <td>{{ $perusahaan->nama }}</td>
                     <td>{{ number_format($perusahaan->total_emisi_filtered, 2, ',', '.') }} kg</td>
                     <td>{{ number_format($perusahaan->rata_rata_harian, 2, ',', '.') }} kg</td>
-                    <td>{{ $perusahaan->total_perjalanan }} kali</td>
-                    <td>{{ \Carbon\Carbon::createFromDate($tahun, $bulan)->translatedFormat('F Y') }}</td>
+                    <td>{{ $perusahaan->total_perjalanan }} {{ __('kali') }}</td>
+                    <td>{{ \Carbon\Carbon::createFromDate($tahun, $bulan, 1)->translatedFormat('F Y') }}</td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="text-center">Tidak ada data perusahaan untuk periode ini.</td>
+                    <td colspan="6" class="text-center">{{ __('Tidak ada data perusahaan untuk periode ini.') }}</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
 
-    {{-- Anda bisa menambahkan tabel breakdown bahan bakar dan transportasi juga di sini jika diperlukan di PDF --}}
-    {{-- Contoh untuk bahan bakar:
-    <h3>Emisi Berdasarkan Bahan Bakar</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Jenis Bahan Bakar</th>
-                <th>Total Emisi (kg CO₂)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($emisiPerBahanBakar as $data)
-            <tr>
-                <td>{{ $data->nama_bakar }}</td>
-                <td>{{ number_format($data->total_emisi, 2, ',', '.') }} kg</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    --}}
+    <p class="footer">
+        {{ __('Dicetak pada') }}: {{ \Carbon\Carbon::now()->translatedFormat('d F Y H:i') }}
+    </p>
 </body>
 </html>

@@ -179,6 +179,15 @@ class PermissionService
                 'guide.detail',
             ],
         ],
+        [
+            'group_name' => 'report',
+            'permissions' => [
+                'report.view',
+                'report.detail',
+                'report.export',
+                'report.export_detail',
+            ],
+        ],
     ];
 
     return $permissions;

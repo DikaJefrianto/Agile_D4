@@ -190,7 +190,9 @@ class RolesService
             'profile.update',
             // Translations
             'translations.view',
-            
+            'report.view',
+            'report.detail',
+
         ];
 
         $roles['perusahaan'] = $this->createRole('Perusahaan', $perusahaanPermissions);

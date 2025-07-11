@@ -34,4 +34,17 @@ class Perusahaan extends Model
     {
         return $this->hasMany(Strategi::class);
     }
+    public function getAllRelatedUserIds()
+    {
+        // ID pemilik perusahaan (user yang terhubung langsung ke model Perusahaan)
+        $ownerUserId = $this->user_id;
+
+        // ID semua karyawan yang terhubung dengan perusahaan ini
+        // Menggunakan pluck('user_id') untuk mendapatkan array dari user_id karyawan
+        $employeeUserIds = $this->karyawans()->pluck('user_id')->toArray();
+
+        // Gabungkan ID pemilik dan ID karyawan, lalu pastikan unik
+        // array_filter digunakan untuk menghapus nilai null atau 0 jika ada
+        return array_unique(array_filter(array_merge([$ownerUserId], $employeeUserIds)));
+    }
 }

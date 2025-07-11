@@ -29,7 +29,7 @@ function serialize($data)
  * @param array|null $options
  * @return mixed
  */
-function unserialize($data, ?array $options = null)
+function unserialize($data, ?array $options = null) // Perhatikan tanda tanya (?) di depan array
 {
     SerializableClosure::enterContext();
     $data = ($options === null || \PHP_MAJOR_VERSION < 7)
@@ -39,4 +39,3 @@ function unserialize($data, ?array $options = null)
     SerializableClosure::exitContext();
     return $data;
 }
-

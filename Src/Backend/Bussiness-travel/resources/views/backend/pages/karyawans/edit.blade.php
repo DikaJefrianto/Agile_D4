@@ -1,14 +1,14 @@
 @extends('backend.layouts.app')
 
 @section('title')
-    {{ __('Edit Karyawan') }} - {{ config('app.name') }}
+    {{ __('Edit Employee') }} - {{ config('app.name') }}
 @endsection
 
 @section('admin-content')
 <div class="p-4 mx-auto max-w-7xl md:p-6">
-    <div x-data="{ pageName: '{{ __('Edit Karyawan') }}' }">
+    <div x-data="{ pageName: '{{ __('Edit Employee') }}' }">
         <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-            <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{{ __('Edit Karyawan') }}</h2>
+            <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{{ __('Edit Employee') }}</h2>
             <nav>
                 <ol class="flex items-center gap-1.5">
                     <li>
@@ -34,7 +34,7 @@
     <div class="space-y-6">
         <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <div class="px-5 py-2.5 sm:px-6 sm:py-5">
-                <h3 class="text-base font-medium text-gray-800 dark:text-white">{{ __('Edit Karyawan') }} - {{ $karyawan->nama_lengkap }}</h3>
+                <h3 class="text-base font-medium text-gray-800 dark:text-white">{{ __('Edit Employee') }} - {{ $karyawan->nama_lengkap }}</h3>
             </div>
             <div class="p-5 space-y-6 border-t border-gray-100 dark:border-gray-800 sm:p-6">
                 @include('backend.layouts.partials.messages')

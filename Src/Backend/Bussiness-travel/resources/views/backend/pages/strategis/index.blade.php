@@ -34,7 +34,7 @@
                 ])
 
                 {{-- Tombol "Tambah Strategi" hanya untuk Admin/Super Admin --}}
-                @if (auth()->user()->hasRole(['admin', 'super-admin']))
+                @if (Auth::check() && (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin')))
                     <a href="{{ route('admin.strategis.create') }}" class="btn-success">
                         <i class="bi bi-plus-circle mr-2"></i>
                         {{ __('Tambah Strategi') }}
@@ -52,7 +52,7 @@
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Dokumen') }}</th>
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Status') }}</th>
                             {{-- Hanya tampilkan kolom Perusahaan jika user adalah Admin/Super Admin --}}
-                            @if (auth()->user()->hasRole(['admin', 'super-admin']))
+                            @if (Auth::check() && (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin')))
                                 <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Perusahaan') }}</th>
                             @endif
                             <th class="p-2 bg-gray-50 dark:bg-gray-800 dark:text-white text-left px-5">{{ __('Aksi') }}</th>
@@ -73,7 +73,7 @@
                             </td>
                             <td class="px-5 py-4 sm:px-6">{{ __($strategi->status) }}</td>
                             {{-- Tampilkan nama perusahaan jika user adalah Admin/Super Admin --}}
-                            @if (auth()->user()->hasRole(['admin', 'super-admin']))
+                            @if (Auth::check() && (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin')))
                                 <td class="px-5 py-4 sm:px-6">{{ $strategi->perusahaan->nama ?? 'N/A' }}</td>
                             @endif
                             <td class="flex px-5 py-4 sm:px-6 text-center gap-1">

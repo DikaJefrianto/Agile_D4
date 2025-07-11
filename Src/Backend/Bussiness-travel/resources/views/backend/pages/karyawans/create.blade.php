@@ -1,14 +1,14 @@
 @extends('backend.layouts.app')
 
 @section('title')
-    {{ __('Karyawan Create') }} - {{ config('app.name') }}
+    {{ __('Employee Create') }} - {{ config('app.name') }}
 @endsection
 
 @section('admin-content')
     <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
-        <div x-data="{ pageName: '{{ __('New Karyawan') }}' }">
+        <div x-data="{ pageName: '{{ __('New Employee') }}' }">
             <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-                <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{{ __('New Karyawan') }}</h2>
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{{ __('New Employee') }}</h2>
                 <nav>
                     <ol class="flex items-center gap-1.5">
                         <li>
@@ -23,7 +23,7 @@
                                 {{ __('Karyawans') }}<i class="bi bi-chevron-right"></i>
                             </a>
                         </li>
-                        <li class="text-sm text-gray-800 dark:text-white/90">{{ __('New Karyawan') }}</li>
+                        <li class="text-sm text-gray-800 dark:text-white/90">{{ __('New Employee') }}</li>
                     </ol>
                 </nav>
             </div>
@@ -32,7 +32,7 @@
         <div class="space-y-6">
             <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
                 <div class="px-5 py-4 sm:px-6 sm:py-5">
-                    <h3 class="text-base font-medium text-gray-800 dark:text-white/90">{{ __('Create New Karyawan') }}</h3>
+                    <h3 class="text-base font-medium text-gray-800 dark:text-white/90">{{ __('Create New Employee') }}</h3>
                 </div>
                 <div class="p-5 space-y-6 border-t border-gray-100 dark:border-gray-800 sm:p-6">
                     @include('backend.layouts.partials.messages')

@@ -377,11 +377,7 @@
                         </div>
                     </div>
                     <div class="mt-12" data-aos="fade-up" data-aos-delay="700">
-<<<<<<< HEAD
                         <a href="{{ route('register') }}" class="btn btn-success">
-=======
-                        <a href="{{ route('login') }}" class="btn btn-primary">
->>>>>>> origin/feedback-panduan
                             Coba Semua Fitur Naima Sekarang
                             <i class="fas fa-magic ml-2"></i>
                         </a>
