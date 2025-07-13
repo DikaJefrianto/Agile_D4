@@ -21,6 +21,6 @@ class BahanBakar extends Model
 
     public function kendaraans()
     {
-        return $this->hasMany(Kendaraan::class);
+        return $this->hasMany(transportasi::class);
     }
 }
