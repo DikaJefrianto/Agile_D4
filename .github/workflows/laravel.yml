@@ -1,11 +1,13 @@
-  # Nama alur kerja yang akan muncul di GitHub Actions
+# Nama alur kerja yang akan muncul di GitHub Actions
 name: Laravel CI
 
 # Mendefinisikan kapan alur kerja akan dijalankan
 on:
   push:
+    # Ganti dengan branch utama Anda (misal: "main", "master", "develop")
     branches: [ "main", "master", "testing","iterasi1","iterasi2","iterasi3","iterasi4" ]
   pull_request:
+    # Ganti dengan branch utama Anda (misal: "main", "master", "develop")
     branches: [ "main", "master", "testing","iterasi1","iterasi2","iterasi3","iterasi4" ]
 
 # Sekumpulan pekerjaan yang akan dijalankan
@@ -54,8 +56,14 @@ jobs:
         echo "DB_PASSWORD=" >> .env
       working-directory: ./Src/Backend/Bussiness-travel
 
-    - name: Install Composer dependencies
-      run: composer install --no-ansi --no-interaction --no-progress --prefer-dist
+    - name: Install Composer dependencies (Skipping scripts)
+      # Menambahkan --no-scripts untuk melewati post-autoload-dump event
+      run: composer install --no-ansi --no-interaction --no-progress --prefer-dist --no-scripts
+      working-directory: ./Src/Backend/Bussiness-travel
+
+    - name: Run package:discover manually
+      # Langkah ini diperlukan karena --no-scripts di atas akan melewati package:discover
+      run: php artisan package:discover --ansi
       working-directory: ./Src/Backend/Bussiness-travel
 
     - name: Generate application key
@@ -69,5 +77,3 @@ jobs:
     - name: Run tests
       run: php artisan test
       working-directory: ./Src/Backend/Bussiness-travel
-
-
