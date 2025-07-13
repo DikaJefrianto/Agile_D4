@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Transportasi;
+use App\Models\transportasi;
 use Illuminate\Http\Request;
 
 class TransportasiController extends Controller
