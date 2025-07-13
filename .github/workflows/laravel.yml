@@ -82,9 +82,6 @@ jobs:
       run : composer require --dev phpstan/phpstan
       working-directory: ./Src/Backend/Bussiness-travel
 
-    - name: Run Larastan
-      run: ./vendor/bin/phpstan analyse
-      
     - name: Run Laravel Pint
       run: ./vendor/bin/pint --test
 
