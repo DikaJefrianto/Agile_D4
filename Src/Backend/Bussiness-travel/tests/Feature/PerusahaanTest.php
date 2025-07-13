@@ -22,7 +22,7 @@ class PerusahaanTest extends TestCase
     {
         $superadmin = User::where('email', 'superadmin@example.com')->first();
 
-        $response = $this->actingAs($superadmin)->post('/perusahaans', [
+        $response = $this->actingAs($superadmin)->post(route('admin.perusahaans.store'), [
             'nama' => 'PT Laravel Hebat',
             'username' => 'ptlaravel',
             'email' => 'pt@laravel.com',
@@ -31,6 +31,7 @@ class PerusahaanTest extends TestCase
             'alamat' => 'Jalan Laravel No.1',
             'keterangan' => 'Testing perusahaan',
         ]);
+
 
         $response->assertRedirect(); // Atau assertStatus(302) jika belum redirect ke URL spesifik
         $this->assertDatabaseHas('perusahaans', [
