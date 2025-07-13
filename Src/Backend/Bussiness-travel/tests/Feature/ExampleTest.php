@@ -2,19 +2,29 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class PerusahaanTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function test_basic_test()
-    {
-        $response = $this->get('/');
+    use RefreshDatabase;
 
-        $response->assertStatus(200);
+    public function test_dapat_menambahkan_perusahaan_baru()
+    {
+        $response = $this->post('/perusahaans', [  // Ganti dengan route yang sesuai
+            'nama' => 'PT Testing Sukses',
+            'username' => 'testing123',
+            'email' => 'testing@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+            'alamat' => 'Jl. Testing No. 123',
+            'keterangan' => 'Perusahaan untuk pengujian',
+        ]);
+
+        $response->assertRedirect(); // Pastikan redirect (biasanya ke index atau detail)
+        $this->assertDatabaseHas('perusahaans', [ // Ganti dengan nama tabel yang sesuai
+            'nama' => 'PT Testing Sukses',
+            'email' => 'testing@example.com',
+        ]);
     }
 }
