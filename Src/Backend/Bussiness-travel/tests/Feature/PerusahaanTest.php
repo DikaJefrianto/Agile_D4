@@ -1,8 +1,10 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Spatie\Permission\Models\Role;
 
 class PerusahaanTest extends TestCase
@@ -11,16 +13,16 @@ class PerusahaanTest extends TestCase
 
     public function test_superadmin_bisa_menambahkan_perusahaan()
     {
-        // Buat role superadmin (jika belum ada)
-        Role::create(['name' => 'superadmin']);
+        // Buat role superadmin kalau belum ada
+        Role::firstOrCreate(['name' => 'superadmin']);
 
         // Buat user dan assign role superadmin
         $superadmin = User::factory()->create([
-            'email_verified_at' => now(),
+            'email_verified_at' => now(), // wajib kalau pakai 'verified' middleware
         ]);
         $superadmin->assignRole('superadmin');
 
-        // Akses route untuk menambahkan perusahaan
+        // Login sebagai superadmin dan kirim data perusahaan
         $response = $this->actingAs($superadmin)->post(route('admin.perusahaans.store'), [
             'nama' => 'PT Laravel Hebat',
             'username' => 'ptlaravel',
@@ -31,8 +33,10 @@ class PerusahaanTest extends TestCase
             'keterangan' => 'Testing perusahaan',
         ]);
 
-        // Assert redirect atau sukses
-        $response->assertRedirect(); // atau ->assertStatus(302)
+        // Validasi: response harus redirect
+        $response->assertRedirect();
+
+        // Validasi: data harus masuk ke database
         $this->assertDatabaseHas('perusahaans', [
             'nama' => 'PT Laravel Hebat',
             'email' => 'pt@laravel.com',
