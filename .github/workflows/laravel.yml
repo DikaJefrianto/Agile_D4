@@ -54,12 +54,9 @@ jobs:
         echo "DB_PASSWORD=" >> .env
       working-directory: ./Src/Backend/Bussiness-travel
 
-    - name: Install Composer dependencies (excluding dev dependencies)
-      # PENTING: Menambahkan env: COMPOSER_NO_DEV: 1 untuk melewati dev dependencies
+    - name: Install Composer dependencies
       run: composer install --no-ansi --no-interaction --no-progress --prefer-dist
       working-directory: ./Src/Backend/Bussiness-travel
-      env:
-        COMPOSER_NO_DEV: 1 # Ini akan mencegah instalasi require-dev dependencies
 
     - name: Generate application key
       run: php artisan key:generate
