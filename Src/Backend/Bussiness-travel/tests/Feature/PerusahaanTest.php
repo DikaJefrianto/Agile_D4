@@ -1,6 +1,11 @@
 <?php
+
 use Spatie\Permission\Models\Role;
+use Tests\TestCase; // ✅ Ini yang penting!
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
+
 
 class PerusahaanTest extends TestCase
 {
