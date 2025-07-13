@@ -6,14 +6,7 @@
       run: composer install --no-ansi --no-interaction --no-progress --prefer-dist --no-scripts
       working-directory: ./Src/Backend/Bussiness-travel
 
-    # ... (lanjutan langkah-langkah Anda) ...
-
-    # PENTING: Jika Anda melewati --no-scripts, Anda perlu menjalankan package:discover secara manual
-    - name: Run package:discover manually
-      run: php artisan package:discover --ansi
-      working-directory: ./Src/Backend/Bussiness-travel
-      # Tambahkan ini HANYA JIKA Anda menggunakan --no-scripts di atas
-      # dan jika Anda ingin melihat apakah package:discover itu sendiri yang bermasalah
+  
 
 # Nama alur kerja yang akan muncul di GitHub Actions
 name: Laravel CI
@@ -86,3 +79,12 @@ jobs:
     - name: Run tests
       run: php artisan test
       working-directory: ./Src/Backend/Bussiness-travel
+
+        # ... (lanjutan langkah-langkah Anda) ...
+
+    # PENTING: Jika Anda melewati --no-scripts, Anda perlu menjalankan package:discover secara manual
+    - name: Run package:discover manually
+      run: php artisan package:discover --ansi
+      working-directory: ./Src/Backend/Bussiness-travel
+      # Tambahkan ini HANYA JIKA Anda menggunakan --no-scripts di atas
+      # dan jika Anda ingin melihat apakah package:discover itu sendiri yang bermasalah
