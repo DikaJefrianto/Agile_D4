@@ -55,7 +55,7 @@ jobs:
       working-directory: ./Src/Backend/Bussiness-travel
 
     - name: Install Composer dependencies
-      run: composer install --no-ansi --no-interaction --no-progress --prefer-dist
+      run: composer install --no-scripts --no-ansi --no-interaction --no-progress --prefer-dist
       working-directory: ./Src/Backend/Bussiness-travel
 
     - name: Generate application key
