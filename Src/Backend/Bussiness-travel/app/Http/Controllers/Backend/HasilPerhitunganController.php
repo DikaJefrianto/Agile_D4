@@ -6,7 +6,7 @@ use App\Models\BahanBakar;
 use App\Models\biaya;
 use App\Models\HasilPerhitungan;
 use App\Models\Karyawan;
-use App\Models\Transportasi;
+use App\Models\transportasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
