@@ -1,9 +1,4 @@
 <?php
-
-namespace Tests\Feature;
-
-use Tests\TestCase;
-use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -13,20 +8,22 @@ class PerusahaanTest extends TestCase
 
     public function test_superadmin_bisa_menambahkan_perusahaan(): void
     {
-        // Jalankan seeder agar user superadmin tersedia
-        $this->seed(\Database\Seeders\DatabaseSeeder::class);
+        // Buat role superadmin secara eksplisit
+        Role::create(['name' => 'superadmin', 'guard_name' => 'web']);
 
-        // Ambil user yang sudah ada dari seeder
-        $user = \App\Models\User::where('email', 'superadmin@example.com')->first();
+        // Buat user manual
+        $user = \App\Models\User::factory()->create([
+            'email' => 'superadmin@example.com',
+            'username' => 'superadmin',
+        ]);
 
-        // Optional: pastikan role superadmin
-        if (!$user->hasRole('superadmin')) {
-            $user->assignRole('superadmin');
-        }
+        // Assign role langsung
+        $user->assignRole('superadmin');
 
         // Login sebagai superadmin
         $this->actingAs($user);
 
+        // Lakukan request untuk menambah perusahaan
         $response = $this->post('/dashboard/perusahaans', [
             'nama' => 'PT Laravel Hebat',
             'username' => 'laravelhebat',
@@ -37,7 +34,7 @@ class PerusahaanTest extends TestCase
             'keterangan' => 'Testing perusahaan',
         ]);
 
-        $response->assertRedirect(); // Atau ->assertStatus(302)
+        $response->assertRedirect();
         $this->assertDatabaseHas('perusahaans', [
             'nama' => 'PT Laravel Hebat',
             'email' => 'pt@laravel.com',
