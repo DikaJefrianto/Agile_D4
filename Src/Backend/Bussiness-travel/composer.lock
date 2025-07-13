@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e31dfaa6dac2adca4151a606b2fb05f9",
+    "content-hash": "804bc0089dacab8536376d78a899dc6d",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1564,16 +1564,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.19.3",
+            "version": "v12.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "4e6ec689ef704bb4bd282f29d9dd658dfb4fb262"
+                "reference": "1b9a00f8caf5503c92aa436279172beae1a484ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/4e6ec689ef704bb4bd282f29d9dd658dfb4fb262",
-                "reference": "4e6ec689ef704bb4bd282f29d9dd658dfb4fb262",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/1b9a00f8caf5503c92aa436279172beae1a484ff",
+                "reference": "1b9a00f8caf5503c92aa436279172beae1a484ff",
                 "shasum": ""
             },
             "require": {
@@ -1775,20 +1775,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-06-18T12:56:23+00:00"
+            "time": "2025-07-08T15:02:21+00:00"
         },
         {
             "name": "laravel/prompts",
-            "version": "v0.3.5",
+            "version": "v0.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/prompts.git",
-                "reference": "57b8f7efe40333cdb925700891c7d7465325d3b1"
+                "reference": "86a8b692e8661d0fb308cec64f3d176821323077"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/prompts/zipball/57b8f7efe40333cdb925700891c7d7465325d3b1",
-                "reference": "57b8f7efe40333cdb925700891c7d7465325d3b1",
+                "url": "https://api.github.com/repos/laravel/prompts/zipball/86a8b692e8661d0fb308cec64f3d176821323077",
+                "reference": "86a8b692e8661d0fb308cec64f3d176821323077",
                 "shasum": ""
             },
             "require": {
@@ -1832,9 +1832,9 @@
             "description": "Add beautiful and user-friendly forms to your command-line applications.",
             "support": {
                 "issues": "https://github.com/laravel/prompts/issues",
-                "source": "https://github.com/laravel/prompts/tree/v0.3.5"
+                "source": "https://github.com/laravel/prompts/tree/v0.3.6"
             },
-            "time": "2025-02-11T13:34:40+00:00"
+            "time": "2025-07-07T14:17:42+00:00"
         },
         {
             "name": "laravel/pulse",
@@ -3576,16 +3576,16 @@
         },
         {
             "name": "nwidart/laravel-modules",
-            "version": "v12.0.4",
+            "version": "v12.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nWidart/laravel-modules.git",
-                "reference": "6e1f50de63366206b06ec53bbc823282977ddd06"
+                "reference": "9d53ad7fbf161ddbf23be109ac77ad8962d83ead"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nWidart/laravel-modules/zipball/6e1f50de63366206b06ec53bbc823282977ddd06",
-                "reference": "6e1f50de63366206b06ec53bbc823282977ddd06",
+                "url": "https://api.github.com/repos/nWidart/laravel-modules/zipball/9d53ad7fbf161ddbf23be109ac77ad8962d83ead",
+                "reference": "9d53ad7fbf161ddbf23be109ac77ad8962d83ead",
                 "shasum": ""
             },
             "require": {
@@ -3601,8 +3601,8 @@
                 "laravel/pint": "^1.16",
                 "mockery/mockery": "^1.6",
                 "orchestra/testbench": "^v10.0",
-                "phpstan/phpstan": "^2.0",
-                "phpunit/phpunit": "^11.5.3|^12.0.",
+                "phpstan/phpstan": "^1.4",
+                "phpunit/phpunit": "^11.0",
                 "spatie/phpunit-snapshot-assertions": "^5.0"
             },
             "type": "library",
@@ -3616,7 +3616,7 @@
                     ]
                 },
                 "branch-alias": {
-                    "dev-master": "12.x-dev"
+                    "dev-master": "11.0-dev"
                 }
             },
             "autoload": {
@@ -3649,7 +3649,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nWidart/laravel-modules/issues",
-                "source": "https://github.com/nWidart/laravel-modules/tree/v12.0.4"
+                "source": "https://github.com/nWidart/laravel-modules/tree/v12.0.0"
             },
             "funding": [
                 {
@@ -3661,20 +3661,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-06-29T09:23:53+00:00"
+            "time": "2025-02-24T22:02:47+00:00"
         },
         {
             "name": "opis/closure",
-            "version": "3.6.3",
+            "version": "3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "3d81e4309d2a927abbe66df935f4bb60082805ad"
+                "reference": "b1a22a6be71c1263f3ca6e68f00b3fd4d394abc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/3d81e4309d2a927abbe66df935f4bb60082805ad",
-                "reference": "3d81e4309d2a927abbe66df935f4bb60082805ad",
+                "url": "https://api.github.com/repos/opis/closure/zipball/b1a22a6be71c1263f3ca6e68f00b3fd4d394abc4",
+                "reference": "b1a22a6be71c1263f3ca6e68f00b3fd4d394abc4",
                 "shasum": ""
             },
             "require": {
@@ -3724,9 +3724,9 @@
             ],
             "support": {
                 "issues": "https://github.com/opis/closure/issues",
-                "source": "https://github.com/opis/closure/tree/3.6.3"
+                "source": "https://github.com/opis/closure/tree/3.7.0"
             },
-            "time": "2022-01-27T09:35:39+00:00"
+            "time": "2025-07-08T20:30:08+00:00"
         },
         {
             "name": "phpoffice/phpspreadsheet",
@@ -4600,16 +4600,16 @@
         },
         {
             "name": "sabberworm/php-css-parser",
-            "version": "v8.8.0",
+            "version": "v8.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MyIntervals/PHP-CSS-Parser.git",
-                "reference": "3de493bdddfd1f051249af725c7e0d2c38fed740"
+                "reference": "d8e916507b88e389e26d4ab03c904a082aa66bb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MyIntervals/PHP-CSS-Parser/zipball/3de493bdddfd1f051249af725c7e0d2c38fed740",
-                "reference": "3de493bdddfd1f051249af725c7e0d2c38fed740",
+                "url": "https://api.github.com/repos/MyIntervals/PHP-CSS-Parser/zipball/d8e916507b88e389e26d4ab03c904a082aa66bb9",
+                "reference": "d8e916507b88e389e26d4ab03c904a082aa66bb9",
                 "shasum": ""
             },
             "require": {
@@ -4617,7 +4617,8 @@
                 "php": "^5.6.20 || ^7.0.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "5.7.27 || 6.5.14 || 7.5.20 || 8.5.41"
+                "phpunit/phpunit": "5.7.27 || 6.5.14 || 7.5.20 || 8.5.41",
+                "rawr/cross-data-providers": "^2.0.0"
             },
             "suggest": {
                 "ext-mbstring": "for parsing UTF-8 CSS"
@@ -4659,9 +4660,9 @@
             ],
             "support": {
                 "issues": "https://github.com/MyIntervals/PHP-CSS-Parser/issues",
-                "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v8.8.0"
+                "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v8.9.0"
             },
-            "time": "2025-03-23T17:59:05+00:00"
+            "time": "2025-07-11T13:20:48+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -7567,16 +7568,16 @@
         },
         {
             "name": "laravel/pint",
-            "version": "v1.23.0",
+            "version": "v1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/pint.git",
-                "reference": "9ab851dba4faa51a3c3223dd3d07044129021024"
+                "reference": "0345f3b05f136801af8c339f9d16ef29e6b4df8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/pint/zipball/9ab851dba4faa51a3c3223dd3d07044129021024",
-                "reference": "9ab851dba4faa51a3c3223dd3d07044129021024",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/0345f3b05f136801af8c339f9d16ef29e6b4df8a",
+                "reference": "0345f3b05f136801af8c339f9d16ef29e6b4df8a",
                 "shasum": ""
             },
             "require": {
@@ -7587,7 +7588,7 @@
                 "php": "^8.2.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.76.0",
+                "friendsofphp/php-cs-fixer": "^3.82.2",
                 "illuminate/view": "^11.45.1",
                 "larastan/larastan": "^3.5.0",
                 "laravel-zero/framework": "^11.45.0",
@@ -7632,7 +7633,7 @@
                 "issues": "https://github.com/laravel/pint/issues",
                 "source": "https://github.com/laravel/pint"
             },
-            "time": "2025-07-03T10:37:47+00:00"
+            "time": "2025-07-10T18:09:32+00:00"
         },
         {
             "name": "laravel/sail",
@@ -8394,16 +8395,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.26",
+            "version": "11.5.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "4ad8fe263a0b55b54a8028c38a18e3c5bef312e0"
+                "reference": "446d43867314781df7e9adf79c3ec7464956fd8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4ad8fe263a0b55b54a8028c38a18e3c5bef312e0",
-                "reference": "4ad8fe263a0b55b54a8028c38a18e3c5bef312e0",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/446d43867314781df7e9adf79c3ec7464956fd8f",
+                "reference": "446d43867314781df7e9adf79c3ec7464956fd8f",
                 "shasum": ""
             },
             "require": {
@@ -8413,7 +8414,7 @@
                 "ext-mbstring": "*",
                 "ext-xml": "*",
                 "ext-xmlwriter": "*",
-                "myclabs/deep-copy": "^1.13.1",
+                "myclabs/deep-copy": "^1.13.3",
                 "phar-io/manifest": "^2.0.4",
                 "phar-io/version": "^3.2.1",
                 "php": ">=8.2",
@@ -8475,7 +8476,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.26"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.27"
             },
             "funding": [
                 {
@@ -8499,7 +8500,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-04T05:58:21+00:00"
+            "time": "2025-07-11T04:10:06+00:00"
         },
         {
             "name": "sebastian/cli-parser",
