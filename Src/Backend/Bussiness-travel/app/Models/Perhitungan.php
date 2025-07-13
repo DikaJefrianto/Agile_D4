@@ -14,9 +14,4 @@ class Perhitungan extends Model
         'total_emisi',
         'catatan',
     ];
-
-    public function perjalananDinas()
-    {
-        return $this->belongsTo(PerjalananDinas::class, 'perjalanan_id');
-    }
 }
