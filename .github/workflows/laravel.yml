@@ -1,15 +1,12 @@
-
 # Nama alur kerja yang akan muncul di GitHub Actions
 name: Laravel CI
 
 # Mendefinisikan kapan alur kerja akan dijalankan
 on:
   push:
-    # Ganti dengan branch utama Anda (misal: "main", "master", "develop")
     branches: [ "main", "master", "testing","iterasi1","iterasi2","iterasi3","iterasi4" ]
   pull_request:
-    # Ganti dengan branch utama Anda (misal: "main", "master", "develop")
-   branches: [ "main", "master", "testing","iterasi1","iterasi2","iterasi3","iterasi4" ]
+    branches: [ "main", "master", "testing","iterasi1","iterasi2","iterasi3","iterasi4" ]
 
 # Sekumpulan pekerjaan yang akan dijalankan
 jobs:
@@ -37,22 +34,27 @@ jobs:
         extensions: pdo_mysql, mbstring, dom, fileinfo, gd
         tools: composer
 
+    # Langkah baru: Cache Composer dependencies
+    - name: Cache Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.composer/cache
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
     - name: Create .env file and configure database
-      # PENTING: Menggabungkan langkah pembuatan .env dan konfigurasi database
-      # agar konfigurasi database sudah ada sebelum composer install selesai
       run: |
         cp .env.example .env
-        # Menulis konfigurasi database langsung ke .env
         echo "DB_CONNECTION=mysql" >> .env
         echo "DB_HOST=127.0.0.1" >> .env
         echo "DB_PORT=3306" >> .env
         echo "DB_DATABASE=laravel_test" >> .env
         echo "DB_USERNAME=root" >> .env
         echo "DB_PASSWORD=" >> .env
-      working-directory: ./Src/Backend/Bussiness-travel # PATH LENGKAP KE FOLDER PROYEK LARAVEL ANDA
+      working-directory: ./Src/Backend/Bussiness-travel
 
     - name: Install Composer dependencies
-      # Composer install akan dijalankan setelah .env dikonfigurasi
       run: composer install --no-ansi --no-interaction --no-progress --prefer-dist
       working-directory: ./Src/Backend/Bussiness-travel
 
