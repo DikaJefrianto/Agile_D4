@@ -19,6 +19,7 @@ class PerusahaanTest extends TestCase
         $user = \App\Models\User::factory()->create([
             'email' => 'superadmin@example.com',
             'username' => 'superadmin',
+             'email_verified_at' => now()
         ]);
 
         // Assign role langsung
