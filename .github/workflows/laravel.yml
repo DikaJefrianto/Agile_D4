@@ -78,11 +78,12 @@ jobs:
       run: php artisan test
       working-directory: ./Src/Backend/Bussiness-travel
 
-    - name: Install Phpstan
-      run : composer require --dev phpstan/phpstan
-      working-directory: ./Src/Backend/Bussiness-travel
+    - name: Install PHPStan manually
+      run: composer global require phpstan/phpstan
 
-    - name: Run Laravel Pint
-      run: ./vendor/bin/pint --test
+    - name: Run PHPStan
+      run: phpstan analyse app tests
+
+
 
 
