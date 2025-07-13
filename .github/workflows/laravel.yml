@@ -53,11 +53,17 @@ jobs:
         echo "DB_USERNAME=root" >> .env
         echo "DB_PASSWORD=" >> .env
       working-directory: ./Src/Backend/Bussiness-travel
-
+      
+    - name: Install Larastan
+      run: composer require --dev nunomaduro/larastan
+      working-directory: ./Src/Backend/Bussiness-travel
+      
     - name: Install Composer dependencies
       run: composer update 
       working-directory: ./Src/Backend/Bussiness-travel
-
+      
+    
+      
     - name: Generate application key
       run: php artisan key:generate
       working-directory: ./Src/Backend/Bussiness-travel
