@@ -82,7 +82,9 @@ jobs:
       run: composer global require phpstan/phpstan
 
     - name: Run PHPStan
-      run: phpstan analyse app tests
+      run: ./vendor/bin/phpstan analyse app tests
+      working-directory: Src/Backend/Bussiness-travel
+
 
 
 
