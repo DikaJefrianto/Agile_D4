@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\BahanBakar;
-use App\Models\Biaya;
+use App\Models\biaya;
 use App\Models\HasilPerhitungan;
 use App\Models\Karyawan;
 use App\Models\Transportasi;
