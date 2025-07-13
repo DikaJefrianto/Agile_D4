@@ -14,55 +14,56 @@ on:
 # Sekumpulan pekerjaan yang akan dijalankan
 jobs:
   laravel-tests:
-    # Menggunakan sistem operasi Ubuntu terbaru untuk menjalankan pekerjaan
     runs-on: ubuntu-latest
 
-    # Konfigurasi layanan database MySQL untuk testing
     services:
       mysql:
-        image: mysql:8.0 # Menggunakan image Docker MySQL versi 8.0
+        image: mysql:8.0
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes # Izinkan password kosong untuk kemudahan testing
-          MYSQL_DATABASE: laravel_test    # Nama database untuk testing
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: laravel_test
         ports:
-          - 3306:3306 # Memetakan port MySQL dari container ke host
-        # Memastikan database siap sebelum job dimulai
+          - 3306:3306
         options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    # Urutan langkah-langkah dalam pekerjaan
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4 # Mengambil kode dari repositori
+      uses: actions/checkout@v4
 
     - name: Setup PHP
-      uses: shivammathur/setup-php@v2 # Mengatur lingkungan PHP
+      uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.3' # Ganti dengan versi PHP proyek Anda
-        extensions: pdo_mysql, mbstring, dom, fileinfo, gd # Ekstensi PHP yang dibutuhkan
-        tools: composer # Menginstal Composer
+        php-version: '8.2'
+        extensions: pdo_mysql, mbstring, dom, fileinfo, gd
+        tools: composer
+
+    - name: Create .env file and configure database
+      # PENTING: Menggabungkan langkah pembuatan .env dan konfigurasi database
+      # agar konfigurasi database sudah ada sebelum composer install selesai
+      run: |
+        cp .env.example .env
+        # Menulis konfigurasi database langsung ke .env
+        echo "DB_CONNECTION=mysql" >> .env
+        echo "DB_HOST=127.0.0.1" >> .env
+        echo "DB_PORT=3306" >> .env
+        echo "DB_DATABASE=laravel_test" >> .env
+        echo "DB_USERNAME=root" >> .env
+        echo "DB_PASSWORD=" >> .env
+      working-directory: ./Src/Backend/Bussiness-travel # PATH LENGKAP KE FOLDER PROYEK LARAVEL ANDA
 
     - name: Install Composer dependencies
+      # Composer install akan dijalankan setelah .env dikonfigurasi
       run: composer install --no-ansi --no-interaction --no-progress --prefer-dist
-
-    - name: Create .env file
-      run: cp .env.example .env # Membuat file .env dari .env.example
+      working-directory: ./Src/Backend/Bussiness-travel
 
     - name: Generate application key
-      run: php artisan key:generate # Menghasilkan application key Laravel
-
-    - name: Configure database for tests
-      run: |
-        # Mengatur koneksi database di .env untuk testing
-        # Pastikan nama database 'laravel_test' sesuai dengan yang di layanan MySQL di atas
-        sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env
-        sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
-        sed -i 's/DB_PORT=.*/DB_PORT=3306/' .env
-        sed -i 's/DB_DATABASE=.*/DB_DATABASE=laravel_test/' .env
-        sed -i 's/DB_USERNAME=.*/DB_USERNAME=root/' .env
-        sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=/' .env
+      run: php artisan key:generate
+      working-directory: ./Src/Backend/Bussiness-travel
 
     - name: Run database migrations
-      run: php artisan migrate --force # Menjalankan migrasi database
+      run: php artisan migrate --force
+      working-directory: ./Src/Backend/Bussiness-travel
 
     - name: Run tests
-      run: php artisan test # Menjalankan PHPUnit tests (atau vendor/bin/phpunit jika Anda tidak menggunakan artisan test)
+      run: php artisan test
+      working-directory: ./Src/Backend/Bussiness-travel
