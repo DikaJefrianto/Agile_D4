@@ -72,3 +72,11 @@ jobs:
       # Namun, jika masalahnya hanya pada Pint, ini bisa menjadi solusi sementara.
       run: php artisan test
       working-directory: ./Src/Backend/Bussiness-travel
+
+    - name: Run Larastan
+      run: ./vendor/bin/phpstan analyse
+      
+    - name: Run Laravel Pint
+      run: ./vendor/bin/pint --test
+
+
