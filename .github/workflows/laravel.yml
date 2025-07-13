@@ -54,9 +54,8 @@ jobs:
         echo "DB_PASSWORD=" >> .env
       working-directory: ./Src/Backend/Bussiness-travel
       
-    - name: Install Larastan
-      run: composer require --dev nunomaduro/larastan
-      working-directory: ./Src/Backend/Bussiness-travel
+    - name: Install PHPStan (and Larastan)
+      run: composer require --dev phpstan/phpstan larastan/larastan
       
     - name: Install Composer dependencies
       run: composer update 
