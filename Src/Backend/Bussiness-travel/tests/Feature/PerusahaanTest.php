@@ -4,27 +4,38 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
 
 class PerusahaanTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_dapat_menambahkan_perusahaan_baru()
+    protected function setUp(): void
     {
-        $response = $this->post('/perusahaans', [  // Ganti dengan route yang sesuai
-            'nama' => 'PT Testing Sukses',
-            'username' => 'testing123',
-            'email' => 'testing@example.com',
+        parent::setUp();
+
+        // Jalankan seeder untuk mendapatkan superadmin
+        $this->artisan('db:seed', ['--class' => 'UserSeeder']);
+    }
+
+    public function test_superadmin_bisa_menambahkan_perusahaan()
+    {
+        $superadmin = User::where('email', 'superadmin@example.com')->first();
+
+        $response = $this->actingAs($superadmin)->post('/perusahaans', [
+            'nama' => 'PT Laravel Hebat',
+            'username' => 'ptlaravel',
+            'email' => 'pt@laravel.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
-            'alamat' => 'Jl. Testing No. 123',
-            'keterangan' => 'Perusahaan untuk pengujian',
+            'alamat' => 'Jalan Laravel No.1',
+            'keterangan' => 'Testing perusahaan',
         ]);
 
-        $response->assertRedirect(); // Pastikan redirect (biasanya ke index atau detail)
-        $this->assertDatabaseHas('perusahaans', [ // Ganti dengan nama tabel yang sesuai
-            'nama' => 'PT Testing Sukses',
-            'email' => 'testing@example.com',
+        $response->assertRedirect(); // Atau assertStatus(302) jika belum redirect ke URL spesifik
+        $this->assertDatabaseHas('perusahaans', [
+            'nama' => 'PT Laravel Hebat',
+            'email' => 'pt@laravel.com',
         ]);
     }
 }
