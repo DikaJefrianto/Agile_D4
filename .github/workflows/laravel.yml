@@ -80,6 +80,10 @@ jobs:
 
     - name: Install PHPStan manually
       run: composer global require phpstan/phpstan
+      
+    - name: Install PHPStan
+      run: composer require --dev phpstan/phpstan
+      working-directory: Src/Backend/Bussiness-travel
 
     - name: Run PHPStan
       run: ./vendor/bin/phpstan analyse app tests
