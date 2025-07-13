@@ -69,7 +69,7 @@ jobs:
       working-directory: ./Src/Backend/Bussiness-travel
 
     - name: Run database migrations
-      run: php artisan migrate --force
+      run: php artisan migrate --force --seed
       working-directory: ./Src/Backend/Bussiness-travel
 
     - name: Run tests
