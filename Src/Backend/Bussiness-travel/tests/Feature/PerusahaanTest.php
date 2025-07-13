@@ -11,35 +11,33 @@ class PerusahaanTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_superadmin_bisa_menambahkan_perusahaan()
-    {
-        // Buat role superadmin kalau belum ada
-        Role::firstOrCreate(['name' => 'superadmin']);
+    public function test_superadmin_bisa_menambahkan_perusahaan(): void
+{
+    // Ambil user yang sudah ada dari seeder
+    $user = \App\Models\User::where('email', 'superadmin@example.com')->first();
 
-        // Buat user dan assign role superadmin
-        $superadmin = User::factory()->create([
-            'email_verified_at' => now(), // wajib kalau pakai 'verified' middleware
-        ]);
-        $superadmin->assignRole('superadmin');
+    // Pastikan role superadmin sudah diberikan
+    $user->assignRole('superadmin'); // Pastikan menggunakan Spatie Role package
 
-        // Login sebagai superadmin dan kirim data perusahaan
-        $response = $this->actingAs($superadmin)->post(route('admin.perusahaans.store'), [
-            'nama' => 'PT Laravel Hebat',
-            'username' => 'ptlaravel',
-            'email' => 'pt@laravel.com',
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
-            'alamat' => 'Jalan Laravel No.1',
-            'keterangan' => 'Testing perusahaan',
-        ]);
+    // Login sebagai superadmin
+    $this->actingAs($user);
 
-        // Validasi: response harus redirect
-        $response->assertRedirect();
+    // Kirimkan POST request ke route perusahaan store
+    $response = $this->post('/dashboard/perusahaans', [
+        'nama' => 'PT Laravel Hebat',
+        'username' => 'laravelhebat',
+        'email' => 'pt@laravel.com',
+        'password' => 'password123',
+        'password_confirmation' => 'password123',
+        'alamat' => 'Jalan Laravel No.1',
+        'keterangan' => 'Testing perusahaan',
+    ]);
 
-        // Validasi: data harus masuk ke database
-        $this->assertDatabaseHas('perusahaans', [
-            'nama' => 'PT Laravel Hebat',
-            'email' => 'pt@laravel.com',
-        ]);
-    }
+    $response->assertRedirect(); // 302 redirect
+    $this->assertDatabaseHas('perusahaans', [
+        'nama' => 'PT Laravel Hebat',
+        'email' => 'pt@laravel.com',
+    ]);
+}
+
 }
