@@ -1,5 +1,6 @@
 ## Deskripsi Proyek
-Proyek ini adalah sistem yang mendukung untuk implementasi lingkungan keberlanjutan yaitu tentang perhitungan dan pelaporan emisi karbon dari perjalanan bisnis. Pada sistem ini pengguna dapat melakukan perhitungan emisi karbon yang dikeluarkan selama perjalanan bisnis, hasilnya langsung dapat dijadikan laporan dalam berbagai format. Di sistem ini memungkinkan bagi pengguna untuk melihat pelaporan emisi yang dikeluarkan selama perjalanan bisnis secara real time.
+Proyek ini merupakan sistem digital yang mendukung implementasi prinsip keberlanjutan lingkungan, khususnya dalam hal perhitungan dan pelaporan emisi karbon dari perjalanan bisnis. Sistem ini memungkinkan pengguna untuk menghitung emisi karbon yang dihasilkan selama perjalanan, serta menyajikan hasil perhitungan tersebut dalam berbagai format laporan secara otomatis.
+Dirancang untuk mempermudah perusahaan dalam menghitung, memantau, dan mengelola emisi karbon secara efisien dan akurat. Solusi ini hadir untuk menggantikan proses pelaporan manual yang selama ini memakan waktu hingga 3–7 bulan, dengan pelaporan harian oleh karyawan dan output laporan yang telah terstandar GRI dalam hitungan detik.
 
 ## Library yang digunakan
 
