@@ -51,3 +51,10 @@ npm run dev   # untuk development
 ### 8. Jalankan Server
 php artisan serve
 
+
+
+
+
+### Akun untuk Akses Login
+Email : superadmin@example.com
+password : 12345678
