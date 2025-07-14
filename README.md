@@ -1,7 +1,7 @@
-**##Deskripsi Proyek **
+##Deskripsi Proyek
 Proyek ini adalah sistem yang mendukung untuk implementasi lingkungan keberlanjutan yaitu tentang perhitungan dan pelaporan emisi karbon dari perjalanan bisnis. Pada sistem ini pengguna dapat melakukan perhitungan emisi karbon yang dikeluarkan selama perjalanan bisnis, hasilnya langsung dapat dijadikan laporan dalam berbagai format. Di sistem ini memungkinkan bagi pengguna untuk melihat pelaporan emisi yang dikeluarkan selama perjalanan bisnis secara real time.
 
-**## Library yang digunakan**
+## Library yang digunakan
 
 Berikut adalah beberapa library utama yang digunakan dalam proyek Laravel ini:
 
