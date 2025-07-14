@@ -1,0 +1,1 @@
+Deskripsi Proyek : Proyek ini adalah sistem yang mendukung lingkungan keberlanjutan tentang perhitungan dan pelaporan emisi karbon dari perjalanan bisnis. Pada sistem ini pengguna dapat melakukan perhitungan emisi karbon yang dikeluarkan selama perjalanan bisnis, hasilnya langsung dapat dijadikan laoan
